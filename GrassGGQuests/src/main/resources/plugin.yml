@@ -3,7 +3,7 @@ version: '1.0'
 main: me.sbpro.grassggquests.GrassGGQuests
 api-version: '26.2'
 author: GrassGG
-description: GrassGG quest system with Medium and Easy quests.
+description: GrassGG quest system with Normal and Easy quests.
 depend:
   - GrassGGCoins
 commands:

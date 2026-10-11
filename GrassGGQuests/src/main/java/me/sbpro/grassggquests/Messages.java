@@ -21,9 +21,13 @@ public final class Messages {
     public static String MAX_QUESTS = RED + "You already have the maximum number of active quests.";
     public static String NOT_ENOUGH_COINS = RED + "You do not have enough coins.";
     public static String ALREADY_ACTIVE = RED + "That quest is already active for this player.";
+    public static String SLOT_ON_COOLDOWN = RED + "That quest slot is on cooldown. It unlocks in " + CUSTOM_COLOR + "%time%" + RED + ".";
+    public static String EASIFY_UNAVAILABLE = RED + "That quest cannot be Easified right now.";
 
     public static String EASY_SUCCESS = WHITE + "Quest made easier for " + CUSTOM_COLOR + "2 coins" + WHITE + ".";
     public static String REROLL_SUCCESS = WHITE + "Quest Easified for " + CUSTOM_COLOR + "2 coins" + WHITE + ".";
+    public static String SLOT_COOLDOWN_STARTED = WHITE + "Quest slot " + CUSTOM_COLOR + "%slot%" + WHITE + " is on cooldown for " + CUSTOM_COLOR + "%time%" + WHITE + ".";
+    public static String SLOT_UNLOCKED = WHITE + "Quest slot " + CUSTOM_COLOR + "%slot%" + WHITE + " has unlocked! New quest: " + CUSTOM_COLOR + "%quest%" + WHITE + ".";
     public static String QUEST_COMPLETED = WHITE + "Quest completed: " + CUSTOM_COLOR + "%quest%";
     public static String QUEST_GIVEN_TO_YOU = WHITE + "You received quest: " + CUSTOM_COLOR + "%quest%" + WHITE + ".";
     public static String RELOAD_SUCCESS = WHITE + "Configuration reloaded successfully.";
@@ -50,12 +54,18 @@ public final class Messages {
     public static String COIN_SHOP_NAME = "§x§F§F§D§5§4§ACoin Shop";
     public static List<String> COIN_SHOP_LORE = List.of(WHITE + "Open the Coin Shop.");
     public static String QUEST_TITLE_FORMAT = CUSTOM_COLOR + "%quest%";
-    public static String NORMAL_LABEL = "§fDiffculty: §eNormal";
-    public static String EASY_LABEL = "§fDiffculty: §aEasy";
+    public static String NORMAL_LABEL = "§fDifficulty: §eNormal";
+    public static String EASY_LABEL = "§fDifficulty: §aEasy";
     public static String PROGRESS_LINE = WHITE + "Progress: " + CUSTOM_COLOR + "%progress%" + WHITE + " / " + CUSTOM_COLOR + "%required%";
     public static String REWARD_LINE = WHITE + "Reward: " + CUSTOM_COLOR + "%reward% coins";
     public static String REROLL_BUTTON_NAME = "§eEasify Quest";
     public static List<String> REROLL_BUTTON_LORE = List.of(WHITE + "Turn this quest into an easier quest for " + CUSTOM_COLOR + "2 coins" + WHITE + ".");
+
+    public static String SLOT_COOLDOWN_NAME = "§cQuest Slot Unavailable";
+    public static List<String> SLOT_COOLDOWN_LORE = List.of(
+            WHITE + "This quest slot is on cooldown.",
+            WHITE + "Unlocks in: " + CUSTOM_COLOR + "%time%",
+            WHITE + "A new Normal quest will be assigned automatically.");
 
     public static String EASIFY_CONFIRM_TITLE = CUSTOM_COLOR + "Confirm Easify";
     public static String CONFIRM_NAME = "§aConfirm";

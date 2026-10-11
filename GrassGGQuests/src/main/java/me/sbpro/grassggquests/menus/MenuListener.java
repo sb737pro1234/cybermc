@@ -2,6 +2,8 @@ package me.sbpro.grassggquests.menus;
 
 import me.sbpro.grassggquests.GrassGGQuests;
 import me.sbpro.grassggquests.Messages;
+import me.sbpro.grassggquests.data.PlayerData;
+import me.sbpro.grassggquests.quests.QuestManager;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,20 +27,27 @@ public class MenuListener implements Listener {
 
         int slot = event.getRawSlot();
         if (title.equals(ChatColor.stripColor(Messages.QUEST_MENU_TITLE))) {
-            if (slot == 11) {
+            if (slot == MenuManager.QUEST_LIST_BUTTON_SLOT) {
+                plugin.getMenus().openQuestList(player);
+            } else if (slot == MenuManager.COIN_SHOP_BUTTON_SLOT) {
                 if (!player.hasPermission("grassgg.coins.shop")) return;
                 player.openInventory(me.sbpro.grassggcoins.gui.MenuFactory.createShopMenu(plugin.getCoinsPlugin(), player));
-            } else if (slot == 15) {
-                plugin.getMenus().openQuestList(player);
             }
             return;
         }
 
         if (title.equals(ChatColor.stripColor(Messages.QUEST_LIST_TITLE))) {
-            int[] rerollSlots = {19, 21, 23, 25};
-            for (int i = 0; i < 4; i++) {
-                if (slot == rerollSlots[i]) {
+            PlayerData data = plugin.getQuestManager().getData(player.getUniqueId());
+            long now = System.currentTimeMillis();
+            for (int i = 0; i < PlayerData.SLOT_COUNT; i++) {
+                if (slot == MenuManager.EASIFY_SLOTS[i]) {
+                    // The button only exists on Normal quests that are not on cooldown; re-checked here.
                     plugin.getMenus().openRerollConfirmation(player, i);
+                    return;
+                }
+                if (slot == MenuManager.QUEST_SLOTS[i] && data.isOnCooldown(i, now)) {
+                    player.sendMessage(Messages.PREFIX + Messages.SLOT_ON_COOLDOWN.replace("%time%",
+                            QuestManager.formatDuration(data.getCooldownUntil(i) - now)));
                     return;
                 }
             }
