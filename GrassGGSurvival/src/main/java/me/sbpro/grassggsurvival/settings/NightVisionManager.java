@@ -21,22 +21,8 @@ public class NightVisionManager {
     public NightVisionManager(GrassGGSurvival plugin) {
         this.plugin = plugin;
 
-        File folder = new File(plugin.getDataFolder(), "settings/data");
-        if (!folder.exists()) {
-            folder.mkdirs();
-        }
-
-        file = new File(folder, "settings.yml");
-
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        config = YamlConfiguration.loadConfiguration(file);
+        file = plugin.getSettingsStorage().getFile();
+        config = plugin.getSettingsStorage().getConfig();
     }
 
     public boolean isNightVisionEnabled(UUID uuid) {

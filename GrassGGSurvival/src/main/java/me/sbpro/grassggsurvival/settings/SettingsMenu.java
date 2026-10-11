@@ -293,12 +293,46 @@ public class SettingsMenu {
                 )
         );
 
+        ActionButton bossBarButton = ActionButton.create(
+                Component.text("Bossbar: ")
+                        .append(
+                                plugin.getBossBarManager()
+                                        .isBossBarEnabled(
+                                                player.getUniqueId()
+                                        )
+                                        ? Component.text(
+                                        "Enabled",
+                                        NamedTextColor.GREEN
+                                )
+                                        : Component.text(
+                                        "Disabled",
+                                        NamedTextColor.RED
+                                )
+                        ),
+                Component.text("Toggle your bossbar"),
+                BUTTON_WIDTH,
+                categoryToggleAction(
+                        plugin,
+                        clickedPlayer ->
+                                plugin.getBossBarManager()
+                                        .toggleBossBar(
+                                                clickedPlayer
+                                        ),
+                        clickedPlayer ->
+                                createVisualsDialog(
+                                        plugin,
+                                        clickedPlayer
+                                )
+                )
+        );
+
         return createDialog(
                 base,
                 List.of(
                         nightVisionButton,
                         scoreboardButton,
-                        glowButton
+                        glowButton,
+                        bossBarButton
                 ),
                 createBackButton(plugin, player)
         );

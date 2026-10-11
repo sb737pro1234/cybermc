@@ -33,6 +33,8 @@ public class PlayerSettingsListener implements Listener {
         } else {
             plugin.getGlowManager().disableGlow(player);
         }
+
+        plugin.getBossBarManager().applySavedState(player);
     }
 
 

@@ -91,7 +91,6 @@ public class RanksCommand implements CommandExecutor {
             ItemMeta rank6Meta = rank6.getItemMeta();
             rank6Meta.setDisplayName(RANK6COLOR + "Lord");
             rank6Meta.setLore(List.of(
-                    RANK6COLOR + "◆ " + WHITE + "Can use the /feed command.",
                     RANK6COLOR + "◆ " + WHITE + "Can set up to 5 homes.",
                     RANK6COLOR + "◆ " + WHITE + "Can use up to 4 enderchest rows.",
                     RANK6COLOR + "◆ " + WHITE + "Can use fastplace with a range of 64 blocks."));
@@ -100,7 +99,6 @@ public class RanksCommand implements CommandExecutor {
             ItemMeta rank7Meta = rank7.getItemMeta();
             rank7Meta.setDisplayName(RANK7COLOR + "King");
             rank7Meta.setLore(List.of(
-                    RANK7COLOR + "◆ " + WHITE + "Can use the /heal command.",
                     RANK7COLOR + "◆ " + WHITE + "Can set up to 6 homes.",
                     RANK7COLOR + "◆ " + WHITE + "Can use up to 5 enderchest rows.",
                     RANK7COLOR + "◆ " + WHITE + "Can use fastplace with a range of 128 blocks."));

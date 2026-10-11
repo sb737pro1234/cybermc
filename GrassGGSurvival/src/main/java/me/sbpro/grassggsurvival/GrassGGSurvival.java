@@ -78,6 +78,20 @@ public final class GrassGGSurvival extends JavaPlugin implements Listener {
 
 
     // Settings Managers
+    private SettingsStorage settingsStorage;
+
+    public SettingsStorage getSettingsStorage() {
+        return settingsStorage;
+    }
+
+
+    private BossBarManager bossBarManager;
+
+    public BossBarManager getBossBarManager() {
+        return bossBarManager;
+    }
+
+
     private ChatToggleManager chatToggleManager;
 
     public ChatToggleManager getChatToggleManager() {
@@ -126,6 +140,7 @@ public final class GrassGGSurvival extends JavaPlugin implements Listener {
         getCommand("glow").setExecutor(new GlowCommand(this));
         getCommand("settings").setExecutor(new SettingsCommand(this));
         getCommand("chattoggle").setExecutor(new ChatToggleCommand(this));
+        getCommand("bossbartoggle").setExecutor(new BossBarToggleCommand(this));
 
 
         AutoSmeltEnchant autoSmelt = new AutoSmeltEnchant(this);
@@ -163,7 +178,9 @@ public final class GrassGGSurvival extends JavaPlugin implements Listener {
 
 
         // Managers
+        settingsStorage = new SettingsStorage(this);
         chatToggleManager = new ChatToggleManager(this);
+        bossBarManager = new BossBarManager(this);
         scoreboardManager = new ScoreboardManager(this);
         nightVisionManager = new NightVisionManager(this);
         glowManager = new GlowManager(this);
@@ -183,6 +200,9 @@ public final class GrassGGSurvival extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
 
+        if (bossBarManager != null) {
+            bossBarManager.hideAll();
+        }
 
 
         getLogger().info("Grass.GG Network » Server Stopping.");

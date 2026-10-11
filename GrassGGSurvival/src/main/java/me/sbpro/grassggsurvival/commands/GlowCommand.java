@@ -25,9 +25,9 @@ public class GlowCommand implements CommandExecutor {
         plugin.getGlowManager().toggleGlow(player);
 
         if (plugin.getGlowManager().isGlowEnabled(player.getUniqueId())) {
-            player.sendMessage("§2§lGRASS.GG §8» §2Your glow has been §a§lenabled§2.");
+            player.sendMessage("§2§lGRASS.GG §8» §fYour glow has been §2enabled§f.");
         } else {
-            player.sendMessage("§2§lGRASS.GG §8» §2Your glow has been §c§ldisabled§2.");
+            player.sendMessage("§2§lGRASS.GG §8» §fYour glow has been §2disabled§f.");
         }
 
         return true;

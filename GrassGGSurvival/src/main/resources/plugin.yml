@@ -38,6 +38,13 @@ commands:
       - togglechat
     permission: grassgg.settings.chattoggle
 
+  bossbartoggle:
+    description: Toggles the bossbar.
+    usage: "/bossbartoggle"
+    aliases:
+      - togglebossbar
+    permission: grassgg.bossbar
+
   settings:
     description: Opens the settings menu.
     usage: "/settings"
@@ -102,6 +109,10 @@ permissions:
 
   grassgg.settings:
     description: Allows players to open the settings menu.
+    default: true
+
+  grassgg.bossbar:
+    description: Allows players to toggle the bossbar.
     default: true
 
   grassgg.baltop:

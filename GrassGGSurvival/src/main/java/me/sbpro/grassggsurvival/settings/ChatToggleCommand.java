@@ -24,10 +24,10 @@ public class ChatToggleCommand implements CommandExecutor {
 
         if (plugin.getChatToggleManager().isChatDisabled(player.getUniqueId())) {
             plugin.getChatToggleManager().enableChat(player.getUniqueId());
-            player.sendMessage("§2§lGRASS.GG §8» §2Chat visilblity has been §a§lenabled§2.");
+            player.sendMessage("§2§lGRASS.GG §8» §fChat visilblity has been §2enabled§f.");
         } else {
             plugin.getChatToggleManager().disableChat(player.getUniqueId());
-            player.sendMessage("§2§lGRASS.GG §8» §2Chat visilblity has been §c§ldisabled§2.");
+            player.sendMessage("§2§lGRASS.GG §8» §fChat visilblity has been §2disabled§f.");
         }
 
         return true;
