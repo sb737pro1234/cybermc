@@ -13,8 +13,12 @@ import org.bukkit.command.CommandSender;
 import java.util.Arrays;
 
 public class RulesCommand implements CommandExecutor {
+    
+    public static final String CUSTOM = "§x§2§9§7§9§F§F";
+    public static final String WHITE = "§f";
+    public static final String POINT = CUSTOM +"◆ ";
+    public static final String TITLE = CUSTOM + "Rules";
 
-    public static final String TITLE = "§x§0§0§C§2§F§FRules";
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -30,22 +34,22 @@ public class RulesCommand implements CommandExecutor {
         ItemMeta meta = book.getItemMeta();
 
         if (meta != null) {
-            meta.setDisplayName("§x§0§0§C§2§F§FRules");
+            meta.setDisplayName(CUSTOM + "Rules");
 
             meta.setLore(Arrays.asList(
-                    "§x§0§0§C§2§F§F◆ §fNo chat spam, symbols or caps abuse",
-                    "§x§0§0§C§2§F§F◆ §fEnglish only, no swearing or inappropriate topics",
-                    "§x§0§0§C§2§F§F◆ §fNo disrespect, harassment or toxicity",
-                    "§x§0§0§C§2§F§F◆ §fNo scamming, fake messages or impersonation",
-                    "§x§0§0§C§2§F§F◆ §fNo advertising or hackusating",
-                    "§x§0§0§C§2§F§F◆ §fNo disallowed mods, hacking, ESP or Xray",
-                    "§x§0§0§C§2§F§F◆ §fNo glitch/exploit abuse or duping",
-                    "§x§0§0§C§2§F§F◆ §fNo lag machines, bad builds or casinos",
-                    "§x§0§0§C§2§F§F◆ §fNo alt abuse, autoclicking or macros",
-                    "§x§0§0§C§2§F§F◆ §fNo teleport trapping, command or report abuse",
-                    "§x§0§0§C§2§F§F◆ §fNo racism, threats, IRL scamming or leaking info",
+                    POINT + WHITE + "No chat spam, symbols or caps abuse",
+                    POINT + WHITE + "English only, no swearing or inappropriate topics",
+                    POINT + WHITE + "No disrespect, harassment or toxicity",
+                    POINT + WHITE + "No scamming, fake messages or impersonation",
+                    POINT + WHITE + "No advertising or hackusating",
+                    POINT + WHITE + "No disallowed mods, hacking, ESP or Xray",
+                    POINT + WHITE + "No glitch/exploit abuse or duping",
+                    POINT + WHITE + "No lag machines, bad builds or casinos",
+                    POINT + WHITE + "No alt abuse, autoclicking or macros",
+                    POINT + WHITE + "No teleport trapping, command or report abuse",
+                    POINT + WHITE + "No racism, threats, IRL scamming or leaking info",
                     "",
-                    "§x§0§0§C§2§F§FFor more details on the rules. Click here.."
+                    CUSTOM + "For more details on the rules. Click here."
             ));
 
             book.setItemMeta(meta);

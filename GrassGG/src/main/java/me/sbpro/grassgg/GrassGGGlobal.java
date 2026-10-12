@@ -140,6 +140,13 @@ public final class GrassGGGlobal extends JavaPlugin implements Listener {
                         .decorate(TextDecoration.BOLD),
                 URI.create("https://youtube.com/@MrGrassYT1")
         );
+
+        getServer().getServerLinks().addLink(
+                Component.text("Server Rules")
+                        .color(TextColor.fromHexString("#2979FF"))
+                        .decorate(TextDecoration.BOLD),
+                URI.create("https://docs.google.com/document/d/1wZWo1C1_vQj826vAjiInfvQced7srQfRcTJrb9H-BoQ/edit?usp=sharing")
+        );
     }
 
 
