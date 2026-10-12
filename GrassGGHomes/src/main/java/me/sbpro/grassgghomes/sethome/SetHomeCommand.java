@@ -1,5 +1,7 @@
-package me.sbpro.grassgghomes;
+package me.sbpro.grassgghomes.sethome;
 
+import me.sbpro.grassgghomes.GrassGGHomes;
+import me.sbpro.grassgghomes.Home;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;

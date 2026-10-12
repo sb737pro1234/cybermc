@@ -1,5 +1,7 @@
-package me.sbpro.grassgghomes;
+package me.sbpro.grassgghomes.delhome;
 
+import me.sbpro.grassgghomes.GrassGGHomes;
+import me.sbpro.grassgghomes.DeleteHomeMenu;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

@@ -1,5 +1,12 @@
 package me.sbpro.grassgghomes;
 
+import me.sbpro.grassgghomes.homes.HomesCommand;
+import me.sbpro.grassgghomes.homes.HomeTabCompleter;
+import me.sbpro.grassgghomes.sethome.SetHomeCommand;
+import me.sbpro.grassgghomes.sethome.SetHomeTabCompleter;
+import me.sbpro.grassgghomes.delhome.DelHomeCommand;
+import me.sbpro.grassgghomes.delhome.DelHomeTabCompleter;
+
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class GrassGGHomes extends JavaPlugin {

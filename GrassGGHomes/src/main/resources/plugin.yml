@@ -10,21 +10,23 @@ authors: [ SBPro ]
 commands:
   homes:
     description: Opens and manages homes
-    usage: /homes [home/player]
+    usage: /homes [home] or /homes view <player>
     aliases:
-      - home
+      - h
 
   sethome:
     description: Creates a home
     usage: /sethome <name>
     aliases:
       - createhome
+      - addhome
 
   delhome:
     description: Deletes a home
     usage: /delhome <name>
     aliases:
       - deletehome
+      - removehome
 
 permissions:
   grassgg.homes.staff:

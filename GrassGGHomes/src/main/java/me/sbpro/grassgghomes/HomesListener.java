@@ -59,6 +59,55 @@ public class HomesListener implements Listener {
         String title =
                 event.getView().getTitle();
 
+// Viewing another player's homes.
+        if (title.startsWith("§2Homes View §8»")) {
+
+            event.setCancelled(true);
+
+            int slot = event.getRawSlot();
+
+            // Only allow clicks inside the top inventory.
+            if (slot < 10 || slot > 16) {
+                return;
+            }
+
+            UUID targetUUID = ViewHomesMenu.getTarget(
+                    player.getUniqueId()
+            );
+
+            if (targetUUID == null) {
+                return;
+            }
+
+            int homeNumber = slot - 9;
+
+            Home home = plugin.getHomesManager().getHome(
+                    targetUUID,
+                    homeNumber
+            );
+
+            if (home == null) {
+                return;
+            }
+
+            player.closeInventory();
+
+            player.sendMessage(
+                    Messages.PREFIX
+                            + "Teleporting to §2"
+                            + home.getName()
+                            + "§f."
+            );
+
+            new TeleportManager(
+                    plugin,
+                    player,
+                    home.getLocation()
+            ).start();
+
+            return;
+        }
+
 
         /*
          * Homes menu

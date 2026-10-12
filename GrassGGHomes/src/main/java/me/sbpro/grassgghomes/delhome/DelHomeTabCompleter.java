@@ -1,5 +1,7 @@
-package me.sbpro.grassgghomes;
+package me.sbpro.grassgghomes.delhome;
 
+import me.sbpro.grassgghomes.GrassGGHomes;
+import me.sbpro.grassgghomes.Home;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -9,11 +11,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class HomeTabCompleter implements TabCompleter {
+public class DelHomeTabCompleter implements TabCompleter {
 
     private final GrassGGHomes plugin;
 
-    public HomeTabCompleter(GrassGGHomes plugin) {
+    public DelHomeTabCompleter(GrassGGHomes plugin) {
         this.plugin = plugin;
     }
 
@@ -41,8 +43,12 @@ public class HomeTabCompleter implements TabCompleter {
                         .getHomes(player.getUniqueId())
                         .values()) {
 
-            if (home.getName() != null) {
-                completions.add(home.getName());
+            if (home.getName() != null
+                    && !home.getName().isBlank()) {
+
+                completions.add(
+                        home.getName()
+                );
             }
         }
 
