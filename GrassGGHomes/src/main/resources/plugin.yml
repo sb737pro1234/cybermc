@@ -11,8 +11,6 @@ commands:
   homes:
     description: Opens and manages homes
     usage: /homes [home] or /homes view <player>
-    aliases:
-      - h
 
   sethome:
     description: Creates a home
