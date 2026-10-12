@@ -232,6 +232,7 @@ public final class Messages {
 
         return String.join(
                 "\n",
+                "",
                 "§8━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
                 "§2§lGRASS.GG",
                 "§8━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
@@ -245,8 +246,8 @@ public final class Messages {
                 "",
                 "§8━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
                 "§c§lAPPEAL",
-                "§7Join our Discord to appeal your punishment",
-                "§6§nhttps://discord.gg/A97Dkcb7TU",
+                "§fJoin our Discord to appeal your punishment",
+                "§b§nhttps://discord.gg/A97Dkcb7TU",
                 "§8━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
         );
     }
