@@ -12,6 +12,11 @@ public final class Messages {
 
     private Messages() {
     }
+    
+    
+    public static final String CUSTOM = "§x§2§9§7§9§F§F";
+    public static final String WHITE = "§f";
+    public static final String RED = "§c";
 
     /*
      * ============================================================
@@ -19,25 +24,25 @@ public final class Messages {
      * ============================================================
      */
 
-    public static final String PREFIX = "§x§2§9§7§9§F§F§lSTAFF §8» §f";
+    public static final String PREFIX = CUSTOM + "§lSTAFF §8» §f";
 
     public static final String NO_PERMISSION =
-            PREFIX + "§cYou do not have permission to use this command.";
+            PREFIX + RED + "You do not have permission to use this command.";
 
     public static final String PLAYER_NOT_FOUND =
-            PREFIX + "§cThat player could not be identified.";
+            PREFIX + RED + "That player could not be identified.";
 
     public static final String UNKNOWN_PLAYER =
-            PREFIX + "§cThat player has never joined the network and cannot be identified.";
+            PREFIX + RED + "That player has never joined the network and cannot be identified.";
 
     public static final String REASON_NOT_FOUND =
-            PREFIX + "§cThat is not a valid punishment reason.";
+            PREFIX + RED + "That is not a valid punishment reason.";
 
     public static final String INVALID_PUNISHMENT =
-            PREFIX + "§cThe punishment configuration for this offence is invalid.";
+            PREFIX + RED + "The punishment configuration for this offence is invalid.";
 
     public static final String DATABASE_ERROR =
-            PREFIX + "§cA database error occurred. Please try again.";
+            PREFIX + RED + "A database error occurred. Please try again.";
 
     public static final String NO_ACTIVE_PUNISHMENT =
             PREFIX
@@ -53,10 +58,10 @@ public final class Messages {
      */
 
     public static final String OFFEND_USAGE =
-            PREFIX + "§cUsage: /offend <player> <reason>";
+            PREFIX + RED + "Usage: /offend <player> <reason>";
 
     public static final String OFFENCE_USAGE =
-            PREFIX + "§cUsage: /offence <new|check|list|change|remove> ...";
+            PREFIX + RED + "Usage: /offence <new|check|list|change|remove> ...";
 
     /*
      * ============================================================
@@ -129,7 +134,7 @@ public final class Messages {
     private static String getStatus(OffenceRecord record) {
 
         if (record.removed()) {
-            return "§cRemoved";
+            return RED + "Removed";
         }
 
         if (record.expiresAt() != null &&
@@ -217,11 +222,11 @@ public final class Messages {
      */
 
     public static String configurationError(String message) {
-        return PREFIX + "§cConfiguration error: §f" + message;
+        return PREFIX + RED + "Configuration error: §f" + message;
     }
 
     public static String databaseError(String message) {
-        return PREFIX + "§cDatabase error: §f" + message;
+        return PREFIX + RED + "Database error: §f" + message;
     }
 
     public static String banScreen(OffenceRecord record) {
@@ -279,7 +284,7 @@ public final class Messages {
     }
 
     public static final String OFFENCE_REMOVE_USAGE =
-            "§cUsage: /offence remove <player>";
+            RED + "Usage: /offence remove <player>";
 
 
     public static String punishmentRemoved(
@@ -303,13 +308,13 @@ public final class Messages {
 
 
     public static final String OFFENCE_NEW_USAGE =
-            "§cUsage: /offence new <player> <reason>";
+            RED + "Usage: /offence new <player> <reason>";
 
     public static final String OFFENCE_CHECK_USAGE =
-            "§cUsage: /offence check <player>";
+            RED + "Usage: /offence check <player>";
 
     public static final String OFFENCE_CHANGE_USAGE =
-            "§cUsage: /offence change <player> <new reason>";
+            RED + "Usage: /offence change <player> <new reason>";
 
     public static final String OFFENCE_HISTORY_HEADER =
             "§8§m━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
@@ -361,7 +366,7 @@ public final class Messages {
 
 
     public static final String OFFENCE_RESET_USAGE =
-            PREFIX + "§cUsage: /offence reset <player>";
+            PREFIX + RED + "Usage: /offence reset <player>";
 
     public static final String PUNISHMENT_HISTORY_RESET =
             PREFIX
@@ -372,33 +377,33 @@ public final class Messages {
 
     public static final String RESET_FAILED =
             PREFIX
-                    + "§cFailed to reset the punishment history of §f{player}§c.";
+                    + RED + "Failed to reset the punishment history of §f{player}§c.";
 
 
 
 
     public static final String SUS_USAGE =
-            PREFIX + "§cUsage: /sus [add|remove] ...";
+            PREFIX + RED + "Usage: /sus [add|remove] ...";
 
     public static final String SUS_ADD_USAGE =
-            PREFIX + "§cUsage: /sus add <player> <reason>";
+            PREFIX + RED + "Usage: /sus add <player> <reason>";
 
     public static final String SUS_REMOVE_USAGE =
-            PREFIX + "§cUsage: /sus remove <player> <reason>";
+            PREFIX + RED + "Usage: /sus remove <player> <reason>";
 
     public static final String SUS_PLAYER_ONLY =
-            PREFIX + "§cOnly players can open the SUS menu.";
+            PREFIX + RED + "Only players can open the SUS menu.";
 
     public static final String SUS_REASON_TOO_LONG =
-            PREFIX + "§cThat suspicion reason is too long.";
+            PREFIX + RED + "That suspicion reason is too long.";
 
     public static String susAdded(
             me.sbpro.grassggstaff.sus.SusNote note
     ) {
         return PREFIX
-                + "§fAdded SUS to §x§2§9§7§9§F§F"
+                + WHITE + "Added SUS to" + CUSTOM
                 + note.playerName()
-                + "§f: §x§2§9§7§9§F§F"
+                + WHITE + ":" + CUSTOM
                 + note.reason();
     }
 
@@ -406,9 +411,9 @@ public final class Messages {
             me.sbpro.grassggstaff.sus.SusNote note
     ) {
         return PREFIX
-                + "§fRemoved SUS from §x§2§9§7§9§F§F"
+                + WHITE + "Removed SUS from" + CUSTOM
                 + note.playerName()
-                + "§f: §x§2§9§7§9§F§F"
+                + WHITE + ":" + CUSTOM
                 + note.reason();
     }
 
@@ -417,9 +422,9 @@ public final class Messages {
             String reason
     ) {
         return PREFIX
-                + "§fThat SUS reason already exists for §x§2§9§7§9§F§F"
+                + WHITE + "That SUS reason already exists for" + CUSTOM
                 + player
-                + "§f.";
+                + WHITE + ".";
     }
 
     public static String susReasonNotFound(
@@ -427,8 +432,8 @@ public final class Messages {
             String reason
     ) {
         return PREFIX
-                + "§cThat SUS reason does not exist for §f"
+                + RED + "That SUS reason does not exist for §f"
                 + player
-                + "§c.";
+                + RED + ".";
     }
 }
