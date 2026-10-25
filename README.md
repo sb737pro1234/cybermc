@@ -1,5 +1,5 @@
-# Grass.GG Network
-## The code for the custom plugins used in Grass.GG Network. 
+# Cyber
+## The code for the custom plugins used on the Cyber network.
 
 ### Main Author:
 - SBPro
