@@ -1,0 +1,9 @@
+name: CyberHub
+description: $description
+version: '${version}'
+
+main: me.sbpro.cyberhub.CyberHub
+api-version: '26.2'
+load: POSTWORLD
+
+authors: [ SBPro ]

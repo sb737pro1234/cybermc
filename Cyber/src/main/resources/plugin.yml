@@ -1,0 +1,267 @@
+name: Cyber
+version: '1.0'
+description: Official base plugin of the Cyber network.
+
+main: me.sbpro.cyber.Cyber
+api-version: '26.2'
+load: POSTWORLD
+
+authors: [ SBPro ]
+
+softdepend:
+  - LuckPerms
+
+commands:
+  kill:
+    description: Kills the player.
+    usage: "/kill <PLAYER>"
+    aliases:
+      - suicide
+  heal:
+    description: Heals  the player.
+    usage: "/heal <PLAYER>"
+  feed:
+    description: Feeds  the player.
+    usage: "/feed <PLAYER>"
+  youtube:
+    description: Shows the youtube link for MrGrassYT
+    usage: "/<command>"
+  ping:
+    description: Shows your or another player's ping.
+    usage: "/ping [PLAYER]"
+    permission: cyber.ping
+
+  discord:
+    description: Shows the discord link to join the server!
+    usage: "/<command>"
+    aliases:
+      - dc
+      - apply
+      - bugs
+
+  staff:
+    description: Displays online staff.
+    usage: "/<command>"
+    aliases:
+      - onlinestaff
+
+  gamemode:
+    aliases:
+    - gm
+    description: Sets yours or another players gamemode.
+    usage: "/gamemode [GAMEMODE] [PLAYER]"
+
+  gmc:
+    description: Sets Creative mode
+    usage: "/gmc [PLAYER]"
+
+  gms:
+    description: Sets Survival mode
+    usage: "/gms [PLAYER]"
+
+  gma:
+    description: Sets Adventure mode
+    usage: "/gma [PLAYER]"
+
+  gmsp:
+    description: Sets Spectator mode
+    usage: "/gmsp [PLAYER]"
+
+  msg:
+    description: Message command.
+    usage: "/message [PLAYER] [MESSAGE]"
+    aliases:
+      - message
+      - tell
+      - w
+      - whisper
+
+  r:
+    description: Reply command.
+    usage: "/reply [MESSAGE]"
+    aliases:
+      - reply
+  msgtoggle:
+    description: Toggle whether you can receive private messages
+    usage: /msgtoggle [on|off]
+
+  nightvision:
+    description: Toggle night vision.
+    usage: /nightvision [player]
+    aliases:
+      - nv
+    permission: cyber.nightvision.self
+
+  clear:
+    description: Clears a player's inventory
+    usage: /clear [player]
+    permission: cyber.clear.self
+
+  trash:
+    description: Open the trash menu.
+    usage: /trash
+    permission: cyber.trash
+    aliases:
+      - bin
+      - disposal
+
+  colors:
+    description: Shows all the Minecraft Colors and their formatting codes.
+    usage: /colors
+    aliases:
+      - colours
+
+  craft:
+    description: Opens a virtual crafting table
+    aliases:
+      - craftingtable
+      - workbench
+      - wb
+
+  smithing:
+    description: Opens a virtual smithing table
+    aliases:
+      - smithingtable
+
+  stonecutter:
+    description: Opens a virtual stonecutter
+
+  loom:
+    description: Opens a virtual loom
+
+  cartography:
+    description: Opens a virtual cartography table
+
+  grindstone:
+    description: Opens a virtual grindstone
+
+  anvil:
+    description: Opens a virtual anvil
+    aliases:
+      - rename
+
+  rules:
+    description: Opens the rules menu
+    usage: /rules
+
+  say:
+    description: Makes it so admins can use /say with titles
+    usage: /say
+    permission: cyber.say
+    aliases:
+      - shout
+      - talk
+
+
+permissions:
+  cyber.kill.self:
+    description: Allows players to kill themselves.
+    default: true
+  cyber.kill.others:
+    description: Allows staff to kill other players.
+    default: op
+  cyber.heal:
+    description: Allows players to heal yourself.
+    default: op
+  cyber.heal.others:
+    description: Allows players to heal players.
+    default: op
+  cyber.feed:
+    description: Allows players to feed yourself.
+    default: op
+  cyber.feed.others:
+    description: Allows players to feed players.
+    default: op
+
+  cyber.ping:
+    description: Displays the players ping
+    default: true
+  cyber.ping.others:
+    description: Displays other players ping
+    default: true
+
+  cyber.staff:
+    description: Grants access to Cyber staff commands.
+    default: op
+  cyber.admin:
+    description: Grants access to Cyber administrative commands.
+    default: op
+
+  cyber.gamemode:
+    default: op
+  cyber.gamemode.creative:
+    default: op
+  cyber.gamemode.survival:
+    default: op
+  cyber.gamemode.adventure:
+    default: op
+  cyber.gamemode.spectator:
+    default: op
+  cyber.gamemode.others:
+    default: op
+
+  cyber.announcejoinleave:
+    default: op
+    description: Announces when the player joins and leaves.
+
+  cyber.nightvision.self:
+    description: Allows the player to toggle their own night vision
+    default: op
+  cyber.nightvision.others:
+    description: Allows the player to toggle night vision for other players
+    default: op
+
+  cyber.clear.self:
+    description: Allows the player to clear their inventory.
+    default: op
+  cyber.clear.others:
+    description: Allows the player to clear another player's inventory.
+    default: op
+
+  cyber.gui.*:
+    description: Allows access to all virtual GUI commands
+    default: op
+    children:
+      cyber.gui.craft: true
+      cyber.gui.smithing: true
+      cyber.gui.stonecutter: true
+      cyber.gui.loom: true
+      cyber.gui.cartography: true
+      cyber.gui.grindstone: true
+      cyber.gui.anvil: true
+
+  cyber.gui.craft:
+    description: Allows use of /craft
+    default: op
+
+  cyber.gui.smithing:
+    description: Allows use of /smithing
+    default: op
+
+  cyber.gui.stonecutter:
+    description: Allows use of /stonecutter
+    default: op
+
+  cyber.gui.loom:
+    description: Allows use of /loom
+    default: op
+
+  cyber.gui.cartography:
+    description: Allows use of /cartography
+    default: op
+
+  cyber.gui.grindstone:
+    description: Allows use of /grindstone
+    default: op
+
+  cyber.gui.anvil:
+    description: Allows use of /anvil
+    default: op
+
+  cyber.trash:
+    description: Allows players to use /trash
+    default: true
+
+  cyber.say:
+    description: Allows player to use /say
+    default: op
