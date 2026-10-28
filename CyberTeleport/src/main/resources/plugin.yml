@@ -1,0 +1,153 @@
+name: CyberTeleport
+version: 1.0.0
+main: me.sbpro.cyberteleport.CyberTeleport
+api-version: '26.2'
+
+author: SBPro
+description: A complete teleportation system for Cyber.
+
+commands:
+  tp:
+    description: Teleport players.
+    usage: /tp <player|x> [player|y] [z]
+    permission: cyber.teleport.tp
+
+  tpall:
+    description: Teleport all players to you.
+    usage: /tpall
+    permission: cyber.teleport.tpall
+
+  tp2p:
+    description: Teleport yourself to another player.
+    usage: /tp2p <player>
+    permission: cyber.teleport.tp
+
+  tphere:
+    description: Teleport another player to you.
+    usage: /tphere <player>
+    permission: cyber.teleport.tphere
+
+  tpa:
+    description: Request to teleport to another player.
+    usage: /tpa <player>
+    permission: cyber.teleport.tpa
+
+  tpahere:
+    description: Request another player to teleport to you.
+    usage: /tpahere <player>
+    permission: cyber.teleport.tpahere
+
+  tpaccept:
+    description: Accept a teleport request.
+    usage: /tpaccept [player]
+    permission: cyber.teleport.tpaccept
+
+  tpdeny:
+    description: Deny the most recent teleport request.
+    usage: /tpdeny
+    permission: cyber.teleport.tpdeny
+
+  tpacancel:
+    description: Cancel your outgoing teleport requests.
+    usage: /tpacancel
+    permission: cyber.teleport.tpacancel
+
+  tpatoggle:
+    description: Toggle whether players can request that you teleport to them.
+    usage: /tpatoggle
+    permission: cyber.teleport.tptoggle
+    aliases:
+      - tptoggle
+  tpaheretoggle:
+    description: Toggle whether players can request to teleport to you.
+    usage: /tpaheretoggle
+    permission: cyber.teleport.tpaheretoggle
+
+  tpauto:
+    description: Automatically accept incoming TPA requests.
+    usage: /tpauto
+    permission: cyber.teleport.tpauto
+
+  spectate:
+    description: Spectate a player.
+    usage: /spectate [player]
+    permission: cyber.teleport.spectate
+
+permissions:
+  cyber.teleport:
+    description: Base permission for CyberTeleport.
+    default: op
+    children:
+      cyber.teleport.tp: true
+      cyber.teleport.tp.coordinates: true
+      cyber.teleport.tp.others: true
+      cyber.teleport.tpall: true
+      cyber.teleport.tphere: true
+      cyber.teleport.spectate: true
+      cyber.teleport.tpa: true
+      cyber.teleport.tpahere: true
+      cyber.teleport.tpaccept: true
+      cyber.teleport.tpdeny: true
+      cyber.teleport.tpacancel: true
+      cyber.teleport.tptoggle: true
+      cyber.teleport.tpaheretoggle: true
+      cyber.teleport.tpauto: true
+
+  cyber.teleport.tp:
+    description: Use /tp.
+    default: op
+
+  cyber.teleport.tp.coordinates:
+    description: Use coordinate teleportation.
+    default: op
+
+  cyber.teleport.tp.others:
+    description: Teleport another player.
+    default: op
+
+  cyber.teleport.tpall:
+    description: Use /tpall.
+    default: op
+
+  cyber.teleport.tpall.bypass:
+    description: Bypass /tpall.
+    default: false
+
+  cyber.teleport.tphere:
+    description: Use /tphere.
+    default: op
+
+  cyber.teleport.spectate:
+    description: Use /spectate.
+    default: op
+
+  cyber.teleport.tpa:
+    description: Use /tpa.
+    default: true
+
+  cyber.teleport.tpahere:
+    description: Use /tpahere.
+    default: true
+
+  cyber.teleport.tpaccept:
+    description: Use /tpaccept.
+    default: true
+
+  cyber.teleport.tpdeny:
+    description: Use /tpdeny.
+    default: true
+
+  cyber.teleport.tpacancel:
+    description: Use /tpacancel.
+    default: true
+
+  cyber.teleport.tptoggle:
+    description: Use /tpatoggle (also /tptoggle).
+    default: true
+  cyber.teleport.tpaheretoggle:
+    description: Use /tpaheretoggle.
+    default: true
+
+  cyber.teleport.tpauto:
+    description: Use /tpauto.
+    default: true

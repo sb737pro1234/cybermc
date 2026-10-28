@@ -1,0 +1,21 @@
+name: CyberStatistics
+version: '${version}'
+
+main: me.sbpro.cyberstatistics.CyberStatistics
+api-version: '26.2'
+load: POSTWORLD
+
+authors: [ SBPro ]
+
+commands:
+  statistics:
+    description: Opens the statistics menu.
+    usage: "/statistics [PLAYER]"
+    aliases:
+      - stats
+    permission: cyber.statistics
+
+permissions:
+  cyber.statistics:
+    description: Allows players to view statistics.
+    default: true

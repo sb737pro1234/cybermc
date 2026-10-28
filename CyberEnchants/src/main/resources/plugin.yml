@@ -1,0 +1,20 @@
+name: CyberEnchants
+version: 1.0
+main: me.sbpro.cyberenchants.CyberEnchants
+api-version: '26.2'
+author: SBPro
+description: Custom enchant upgrade items for Cyber.
+
+commands:
+  enchantitem:
+    description: Gives custom enchant items.
+    usage: /enchantitem give <player> <item>
+    permission: cyber.enchant.give
+    aliases:
+      - customenchant
+      - enchantcustom
+
+permissions:
+  cyber.enchant.give:
+    description: Allows the player to give Cyber enchant items.
+    default: op

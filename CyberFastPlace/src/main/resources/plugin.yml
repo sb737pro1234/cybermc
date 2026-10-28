@@ -1,0 +1,32 @@
+name: CyberFastPlace
+version: 1.0.0
+main: me.sbpro.cyberfastplace.CyberFastPlace
+api-version: '26.2'
+authors:
+  - SBPro
+contributors:
+  - CrazyLadAlexx
+commands:
+  fp:
+    description: Toggle fastplace or set block range
+    usage: /fastplace [1-16 | 1-32 | 1-64 | 1-128]
+    permission: cyber.fastplace.use
+    aliases:
+      - fastplace
+
+permissions:
+  cyber.fastplace.use:
+    description: Allows use of /fp
+    default: op
+  cyber.fastplace.use.16:
+    description: Allows fastplace up to 16 blocks.
+    default: op
+  cyber.fastplace.use.32:
+    description: Allows fastplace up to 32 blocks.
+    default: op
+  cyber.fastplace.use.64:
+    description: Allows fastplace up to 64 blocks.
+    default: op
+  cyber.fastplace.use.128:
+    description: Allows fastplace up to 128 blocks.
+    default: op

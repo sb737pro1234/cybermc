@@ -1,0 +1,6 @@
+name: CyberCombat
+version: 1.0.0
+main: me.sbpro.cybercombat.CyberCombat
+api-version: '26.2'
+description: Combat timer plugin for Cyber
+author: SBPro

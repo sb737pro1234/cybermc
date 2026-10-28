@@ -1,0 +1,17 @@
+name: CyberSuperTools
+version: 1.0
+main: me.sbpro.cybersupertools.CyberSuperTools
+description: Super tools for Cyber
+author: SBPro
+api-version: '26.2'
+
+commands:
+  supertools:
+    description: Gives Cyber SuperTools
+    usage: /supertools give [player] [tool]
+    permission: cyber.supertools.admin
+
+permissions:
+  cyber.supertools.admin:
+    description: Allows use of /supertools
+    default: op

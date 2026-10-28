@@ -1,0 +1,60 @@
+name: CyberChat
+version: 1.0
+main: me.sbpro.cyberchat.CyberChat
+api-version: '26.2'
+
+commands:
+  chatcolor:
+    description: Change your chat color
+    usage: /chatcolor
+    permission: cyber.chatcolor.command
+
+permissions:
+
+  cyber.chatcolor.command:
+    default: true
+
+  cyber.chatcolor.bold:
+    default: op
+
+  cyber.chatcolor.white:
+    default: true
+
+  cyber.chatcolor.gray:
+    default: op
+
+  cyber.chatcolor.black:
+    default: op
+
+  cyber.chatcolor.red:
+    default: op
+
+  cyber.chatcolor.orange:
+    default: op
+
+  cyber.chatcolor.yellow:
+    default: op
+
+  cyber.chatcolor.lime:
+    default: op
+
+  cyber.chatcolor.green:
+    default: op
+
+  cyber.chatcolor.aqua:
+    default: op
+
+  cyber.chatcolor.blue:
+    default: op
+
+  cyber.chatcolor.purple:
+    default: op
+
+  cyber.chatcolor.pink:
+    default: op
+
+  cyber.chatcolor.dark_gray:
+    default: op
+
+  cyber.chatcolor.dark_aqua:
+    default: op

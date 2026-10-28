@@ -1,0 +1,19 @@
+name: CyberQuests
+version: '1.0'
+main: me.sbpro.cyberquests.CyberQuests
+api-version: '26.2'
+author: SBPro
+description: Cyber quest system with Normal and Easy quests.
+depend:
+  - CyberCoins
+commands:
+  quests:
+    description: Opens and manages the Cyber quest system.
+    usage: /quests [reload|reset|give]
+    aliases:
+      - quest
+      - q
+permissions:
+  cyber.quests.admin:
+    description: Allows access to CyberQuests administration commands.
+    default: op

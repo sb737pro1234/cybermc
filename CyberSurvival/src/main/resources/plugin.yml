@@ -1,0 +1,125 @@
+name: CyberSurvival
+version: "1.0"
+description: Official base plugin of Cyber Survival.
+
+main: me.sbpro.cybersurvival.CyberSurvival
+api-version: "26.2"
+load: POSTWORLD
+
+authors:
+  - SBPro
+
+softdepend:
+  - Vault
+  - Essentials
+  - LuckPerms
+  - CyberTeleport
+
+commands:
+
+  hideplayer:
+    description: Toggle hiding all other players from your view.
+    usage: "/hideplayer"
+    aliases:
+      - hp
+    permission: cyber.hideplayer
+
+  glow:
+    description: Toggle your glowing effect.
+    usage: "/glow"
+    permission: cyber.glow
+
+
+
+  chattoggle:
+    description: Toggles chat visibility.
+    usage: "/chattoggle"
+    aliases:
+      - togglechat
+    permission: cyber.settings.chattoggle
+
+  bossbartoggle:
+    description: Toggles the bossbar.
+    usage: "/bossbartoggle"
+    aliases:
+      - togglebossbar
+    permission: cyber.bossbar
+
+  settings:
+    description: Opens the settings menu.
+    usage: "/settings"
+    permission: cyber.settings
+
+
+  customenchant:
+    description: Gives the player a custom enchantment.
+    usage: "/customenchant give [PLAYER] [ENCHANT]"
+    permission: cyber.admin
+
+
+  baltop:
+    description: View the players with the most money.
+    usage: "/baltop [reload]"
+    aliases:
+      - balancetop
+      - topbalance
+    permission: cyber.baltop
+
+  playtop:
+    description: View the players with the most playtime
+    permission: cyber.playtop
+    aliases:
+      - playtimetop
+      - topplaytime
+
+  playtime:
+    description: View your total playtime
+    permission: cyber.playtop
+
+  ranks:
+    description: View the ranks
+    usage: "/ranks"
+    aliases:
+      - perks
+      - permissions
+
+
+permissions:
+  cyber.store:
+    description: Allows players to use /store
+    default: true
+  cyber.youtube:
+    description: Allows players to use /youtube
+    default: true
+
+
+  cyber.hideplayer:
+    description: Allows players to use /hideplayer.
+    default: false
+
+  cyber.glow:
+    description: Allows players to toggle glowing.
+    default: false
+
+
+
+  cyber.chattoggle:
+    description: Allows players to toggle chat visibility.
+    default: true
+
+  cyber.settings:
+    description: Allows players to open the settings menu.
+    default: true
+
+  cyber.bossbar:
+    description: Allows players to toggle the bossbar.
+    default: true
+
+  cyber.baltop:
+    default: true
+
+  cyber.playtop:
+    default: true
+
+
+

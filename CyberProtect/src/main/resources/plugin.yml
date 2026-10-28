@@ -1,0 +1,19 @@
+name: CyberProtect
+version: 1.0.0
+main: me.sbpro.cyberprotect.CyberProtect
+api-version: '26.2'
+author: SBPro
+description: Lightweight spawn and lobby protection plugin.
+
+commands:
+  cyberprotect:
+    description: CyberProtect administration command.
+    usage: /cyberprotect reload
+    permission: cyber.admin
+    aliases:
+      - grassggprotect
+
+permissions:
+  cyber.builder:
+    default: op
+    description: Builder perms for spawns
