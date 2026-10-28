@@ -1,4 +1,4 @@
-package me.sbpro.cyberquests.quests;
+package me.sbpro.grassggquests.quests;
 
 public class ActiveQuest {
     private final String questId;
