@@ -1,11 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  org.bukkit.configuration.ConfigurationSection
- *  org.bukkit.configuration.file.YamlConfiguration
- *  org.bukkit.plugin.java.JavaPlugin
- */
 package me.sbpro.cyberalliances.data;
 
 import java.io.File;

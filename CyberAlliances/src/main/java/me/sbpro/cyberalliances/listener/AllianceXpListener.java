@@ -1,21 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  org.bukkit.Material
- *  org.bukkit.block.Block
- *  org.bukkit.block.data.Ageable
- *  org.bukkit.block.data.BlockData
- *  org.bukkit.entity.Entity
- *  org.bukkit.entity.Item
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.EventPriority
- *  org.bukkit.event.Listener
- *  org.bukkit.event.block.BlockBreakEvent
- *  org.bukkit.event.entity.EntityDeathEvent
- *  org.bukkit.event.player.PlayerFishEvent
- *  org.bukkit.event.player.PlayerFishEvent$State
- */
 package me.sbpro.cyberalliances.listener;
 
 import me.sbpro.cyberalliances.service.AllianceXpService;

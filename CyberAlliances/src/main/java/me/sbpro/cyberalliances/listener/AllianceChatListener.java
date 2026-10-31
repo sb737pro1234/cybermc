@@ -1,15 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  io.papermc.paper.event.player.AsyncChatEvent
- *  net.kyori.adventure.text.Component
- *  net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
- *  org.bukkit.Bukkit
- *  org.bukkit.entity.Player
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.Listener
- */
 package me.sbpro.cyberalliances.listener;
 
 import me.sbpro.cyberalliances.Messages;

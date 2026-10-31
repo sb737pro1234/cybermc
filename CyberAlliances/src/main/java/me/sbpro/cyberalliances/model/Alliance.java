@@ -1,6 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- */
 package me.sbpro.cyberalliances.model;
 
 import java.util.Collections;

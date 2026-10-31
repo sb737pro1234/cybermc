@@ -1,11 +1,4 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  me.clip.placeholderapi.expansion.PlaceholderExpansion
- *  org.bukkit.OfflinePlayer
- *  org.jetbrains.annotations.NotNull
- */
+
 package me.sbpro.cyberalliances.hook;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;

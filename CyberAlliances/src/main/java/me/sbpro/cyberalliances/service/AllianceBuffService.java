@@ -1,13 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  org.bukkit.Bukkit
- *  org.bukkit.entity.Player
- *  org.bukkit.plugin.java.JavaPlugin
- *  org.bukkit.potion.PotionEffect
- *  org.bukkit.potion.PotionEffectType
- */
 package me.sbpro.cyberalliances.service;
 
 import java.util.UUID;

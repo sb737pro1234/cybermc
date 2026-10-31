@@ -1,16 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.kyori.adventure.text.Component
- *  org.bukkit.Bukkit
- *  org.bukkit.OfflinePlayer
- *  org.bukkit.command.Command
- *  org.bukkit.command.CommandExecutor
- *  org.bukkit.command.CommandSender
- *  org.bukkit.command.TabCompleter
- *  org.bukkit.entity.Player
- */
 package me.sbpro.cyberalliances.command;
 
 import me.sbpro.cyberalliances.Messages;

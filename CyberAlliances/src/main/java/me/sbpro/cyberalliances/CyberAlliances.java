@@ -1,14 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  org.bukkit.command.CommandExecutor
- *  org.bukkit.command.PluginCommand
- *  org.bukkit.command.TabCompleter
- *  org.bukkit.event.Listener
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.plugin.java.JavaPlugin
- */
 package me.sbpro.cyberalliances;
 
 import me.sbpro.cyberalliances.ChatToggleService;

@@ -56,10 +56,14 @@ public final class Messages {
             .append(Component.text("Alliance deletion cancelled.", NamedTextColor.WHITE));
 
     public static final Component CHAT_ENABLED = PREFIX
-            .append(Component.text("Alliance chat enabled.", NamedTextColor.WHITE));
+            .append(Component.text("Alliance chat ", NamedTextColor.WHITE))
+            .append(Component.text("enabled", NamedTextColor.GREEN))
+            .append(Component.text(".", NamedTextColor.WHITE));
 
     public static final Component CHAT_DISABLED = PREFIX
-            .append(Component.text("Alliance chat disabled. You are back in global chat.", NamedTextColor.WHITE));
+            .append(Component.text("Alliance chat ", NamedTextColor.WHITE))
+            .append(Component.text("disabled", NamedTextColor.RED))
+            .append(Component.text(". You are back in global chat.", NamedTextColor.WHITE));
 
     public static final Component TOP_EMPTY = PREFIX
             .append(Component.text("No alliances have been created yet.", NamedTextColor.WHITE));
@@ -75,7 +79,7 @@ public final class Messages {
             .append(Component.text("You could not leave the alliance. Please try again.", NamedTextColor.RED));
 
     public static final Component INVALID_NAME = PREFIX
-            .append(Component.text("Alliance names must be plain text only. No hex colors, no & color codes.", NamedTextColor.RED));
+            .append(Component.text("Alliance names must be plain text only. No color codes.", NamedTextColor.RED));
 
     public static final Component NAME_LENGTH = PREFIX
             .append(Component.text("Alliance names must be between 3 and 24 characters.", NamedTextColor.RED));
@@ -139,7 +143,7 @@ public final class Messages {
     public static final Component MEMBERS_GUI_TITLE = Component.text("Alliance Members", CUSTOM);
     public static final Component LEVEL_TITLE = Component.text("Alliance Level", CUSTOM);
     public static final Component XP_VALUES_TITLE = Component.text("Alliance XP", CUSTOM);
-    public static final Component DELETE_TITLE = Component.text("Delete Alliance?", NamedTextColor.WHITE);
+    public static final Component DELETE_TITLE = Component.text("Delete Alliance", NamedTextColor.WHITE);
 
     public static final Component INFO_GUI_MEMBERS = itemName("Members");
     public static final Component INFO_GUI_LEVEL = itemName("Alliance Level");
