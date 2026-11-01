@@ -18,7 +18,7 @@ public final class Messages {
             .build();
 
     public static final Component ADMIN_PREFIX = Component.text()
-            .append(Component.text("ADMIN", TextColor.color(0xEF4444), TextDecoration.BOLD))
+            .append(Component.text("ADMIN", CUSTOM, TextDecoration.BOLD))
             .append(Component.text(" » ", NamedTextColor.DARK_GRAY))
             .build();
 
