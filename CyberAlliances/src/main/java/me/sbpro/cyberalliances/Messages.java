@@ -9,7 +9,6 @@ import java.util.List;
 
 /**
  * Central place for all CyberAlliances messages and GUI text.
- *
  * Normal text is white; highlighted values use {@link #CUSTOM}.
  */
 public final class Messages {
@@ -133,12 +132,8 @@ public final class Messages {
             .append(Component.text("/a delete", CUSTOM))
             .append(Component.text(" if you want to remove your alliance.", NamedTextColor.WHITE));
 
-    public static final List<Component> TOP_HEADER = List.of(
-            Component.text("Alliance Top", CUSTOM),
-            Component.text("Top alliances by alliance XP", NamedTextColor.WHITE)
-    );
 
-    // GUI titles and button names use the alliance colour, no italics/bold, and standard case.
+    // GUI titles and button names use the alliance color, no italics/bold, and standard case.
     public static final Component INFO_GUI_TITLE = Component.text("Alliance Information", CUSTOM);
     public static final Component MEMBERS_GUI_TITLE = Component.text("Alliance Members", CUSTOM);
     public static final Component LEVEL_TITLE = Component.text("Alliance Level", CUSTOM);
@@ -168,6 +163,12 @@ public final class Messages {
     public static final Component VIEW_ALL_XP_SOURCES_LORE = lore("View all alliance XP sources");
     public static final Component OPEN_PREVIOUS_PAGE_LORE = lore("Open the previous page");
     public static final Component OPEN_NEXT_PAGE_LORE = lore("Open the next page");
+
+    // Alliance Top menu
+    public static final Component TOP_YOU_BUTTON = itemName("Your Alliance");
+    public static final Component TOP_NOT_IN_ALLIANCE_LORE = lore("You are not in an alliance.");
+    public static final Component TOP_YOUR_ALLIANCE_LORE = Component.text("This is your alliance.", CUSTOM)
+            .decoration(TextDecoration.ITALIC, false);
     public static final Component OPEN_LEVEL_MENU_LORE = Component.text("Click to open the Alliance Level menu.", CUSTOM)
             .decoration(TextDecoration.ITALIC, false);
     public static final Component BLANK_LORE = Component.text(" ");
@@ -296,18 +297,6 @@ public final class Messages {
                 .append(Component.text("!", NamedTextColor.WHITE));
     }
 
-    public static Component topEntry(int position, String allianceName, int level, long xp) {
-        return PREFIX
-                .append(Component.text("#" + position, CUSTOM))
-                .append(Component.text(" " + allianceName, NamedTextColor.WHITE))
-                .append(Component.text(" - ", NamedTextColor.DARK_GRAY))
-                .append(Component.text("Level ", NamedTextColor.WHITE))
-                .append(Component.text(level, CUSTOM))
-                .append(Component.text(" - ", NamedTextColor.DARK_GRAY))
-                .append(Component.text("XP: ", NamedTextColor.WHITE))
-                .append(Component.text(xp, CUSTOM));
-    }
-
     /** Alliance chat line. The player's message is plain text and is never parsed for formatting. */
     public static Component allianceChat(String allianceName, String playerName, String message) {
         return PREFIX
@@ -393,7 +382,50 @@ public final class Messages {
         return List.of(loreValue("Category", category), loreValue("Alliance XP", xp));
     }
 
-    /** 20-segment progress bar: filled segments use the alliance colour, the rest are red. */
+    /** Title of the Alliance Top menu, e.g. "Alliance Top (1/3)". */
+    public static Component topTitle(int page, int totalPages) {
+        return Component.text("Alliance Top", CUSTOM)
+                .append(Component.text(" (" + (page + 1) + "/" + totalPages + ")", NamedTextColor.WHITE));
+    }
+
+    /** "Name (#1)" - name and brackets white, the position in the alliance color. */
+    public static Component topEntryName(int rank, String allianceName) {
+        return Component.text(allianceName, NamedTextColor.WHITE)
+                .append(Component.text(" (", NamedTextColor.WHITE))
+                .append(Component.text("#" + rank, CUSTOM))
+                .append(Component.text(")", NamedTextColor.WHITE))
+                .decoration(TextDecoration.ITALIC, false);
+    }
+
+    public static List<Component> topEntryLore(String ownerName, List<String> memberNames, int level, long xp, Component progressBar, boolean yours) {
+        List<Component> lore = new java.util.ArrayList<>();
+        lore.add(loreValue("Owner", ownerName));
+        lore.add(Component.text("Members:", NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false));
+        for (String memberName : memberNames) {
+            lore.add(Component.text("- ", NamedTextColor.DARK_GRAY)
+                    .append(Component.text(memberName, CUSTOM))
+                    .decoration(TextDecoration.ITALIC, false));
+        }
+        lore.add(loreValue("Alliance Level", level));
+        lore.add(loreValue("Alliance XP", xp));
+        lore.add(Component.text("Progress: ", NamedTextColor.WHITE).append(progressBar)
+                .decoration(TextDecoration.ITALIC, false));
+        if (yours) {
+            lore.add(BLANK_LORE);
+            lore.add(TOP_YOUR_ALLIANCE_LORE);
+        }
+        return lore;
+    }
+
+    public static List<Component> topYouLore(int rank, int totalAlliances, int level, long xp) {
+        return List.of(
+                loreValue("Rank", "#" + rank + " of " + totalAlliances),
+                loreValue("Alliance Level", level),
+                loreValue("Alliance XP", xp)
+        );
+    }
+
+    /** 20-segment progress bar: filled segments use the alliance color, the rest are red. */
     public static Component progressBar(int filled) {
         Component bar = Component.empty();
         for (int index = 0; index < 20; index++) {

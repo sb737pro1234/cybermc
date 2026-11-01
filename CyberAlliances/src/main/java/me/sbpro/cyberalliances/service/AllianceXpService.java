@@ -2,6 +2,7 @@ package me.sbpro.cyberalliances.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Locale;
@@ -226,7 +227,10 @@ public final class AllianceXpService {
     }
 
     public List<Alliance> getTopAlliances() {
-        return this.allianceStorage.getAlliances().stream().sorted((left, right) -> Double.compare(right.getXp(), left.getXp())).toList();
+        return this.allianceStorage.getAlliances().stream()
+                .sorted(Comparator.comparingDouble(Alliance::getXp).reversed()
+                        .thenComparing(Alliance::getName, String.CASE_INSENSITIVE_ORDER))
+                .toList();
     }
 
     private void syncStoredLevels() {

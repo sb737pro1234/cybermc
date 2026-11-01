@@ -6,6 +6,7 @@ import me.sbpro.cyberalliances.command.AllianceCommand;
 import me.sbpro.cyberalliances.data.AllianceStorage;
 import me.sbpro.cyberalliances.gui.AllianceLevelGuiListener;
 import me.sbpro.cyberalliances.gui.DeleteAllianceListener;
+import me.sbpro.cyberalliances.gui.TopGuiListener;
 import me.sbpro.cyberalliances.hook.AlliancePlaceholderExpansion;
 import me.sbpro.cyberalliances.listener.AllianceChatListener;
 import me.sbpro.cyberalliances.listener.AlliancePlayerListener;
@@ -44,6 +45,7 @@ extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents((Listener)new AllianceXpListener(this.xpService), (Plugin)this);
         this.getServer().getPluginManager().registerEvents((Listener)new AlliancePlayerListener(this, this.buffService), (Plugin)this);
         this.getServer().getPluginManager().registerEvents((Listener)new AllianceLevelGuiListener(this, this.allianceStorage, this.xpService), (Plugin)this);
+        this.getServer().getPluginManager().registerEvents((Listener)new TopGuiListener(this), (Plugin)this);
         if (this.getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             new AlliancePlaceholderExpansion(this, this.allianceStorage).register();
         }

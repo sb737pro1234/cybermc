@@ -13,6 +13,7 @@ import me.sbpro.cyberalliances.data.AllianceStorage;
 import me.sbpro.cyberalliances.gui.AllianceInfoGui;
 import me.sbpro.cyberalliances.gui.AllianceLevelGui;
 import me.sbpro.cyberalliances.gui.DeleteAllianceGui;
+import me.sbpro.cyberalliances.gui.TopGui;
 import me.sbpro.cyberalliances.model.Alliance;
 import me.sbpro.cyberalliances.service.AllianceBuffService;
 import me.sbpro.cyberalliances.service.AllianceXpService;
@@ -361,14 +362,7 @@ TabCompleter {
             player.sendMessage(Messages.TOP_EMPTY);
             return;
         }
-        for (Component line : Messages.TOP_HEADER) {
-            player.sendMessage(line);
-        }
-        int position = 1;
-        for (Alliance alliance : topAlliances.stream().limit(10L).toList()) {
-            int currentPosition = position++;
-            player.sendMessage(Messages.topEntry(currentPosition, alliance.getName(), alliance.getLevel(), Math.round(alliance.getXp())));
-        }
+        TopGui.open(this.plugin, player, 0);
     }
 
     private void handleLevel(Player player) {
