@@ -1,6 +1,6 @@
 package me.sbpro.cyberteleport.request;
 
-import me.sbpro.cyberteleport.message.Messages;
+import me.sbpro.cyberteleport.Messages;
 import me.sbpro.cyberteleport.settings.TeleportPreferencesManager;
 import me.sbpro.cyberteleport.teleport.TeleportManager;
 import org.bukkit.Bukkit;

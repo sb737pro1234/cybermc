@@ -1,6 +1,6 @@
 package me.sbpro.cyberteleport.spectate;
 
-import me.sbpro.cyberteleport.message.Messages;
+import me.sbpro.cyberteleport.Messages;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;

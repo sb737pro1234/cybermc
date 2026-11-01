@@ -1,6 +1,6 @@
 package me.sbpro.cyberteleport.teleport;
 
-import me.sbpro.cyberteleport.message.Messages;
+import me.sbpro.cyberteleport.Messages;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;

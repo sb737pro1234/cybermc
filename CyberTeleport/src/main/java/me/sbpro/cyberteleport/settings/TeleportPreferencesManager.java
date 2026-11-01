@@ -1,6 +1,6 @@
 package me.sbpro.cyberteleport.settings;
 
-import me.sbpro.cyberteleport.message.Messages;
+import me.sbpro.cyberteleport.Messages;
 import me.sbpro.cyberteleport.request.TeleportRequestType;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;

@@ -2,7 +2,7 @@ package me.sbpro.cyberteleport.command;
 
 import me.sbpro.cyberteleport.CyberTeleport;
 import me.sbpro.cyberteleport.gui.ConfirmationMenu;
-import me.sbpro.cyberteleport.message.Messages;
+import me.sbpro.cyberteleport.Messages;
 import me.sbpro.cyberteleport.permission.Permissions;
 import me.sbpro.cyberteleport.spectate.SpectateAction;
 import me.sbpro.cyberteleport.spectate.SpectateManager;

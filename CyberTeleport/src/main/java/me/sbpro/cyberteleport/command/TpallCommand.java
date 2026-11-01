@@ -1,6 +1,6 @@
 package me.sbpro.cyberteleport.command;
 
-import me.sbpro.cyberteleport.message.Messages;
+import me.sbpro.cyberteleport.Messages;
 import me.sbpro.cyberteleport.CyberTeleport;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

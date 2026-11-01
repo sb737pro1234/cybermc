@@ -1,7 +1,7 @@
 package me.sbpro.cyberteleport.command;
 
 import me.sbpro.cyberteleport.CyberTeleport;
-import me.sbpro.cyberteleport.message.Messages;
+import me.sbpro.cyberteleport.Messages;
 import me.sbpro.cyberteleport.permission.Permissions;
 import me.sbpro.cyberteleport.teleport.TeleportManager;
 import org.bukkit.Bukkit;

@@ -1,6 +1,6 @@
 package me.sbpro.cyberteleport.teleport;
 
-import me.sbpro.cyberteleport.message.Messages;
+import me.sbpro.cyberteleport.Messages;
 import me.sbpro.cyberteleport.gui.ConfirmationAction;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

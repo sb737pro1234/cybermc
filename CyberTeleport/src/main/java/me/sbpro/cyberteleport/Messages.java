@@ -1,4 +1,4 @@
-package me.sbpro.cyberteleport.message;
+package me.sbpro.cyberteleport;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
