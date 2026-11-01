@@ -133,7 +133,7 @@ public final class Cyber extends JavaPlugin implements Listener {
 
         getServer().getServerLinks().addLink(
                 Component.text("Server Rules")
-                        .color(TextColor.fromHexString("#2979FF"))
+                        .color(TextColor.fromHexString("#00AAFF"))
                         .decorate(TextDecoration.BOLD),
                 URI.create("https://docs.google.com/document/d/1wZWo1C1_vQj826vAjiInfvQced7srQfRcTJrb9H-BoQ/edit?usp=sharing")
         );
@@ -149,7 +149,6 @@ public final class Cyber extends JavaPlugin implements Listener {
                 event.joinMessage(Messages.joinMessage(event.getPlayer().displayName()));
             } else {
                 event.joinMessage(null);
-                return;
             }
 
         } else {
@@ -183,7 +182,6 @@ public final class Cyber extends JavaPlugin implements Listener {
             event.quitMessage(Messages.quitMessage(event.getPlayer().displayName()));
         } else {
             event.quitMessage(null);
-            return;
         }
     }
 

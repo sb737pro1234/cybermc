@@ -17,12 +17,18 @@ commands:
     usage: "/kill <PLAYER>"
     aliases:
       - suicide
+    permission: cyber.kill.self
+
   heal:
-    description: Heals  the player.
+    description: Heals the player.
     usage: "/heal <PLAYER>"
+    permission: cyber.heal.self
+
   feed:
-    description: Feeds  the player.
+    description: Feeds the player.
     usage: "/feed <PLAYER>"
+    permission: cyber.feed.self
+
   youtube:
     description: Shows the youtube link for MrGrassYT
     usage: "/<command>"
@@ -50,22 +56,28 @@ commands:
     - gm
     description: Sets yours or another players gamemode.
     usage: "/gamemode [GAMEMODE] [PLAYER]"
+    permission: cyber.gamemode
 
   gmc:
     description: Sets Creative mode
     usage: "/gmc [PLAYER]"
+    permission: cyber.gamemode.creative
+
 
   gms:
     description: Sets Survival mode
     usage: "/gms [PLAYER]"
+    permission: cyber.gamemode.survival
 
   gma:
     description: Sets Adventure mode
     usage: "/gma [PLAYER]"
+    permission: cyber.gamemode.adventure
 
   gmsp:
     description: Sets Spectator mode
     usage: "/gmsp [PLAYER]"
+    permission: cyber.gamemode.spectator
 
   msg:
     description: Message command.
@@ -116,29 +128,40 @@ commands:
     aliases:
       - craftingtable
       - workbench
-      - wb
+    permission: cyber.gui.craft
 
   smithing:
     description: Opens a virtual smithing table
     aliases:
       - smithingtable
+    permission: cyber.gui.smithing
+
 
   stonecutter:
     description: Opens a virtual stonecutter
+    permission: cyber.gui.stonecutter
 
   loom:
     description: Opens a virtual loom
+    permission: cyber.gui.loom
 
   cartography:
     description: Opens a virtual cartography table
+    aliases:
+      - cartographytable
+    permission: cyber.gui.cartography
 
   grindstone:
     description: Opens a virtual grindstone
+    permission: cyber.gui.grindstone
+    aliases:
+      - unenchant
 
   anvil:
     description: Opens a virtual anvil
     aliases:
       - rename
+    permission: cyber.gui.anvil
 
   rules:
     description: Opens the rules menu
