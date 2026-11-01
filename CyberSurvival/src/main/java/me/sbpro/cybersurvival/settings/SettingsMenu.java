@@ -9,7 +9,7 @@ import io.papermc.paper.registry.data.dialog.type.DialogType;
 import me.sbpro.cybersurvival.CyberSurvival;
 import me.sbpro.cyberteleport.CyberTeleport;
 import me.sbpro.cyberteleport.settings.TeleportPreferencesManager;
-import me.sbpro.cyberteleport.message.Messages;
+import me.sbpro.cyberteleport.Messages;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickCallback;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -392,7 +392,7 @@ public class SettingsMenu {
                 privacyToggleAction(
                         plugin,
                         clickedPlayer -> clickedPlayer.sendMessage(
-                                me.sbpro.cyberteleport.message.Messages.tpaToggled(
+                                Messages.tpaToggled(
                                         preferences.toggleTpa(clickedPlayer)
                                 )
                         )
@@ -406,7 +406,7 @@ public class SettingsMenu {
                 privacyToggleAction(
                         plugin,
                         clickedPlayer -> clickedPlayer.sendMessage(
-                                me.sbpro.cyberteleport.message.Messages.tpaHereToggled(
+                                Messages.tpaHereToggled(
                                         preferences.toggleTpaHere(clickedPlayer)
                                 )
                         )
@@ -421,8 +421,8 @@ public class SettingsMenu {
                         plugin,
                         clickedPlayer -> clickedPlayer.sendMessage(
                                 preferences.toggleAutoAcceptTpa(clickedPlayer)
-                                        ? me.sbpro.cyberteleport.message.Messages.tpautoEnabled()
-                                        : me.sbpro.cyberteleport.message.Messages.tpautoDisabled()
+                                        ? Messages.tpautoEnabled()
+                                        : Messages.tpautoDisabled()
                         )
                 )
         );

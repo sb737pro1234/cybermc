@@ -13,9 +13,7 @@ import java.util.UUID;
 
 public class BossBarManager {
 
-    private static final String TITLE = "ɢʀᴀѕѕɢɢ.ᴍʏ.ᴘᴇʙʙʟᴇ.ʜᴏѕᴛ";
-
-    private final CyberSurvival plugin;
+    private static final String TITLE = "ᴄʏʙᴇʀᴍᴄ.ᴍʏ.ᴘᴇʙʙʟᴇ.ʜᴏѕᴛ";
 
     private final File file;
     private final FileConfiguration config;
@@ -24,12 +22,11 @@ public class BossBarManager {
     private final BossBar bossBar = BossBar.bossBar(
             Component.text(TITLE),
             1.0f,
-            BossBar.Color.GREEN,
+            BossBar.Color.BLUE,
             BossBar.Overlay.PROGRESS
     );
 
     public BossBarManager(CyberSurvival plugin) {
-        this.plugin = plugin;
 
         file = plugin.getSettingsStorage().getFile();
         config = plugin.getSettingsStorage().getConfig();
