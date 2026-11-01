@@ -27,17 +27,20 @@ public final class Messages {
     public static final Component PLAYER_NOT_ONLINE = PREFIX
             .append(Component.text("That player is not online.", NamedTextColor.RED));
 
-    public static final Component BACK_BUTTON = Component.text("Back", NamedTextColor.WHITE);
+    public static final Component BACK_BUTTON = Component.text("Back", CUSTOM);
     public static final Component BACK_BUTTON_HINT = Component.text("Return to Statistics", NamedTextColor.WHITE);
-    public static final Component CLOSE_BUTTON = Component.text("Close", NamedTextColor.WHITE);
+    public static final Component CLOSE_BUTTON = Component.text("Close", CUSTOM);
     public static final Component CLOSE_BUTTON_HINT = Component.text("Close statistics", NamedTextColor.WHITE);
+
+    public static final Component SUMMARY_NAME = Component.text("Player Summary", CUSTOM);
+    public static final Component CLICK_TO_VIEW = Component.text("Click to view", NamedTextColor.DARK_GRAY);
 
     public static final Component UNKNOWN = Component.text("Unknown", NamedTextColor.WHITE);
 
     private Messages() {
     }
 
-    /** Title of the main statistics dialog. */
+    /** Title of the main statistics inventory. */
     public static Component statisticsTitle(boolean ownStatistics, String targetName) {
         if (ownStatistics) {
             return Component.text("Statistics", CUSTOM);
@@ -46,35 +49,35 @@ public final class Messages {
                 .append(Component.text(targetName, CUSTOM));
     }
 
-    /** Title of a category dialog. */
-    public static Component categoryTitle(String category) {
-        return Component.text(category, CUSTOM);
+    /** Title of a category inventory. */
+    public static Component categoryTitle(String category, boolean ownStatistics, String targetName) {
+        Component title = Component.text(category, CUSTOM);
+        if (ownStatistics) {
+            return title;
+        }
+        return title
+                .append(Component.text(" » ", NamedTextColor.DARK_GRAY))
+                .append(Component.text(targetName, NamedTextColor.WHITE));
     }
 
-    /** Short description shown at the top of a category dialog. */
-    public static Component categoryDescription(String category, String targetName) {
-        return Component.text(category + " statistics for ", NamedTextColor.WHITE)
-                .append(Component.text(targetName, CUSTOM));
-    }
-
+    /** Display name of a category button. */
     public static Component categoryButton(String title) {
-        return Component.text(title, NamedTextColor.WHITE);
+        return Component.text(title, CUSTOM);
     }
 
+    /** Description line on a category button. */
     public static Component categoryButtonHint(String description) {
         return Component.text(description, NamedTextColor.WHITE);
     }
 
-    /** Bold and underlined heading of the statistics body. */
-    public static Component categoryHeading(String category) {
-        return Component.text(category, CUSTOM, TextDecoration.BOLD, TextDecoration.UNDERLINED);
+    /** Display name of a single statistic item. */
+    public static Component statName(String label) {
+        return Component.text(label, CUSTOM);
     }
 
-    /** A single "Label » value" statistic line. */
-    public static Component statLine(String label, String value) {
-        return Component.text(label, NamedTextColor.WHITE)
-                .append(Component.text(" » ", NamedTextColor.DARK_GRAY))
-                .append(Component.text(value, CUSTOM));
+    /** The value line of a single statistic item. */
+    public static Component statValue(String value) {
+        return Component.text(value, NamedTextColor.WHITE);
     }
 
     /** A single "Label: value" line in the player summary. */

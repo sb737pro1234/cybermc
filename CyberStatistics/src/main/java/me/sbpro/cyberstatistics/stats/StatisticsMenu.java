@@ -1,15 +1,7 @@
 package me.sbpro.cyberstatistics.stats;
 
-import io.papermc.paper.dialog.Dialog;
 import me.sbpro.cyberstatistics.Messages;
-import io.papermc.paper.registry.data.dialog.ActionButton;
-import io.papermc.paper.registry.data.dialog.DialogBase;
-import io.papermc.paper.registry.data.dialog.DialogBase.DialogAfterAction;
-import io.papermc.paper.registry.data.dialog.action.DialogAction;
-import io.papermc.paper.registry.data.dialog.body.DialogBody;
-import io.papermc.paper.registry.data.dialog.type.DialogType;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickCallback;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -18,255 +10,238 @@ import net.luckperms.api.cacheddata.CachedMetaData;
 import net.luckperms.api.model.user.User;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class StatisticsMenu {
 
-    private static final int BUTTON_WIDTH = 180;
+    private static final int MAIN_SIZE = 45;
+    private static final int CATEGORY_SIZE = 27;
+
+    private static final int SUMMARY_SLOT = 4;
+    private static final int MAIN_CLOSE_SLOT = 40;
+    private static final int CATEGORY_BACK_SLOT = 22;
+
+    /** Slots used for 0-3 statistics, centred on the middle row of a category menu. */
+    private static final int[][] STAT_SLOTS = {{}, {13}, {12, 14}, {11, 13, 15}};
 
     private static final LegacyComponentSerializer LEGACY_PREFIX = LegacyComponentSerializer.builder()
             .character('&')
             .hexColors()
             .build();
 
+    private enum Category {
+        COMBAT("Combat", "Player kills, mob kills and deaths", Material.DIAMOND_SWORD, 19),
+        MINING("Mining", "Mining and block-breaking statistics", Material.DIAMOND_PICKAXE, 20),
+        BUILDING("Building", "Building and crafting statistics", Material.BRICKS, 21),
+        EXPLORATION("Exploration", "Travel and exploration statistics", Material.COMPASS, 22),
+        FARMING("Farming", "Farming and animal statistics", Material.WHEAT, 23),
+        FISHING("Fishing", "Fishing statistics", Material.FISHING_ROD, 24),
+        GENERAL("General", "General player statistics", Material.BOOK, 25);
+
+        private final String title;
+        private final String description;
+        private final Material icon;
+        private final int slot;
+
+        Category(String title, String description, Material icon, int slot) {
+            this.title = title;
+            this.description = description;
+            this.icon = icon;
+            this.slot = slot;
+        }
+    }
+
+    private record Stat(Material icon, String label, String value) {
+    }
+
     public static void open(Player viewer, Player target) {
-        viewer.showDialog(createMainDialog(viewer, target));
+        openMain(viewer, target);
     }
 
-    private static Dialog createMainDialog(Player viewer, Player target) {
-        DialogBase base = DialogBase.builder(Messages.statisticsTitle(viewer.equals(target), target.getName()))
-                .canCloseWithEscape(true)
-                .pause(false)
-                .afterAction(DialogAfterAction.NONE)
-                .body(List.of(
-                        DialogBody.plainMessage(
-                                createPlayerSummary(target),
-                                350
-                        )
-                ))
-                .build();
+    // ------------------------------------------------------------------
+    // Menus
+    // ------------------------------------------------------------------
 
-        return createDialog(base, List.of(
-                categoryButton("Combat", "Player kills, mob kills and deaths",
-                        p -> p.showDialog(createCombatDialog(viewer, target))),
-                categoryButton("Mining", "Mining and block-breaking statistics",
-                        p -> p.showDialog(createMiningDialog(viewer, target))),
-                categoryButton("Building", "Building and crafting statistics",
-                        p -> p.showDialog(createBuildingDialog(viewer, target))),
-                categoryButton("Exploration", "Travel and exploration statistics",
-                        p -> p.showDialog(createExplorationDialog(viewer, target))),
-                categoryButton("Farming", "Farming and animal statistics",
-                        p -> p.showDialog(createFarmingDialog(viewer, target))),
-                categoryButton("Fishing", "Fishing statistics",
-                        p -> p.showDialog(createFishingDialog(viewer, target))),
-                categoryButton("General", "General player statistics",
-                        p -> p.showDialog(createGeneralDialog(viewer, target)))
-        ), createCloseButton());
-    }
+    private static void openMain(Player viewer, Player target) {
 
-    private static Dialog createCombatDialog(Player viewer, Player target) {
-        DialogBase base = createBase("Combat", target);
-        return createStatisticDialog(base, "Combat", List.of(
-                Messages.statLine("Player Kills", formatNumber(target.getStatistic(Statistic.PLAYER_KILLS))),
-                Messages.statLine("Mob Kills", formatNumber(target.getStatistic(Statistic.MOB_KILLS))),
-                Messages.statLine("Deaths", formatNumber(target.getStatistic(Statistic.DEATHS)))), createBackButton(viewer, target));
-    }
+        StatisticsHolder holder = new StatisticsHolder();
+        Inventory inventory = Bukkit.createInventory(
+                holder,
+                MAIN_SIZE,
+                Messages.statisticsTitle(viewer.equals(target), target.getName())
+        );
+        holder.setInventory(inventory);
 
-    private static Dialog createMiningDialog(Player viewer, Player target) {
-        DialogBase base = createBase("Mining", target);
-        return createStatisticDialog(base, "Mining", List.of(
-                Messages.statLine("Blocks Broken", formatNumber(StatisticsFormatter.getBlocksBroken(target))),
-                Messages.statLine("Ore Blocks Mined", formatNumber(StatisticsFormatter.getOreBlocksMined(target))),
-                Messages.statLine("Tools Broken", formatNumber(StatisticsFormatter.getToolsBroken(target)))), createBackButton(viewer, target));
-    }
+        inventory.setItem(SUMMARY_SLOT, createSummaryItem(target));
 
-    private static Dialog createBuildingDialog(Player viewer, Player target) {
-        DialogBase base = createBase("Building", target);
-        return createStatisticDialog(base, "Building", List.of(
-                Messages.statLine("Blocks Placed", formatNumber(StatisticsFormatter.getBlocksPlaced(target))),
-                Messages.statLine("Items Crafted", formatNumber(StatisticsFormatter.getItemsCrafted(target)))), createBackButton(viewer, target));
-    }
-
-    private static Dialog createExplorationDialog(Player viewer, Player target) {
-        DialogBase base = createBase("Exploration", target);
-        return createStatisticDialog(base, "Exploration", List.of(
-                Messages.statLine("Distance Travelled", StatisticsFormatter.formatDistance(StatisticsFormatter.getTotalDistance(target))),
-                Messages.statLine("Jumps", formatNumber(target.getStatistic(Statistic.JUMP)))), createBackButton(viewer, target));
-    }
-
-    private static Dialog createFarmingDialog(Player viewer, Player target) {
-        DialogBase base = createBase("Farming", target);
-        return createStatisticDialog(base, "Farming", List.of(
-                Messages.statLine("Crops Harvested", formatNumber(StatisticsFormatter.getCropsHarvested(target))),
-                Messages.statLine("Animals Bred", formatNumber(target.getStatistic(Statistic.ANIMALS_BRED)))), createBackButton(viewer, target));
-    }
-
-    private static Dialog createFishingDialog(Player viewer, Player target) {
-        DialogBase base = createBase("Fishing", target);
-        return createStatisticDialog(base, "Fishing", List.of(
-                Messages.statLine("Fish Caught", formatNumber(target.getStatistic(Statistic.FISH_CAUGHT)))), createBackButton(viewer, target));
-    }
-
-    private static Dialog createGeneralDialog(Player viewer, Player target) {
-        DialogBase base = createBase("General", target);
-        return createStatisticDialog(base, "General", List.of(
-                Messages.statLine("Playtime", StatisticsFormatter.formatPlaytime(target.getStatistic(Statistic.PLAY_ONE_MINUTE))),
-                Messages.statLine("Times Slept", formatNumber(target.getStatistic(Statistic.SLEEP_IN_BED))),
-                Messages.statLine("Jumps", formatNumber(target.getStatistic(Statistic.JUMP)))), createBackButton(viewer, target));
-    }
-
-    private static Dialog createStatisticDialog(
-            DialogBase base,
-            String categoryTitle,
-            List<Component> statistics,
-            ActionButton backButton
-    ) {
-
-        // Title: BOLD + UNDERLINED only
-        Component categoryTitleComponent = Messages.categoryHeading(categoryTitle);
-
-        // Statistics: explicitly NOT bold or underlined
-        Component statisticText = Component.text("")
-                .append(categoryTitleComponent)
-                .append(Component.text("\n\n"));
-
-        for (int i = 0; i < statistics.size(); i++) {
-
-            statisticText = statisticText.append(
-                    statistics.get(i)
-                            .decoration(TextDecoration.BOLD, false)
-                            .decoration(TextDecoration.UNDERLINED, false)
-            );
-
-            if (i < statistics.size() - 1) {
-                statisticText = statisticText.append(Component.text("\n"));
-            }
+        for (Category category : Category.values()) {
+            inventory.setItem(category.slot, createCategoryItem(category));
+            holder.onClick(category.slot, player -> openCategory(player, target, category));
         }
 
-        final Component finalStatisticText = statisticText;
-
-        return Dialog.create(factory -> {
-
-            var builder = factory.empty();
-
-            builder.base(
-                    DialogBase.builder(base.title())
-                            .canCloseWithEscape(true)
-                            .pause(false)
-                            .afterAction(DialogAfterAction.NONE)
-                            .body(List.of(
-                                    DialogBody.plainMessage(
-                                            finalStatisticText,
-                                            350
-                                    )
-                            ))
-                            .build()
-            );
-
-            builder.type(
-                    DialogType.multiAction(
-                            List.of(backButton),
-                            null,
-                            1
-                    )
-            );
-        });
-    }
-
-    private static Dialog createDialog(
-            DialogBase base,
-            List<ActionButton> buttons,
-            ActionButton exitButton
-    ) {
-        return Dialog.create(factory -> {
-            var builder = factory.empty();
-            builder.base(base);
-            builder.type(DialogType.multiAction(buttons, exitButton, 2));
-        });
-    }
-
-    private static DialogBase createBase(String category, Player target) {
-        return DialogBase.builder(Messages.categoryTitle(category))
-                .canCloseWithEscape(true)
-                .pause(false)
-                .afterAction(DialogAfterAction.NONE)
-                .body(List.of(DialogBody.plainMessage(Messages.categoryDescription(category, target.getName()), 350)))
-                .build();
-    }
-
-    private static ActionButton categoryButton(
-            String title,
-            String description,
-            Consumer<Player> action
-    ) {
-        return ActionButton.create(
-                Messages.categoryButton(title),
-                Messages.categoryButtonHint(description),
-                BUTTON_WIDTH,
-                DialogAction.customClick(
-                        (response, audience) -> {
-                            if (audience instanceof Player player) {
-                                action.accept(player);
-                            }
-                        },
-                        ClickCallback.Options.builder()
-                                .uses(ClickCallback.UNLIMITED_USES)
-                                .build()
-                )
-        );
-    }
-
-    private static ActionButton createBackButton(Player viewer, Player target) {
-        return ActionButton.create(
-                Messages.BACK_BUTTON,
-                Messages.BACK_BUTTON_HINT,
-                BUTTON_WIDTH,
-                DialogAction.customClick(
-                        (response, audience) -> {
-                            if (audience instanceof Player player) {
-                                player.showDialog(createMainDialog(viewer, target));
-                            }
-                        },
-                        ClickCallback.Options.builder()
-                                .uses(ClickCallback.UNLIMITED_USES)
-                                .build()
-                )
-        );
-    }
-
-    private static ActionButton createCloseButton() {
-        return ActionButton.create(
+        inventory.setItem(MAIN_CLOSE_SLOT, createItem(
+                Material.BARRIER,
                 Messages.CLOSE_BUTTON,
-                Messages.CLOSE_BUTTON_HINT,
-                BUTTON_WIDTH,
-                null
+                List.of(Messages.CLOSE_BUTTON_HINT)
+        ));
+        holder.onClick(MAIN_CLOSE_SLOT, Player::closeInventory);
+
+        viewer.openInventory(inventory);
+    }
+
+    private static void openCategory(Player viewer, Player target, Category category) {
+
+        StatisticsHolder holder = new StatisticsHolder();
+        Inventory inventory = Bukkit.createInventory(
+                holder,
+                CATEGORY_SIZE,
+                Messages.categoryTitle(category.title, viewer.equals(target), target.getName())
+        );
+        holder.setInventory(inventory);
+
+        List<Stat> stats = getStatistics(category, target);
+        int[] slots = STAT_SLOTS[Math.min(stats.size(), STAT_SLOTS.length - 1)];
+
+        for (int i = 0; i < slots.length; i++) {
+            Stat stat = stats.get(i);
+            inventory.setItem(slots[i], createItem(
+                    stat.icon(),
+                    Messages.statName(stat.label()),
+                    List.of(Messages.statValue(stat.value()))
+            ));
+        }
+
+        inventory.setItem(CATEGORY_BACK_SLOT, createItem(
+                Material.ARROW,
+                Messages.BACK_BUTTON,
+                List.of(Messages.BACK_BUTTON_HINT)
+        ));
+        holder.onClick(CATEGORY_BACK_SLOT, player -> openMain(player, target));
+
+        viewer.openInventory(inventory);
+    }
+
+    // ------------------------------------------------------------------
+    // Statistics (same values and formatting as the previous dialog menu)
+    // ------------------------------------------------------------------
+
+    private static List<Stat> getStatistics(Category category, Player target) {
+        return switch (category) {
+            case COMBAT -> List.of(
+                    new Stat(Material.DIAMOND_SWORD, "Player Kills", formatNumber(target.getStatistic(Statistic.PLAYER_KILLS))),
+                    new Stat(Material.ZOMBIE_HEAD, "Mob Kills", formatNumber(target.getStatistic(Statistic.MOB_KILLS))),
+                    new Stat(Material.SKELETON_SKULL, "Deaths", formatNumber(target.getStatistic(Statistic.DEATHS)))
+            );
+            case MINING -> List.of(
+                    new Stat(Material.IRON_PICKAXE, "Blocks Broken", formatNumber(StatisticsFormatter.getBlocksBroken(target))),
+                    new Stat(Material.DIAMOND_ORE, "Ore Blocks Mined", formatNumber(StatisticsFormatter.getOreBlocksMined(target))),
+                    new Stat(Material.ANVIL, "Tools Broken", formatNumber(StatisticsFormatter.getToolsBroken(target)))
+            );
+            case BUILDING -> List.of(
+                    new Stat(Material.BRICKS, "Blocks Placed", formatNumber(StatisticsFormatter.getBlocksPlaced(target))),
+                    new Stat(Material.CRAFTING_TABLE, "Items Crafted", formatNumber(StatisticsFormatter.getItemsCrafted(target)))
+            );
+            case EXPLORATION -> List.of(
+                    new Stat(Material.LEATHER_BOOTS, "Distance Travelled", StatisticsFormatter.formatDistance(StatisticsFormatter.getTotalDistance(target))),
+                    new Stat(Material.RABBIT_FOOT, "Jumps", formatNumber(target.getStatistic(Statistic.JUMP)))
+            );
+            case FARMING -> List.of(
+                    new Stat(Material.WHEAT, "Crops Harvested", formatNumber(StatisticsFormatter.getCropsHarvested(target))),
+                    new Stat(Material.EGG, "Animals Bred", formatNumber(target.getStatistic(Statistic.ANIMALS_BRED)))
+            );
+            case FISHING -> List.of(
+                    new Stat(Material.COD, "Fish Caught", formatNumber(target.getStatistic(Statistic.FISH_CAUGHT)))
+            );
+            case GENERAL -> List.of(
+                    new Stat(Material.CLOCK, "Playtime", StatisticsFormatter.formatPlaytime(target.getStatistic(Statistic.PLAY_ONE_MINUTE))),
+                    new Stat(Material.RED_BED, "Times Slept", formatNumber(target.getStatistic(Statistic.SLEEP_IN_BED))),
+                    new Stat(Material.RABBIT_FOOT, "Jumps", formatNumber(target.getStatistic(Statistic.JUMP)))
+            );
+        };
+    }
+
+    // ------------------------------------------------------------------
+    // Items
+    // ------------------------------------------------------------------
+
+    private static ItemStack createCategoryItem(Category category) {
+        return createItem(
+                category.icon,
+                Messages.categoryButton(category.title),
+                List.of(
+                        Messages.categoryButtonHint(category.description),
+                        Component.empty(),
+                        Messages.CLICK_TO_VIEW
+                )
         );
     }
+
+    private static ItemStack createSummaryItem(Player target) {
+
+        ItemStack item = new ItemStack(Material.PLAYER_HEAD);
+
+        if (item.getItemMeta() instanceof SkullMeta meta) {
+            meta.setOwningPlayer(target);
+            item.setItemMeta(meta);
+        }
+
+        List<Component> lore = List.of(
+                Messages.summaryLine("Username", Messages.summaryValue(target.getName())),
+                Messages.summaryLine("Rank", getPrefixComponent(target)),
+                Messages.summaryLine("Balance", Messages.summaryValue(getBalance(target))),
+                Messages.summaryLine("Playtime", Messages.summaryValue(
+                        StatisticsFormatter.formatPlaytime(target.getStatistic(Statistic.PLAY_ONE_MINUTE)))),
+                Messages.summaryLine("First Join", Messages.summaryValue(
+                        StatisticsFormatter.formatDate(target.getFirstPlayed())))
+        );
+
+        return applyDisplay(item, Messages.SUMMARY_NAME, lore);
+    }
+
+    private static ItemStack createItem(Material material, Component name, List<Component> lore) {
+        return applyDisplay(new ItemStack(material), name, lore);
+    }
+
+    private static ItemStack applyDisplay(ItemStack item, Component name, List<Component> lore) {
+
+        ItemMeta meta = item.getItemMeta();
+
+        // Item text is italic by default; only turn it off where a component doesn't set it.
+        meta.displayName(noItalic(name));
+
+        List<Component> lines = new ArrayList<>();
+        for (Component line : lore) {
+            lines.add(noItalic(line));
+        }
+        meta.lore(lines);
+
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    private static Component noItalic(Component component) {
+        return component.decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE);
+    }
+
+    // ------------------------------------------------------------------
+    // Helpers
+    // ------------------------------------------------------------------
 
     private static String formatNumber(long number) {
         return StatisticsFormatter.formatNumber(number);
-    }
-
-    private static Component createPlayerSummary(Player player) {
-
-        Component summary = Messages.summaryLine("Username", Messages.summaryValue(player.getName()))
-                .appendNewline()
-                .append(Messages.summaryLine("Rank", getPrefixComponent(player)))
-                .appendNewline()
-                .append(Messages.summaryLine("Balance", Messages.summaryValue(getBalance(player))))
-                .appendNewline()
-                .append(Messages.summaryLine("Playtime", Messages.summaryValue(
-                        StatisticsFormatter.formatPlaytime(player.getStatistic(Statistic.PLAY_ONE_MINUTE)))))
-                .appendNewline()
-                .append(Messages.summaryLine("First Join", Messages.summaryValue(
-                        StatisticsFormatter.formatDate(player.getFirstPlayed()))));
-
-        return summary;
     }
 
     private static String getBalance(Player player) {
@@ -317,6 +292,7 @@ public class StatisticsMenu {
             return Messages.UNKNOWN;
         }
     }
+
     private static Component parsePrefix(String prefix) {
 
         // MiniMessage prefixes, including gradients
