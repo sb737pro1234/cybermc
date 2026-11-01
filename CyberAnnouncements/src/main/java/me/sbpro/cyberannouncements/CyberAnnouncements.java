@@ -17,7 +17,7 @@ public final class CyberAnnouncements extends JavaPlugin {
     @Override
     public void onEnable() {
         announcementManager = new AnnouncementManager(this);
-        chatLockManager = new ChatLockManager();
+        chatLockManager = new ChatLockManager(this);
 
         getCommand("announcements").setExecutor(new AnnouncementsCommand(this));
         getCommand("announce").setExecutor(new AnnounceCommand(chatLockManager));
@@ -36,6 +36,10 @@ public final class CyberAnnouncements extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        if (chatLockManager != null) {
+            chatLockManager.shutdown();
+        }
+
         if (announcementManager != null) {
             announcementManager.stop();
         }

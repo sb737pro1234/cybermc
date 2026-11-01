@@ -10,10 +10,10 @@ import net.kyori.adventure.text.format.TextDecoration;
 public final class Messages {
 
     /** Highlight colour of the plugin's own feedback messages. */
-    public static final TextColor CUSTOM = TextColor.color(0xFFFF00);
+    public static final TextColor CUSTOM = TextColor.color(0x00AAFF);
 
     /** Accent colour of livestream / content announcements. */
-    public static final TextColor MEDIA = TextColor.color(0xFF69B4);
+    public static final TextColor MEDIA = TextColor.color(0xAA00AA);
 
     // Standard errors (unprefixed)
     public static final Component PLAYER_ONLY = Component.text(
@@ -47,6 +47,9 @@ public final class Messages {
     public static final Component ANNOUNCEMENT_SUBTITLE =
             Component.text("ᴘʟᴇᴀѕᴇ ʀᴇᴀᴅ ᴛʜᴇ ᴍᴇѕѕᴀɢᴇ ɪɴ ᴄʜᴀᴛ", NamedTextColor.WHITE);
 
+    public static final Component CHAT_UNLOCKED =
+            Component.text("ᴄʜᴀᴛ ɪѕ ɴᴏᴡ ᴜɴʟᴏᴄᴋᴇᴅ.", NamedTextColor.RED);
+
     private static final Component CHAT_PAUSED =
             Component.text("ᴄʜᴀᴛ ɪѕ ᴘᴀᴜѕᴇᴅ ꜰᴏʀ 5 ѕᴇᴄᴏɴᴅѕ.", NamedTextColor.RED);
 
@@ -67,7 +70,7 @@ public final class Messages {
                 .appendNewline()
                 .appendNewline()
                 .appendNewline()
-                .append(Component.text(announcement, CUSTOM))
+                .append(Component.text(announcement, NamedTextColor.WHITE))
                 .appendNewline()
                 .appendNewline()
                 .build();
