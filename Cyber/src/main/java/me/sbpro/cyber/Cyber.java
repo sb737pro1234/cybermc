@@ -22,6 +22,7 @@ import me.sbpro.cyber.commands.rules.RulesListener;
 import me.sbpro.cyber.commands.say.SayCommand;
 import me.sbpro.cyber.commands.trash.TrashCommand;
 import me.sbpro.cyber.commands.trash.TrashListener;
+import me.sbpro.cyber.util.RenameListener;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
@@ -109,6 +110,9 @@ public final class Cyber extends JavaPlugin implements Listener {
 
         getCommand("colors").setExecutor(new ColorsCommand());
         getServer().getPluginManager().registerEvents(new AnvilColorListener(), this);
+
+        getServer().getPluginManager().registerEvents(new RenameListener(), this);
+        getCommand("rename").setExecutor(new RenameCommand());
 
         // ServerLinks
         getServer().getServerLinks().addLink(

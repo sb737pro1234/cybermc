@@ -159,8 +159,6 @@ commands:
 
   anvil:
     description: Opens a virtual anvil
-    aliases:
-      - rename
     permission: cyber.gui.anvil
 
   rules:
@@ -174,6 +172,11 @@ commands:
     aliases:
       - shout
       - talk
+
+
+  rename:
+    description: Rename the item in your hand
+    permission: cyber.rename
 
 
 permissions:
@@ -194,6 +197,10 @@ permissions:
     default: op
   cyber.feed.others:
     description: Allows players to feed players.
+    default: op
+
+  cyber.rename:
+    description: Allows players to use the rename command.
     default: op
 
   cyber.ping:
