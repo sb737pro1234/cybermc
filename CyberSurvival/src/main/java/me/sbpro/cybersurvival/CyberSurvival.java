@@ -167,6 +167,8 @@ public final class CyberSurvival extends JavaPlugin implements Listener {
         getCommand("playtop").setExecutor(new PlayTopCommand(this));
         getServer().getPluginManager().registerEvents(new PlayTopListener(), this);
         getCommand("playtime").setExecutor(new PlayTimeCommand());
+
+        getCommand("reboot").setExecutor(new RebootCommand(this));
     }
 
     // Disable

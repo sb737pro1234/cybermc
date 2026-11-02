@@ -17,6 +17,10 @@ softdepend:
 
 commands:
 
+  reboot:
+    description: Reboots the server with a countdown
+    permission: cyber.restart
+
   hideplayer:
     description: Toggle hiding all other players from your view.
     usage: "/hideplayer"
@@ -85,6 +89,10 @@ commands:
 
 
 permissions:
+  cyber.restart:
+    description: Allows players to use /reboot
+    default: op
+
   cyber.store:
     description: Allows players to use /store
     default: true
