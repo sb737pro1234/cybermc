@@ -12,7 +12,7 @@ public final class Messages {
     /** Colour of the tick shown next to the selected option. */
     private static final TextColor SELECTED_TICK = TextColor.color(0x55FF55);
     private static final TextColor LOCKED = TextColor.color(0x777777);
-    private static final TextColor BOLD_OPTION = TextColor.color(0xFFAA00);
+    private static final TextColor BOLD_OPTION = TextColor.color(0x55FF55);
 
     public static final Component PREFIX = Component.text()
             .append(Component.text("CHATCOLOR", CUSTOM, TextDecoration.BOLD))
