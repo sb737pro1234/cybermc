@@ -1,0 +1,30 @@
+name: CyberMastery
+version: 1.0
+main: me.sbpro.cybermastery.CyberMastery
+description: Cyber mastery progression plugin.
+author: SBPro
+api-version: '26.2'
+softdepend:
+  - PlaceholderAPI
+
+commands:
+  mastery:
+    description: View your mastery levels and claim rewards.
+    usage: /mastery [top|reload|give|set|reset|check]
+    aliases:
+      - m
+  masterytop:
+    description: View the players with the most mastery levels.
+    usage: /masterytop
+    aliases: []
+
+permissions:
+  cyber.mastery.use:
+    description: Allows use of the /mastery command.
+    default: true
+  cyber.mastery.reload:
+    description: Allows reloading CyberMastery configuration.
+    default: op
+  cyber.mastery.admin:
+    description: Allows /mastery give, set, reset and check (for testing and support).
+    default: op

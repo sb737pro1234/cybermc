@@ -1,0 +1,799 @@
+# =============================================================
+# CyberMastery - categories, groups and types
+#
+# unit     = the category's level unit. Level n costs unit x shape(n),
+#            where shape = 1, 2, 4, 6, 8 ... (+2 per level). Level 45 = 1981 x unit.
+# points   = points one action gives for that type (rarer = more points).
+# includes = shown in the type's lore.
+# match    = block / item materials (or entity types for slaying) that count
+#            as this type. "*" is a wildcard, e.g. "*_WOOL".
+#            Exact names are matched before wildcards.
+#
+# Type ids (the keys, e.g. "stone") must be unique across all categories.
+# They are used in player data files and in %cybermastery_level_<type>%.
+# =============================================================
+
+categories:
+
+  # -----------------------------------------------------------
+  # BLOCKS - mining natural blocks (and placing, see config.yml)
+  # -----------------------------------------------------------
+  blocks:
+    unit: 20
+    groups:
+
+      stones:
+        name: Stones
+        icon: STONE
+        types:
+          stone:
+            name: Stone
+            icon: STONE
+            points: 1
+            includes: Smooth stone, stairs and slabs
+            match: [STONE, STONE_STAIRS, STONE_SLAB, SMOOTH_STONE, SMOOTH_STONE_SLAB]
+          deepslate:
+            name: Deepslate
+            icon: DEEPSLATE
+            points: 1
+            includes: Cobbled, polished, bricks, tiles and their variants
+            match: [DEEPSLATE, COBBLED_DEEPSLATE, COBBLED_DEEPSLATE_STAIRS, COBBLED_DEEPSLATE_SLAB, COBBLED_DEEPSLATE_WALL,
+                    POLISHED_DEEPSLATE, POLISHED_DEEPSLATE_STAIRS, POLISHED_DEEPSLATE_SLAB, POLISHED_DEEPSLATE_WALL,
+                    DEEPSLATE_BRICKS, DEEPSLATE_BRICK_STAIRS, DEEPSLATE_BRICK_SLAB, DEEPSLATE_BRICK_WALL, CRACKED_DEEPSLATE_BRICKS,
+                    DEEPSLATE_TILES, DEEPSLATE_TILE_STAIRS, DEEPSLATE_TILE_SLAB, DEEPSLATE_TILE_WALL, CRACKED_DEEPSLATE_TILES,
+                    CHISELED_DEEPSLATE]
+          granite:
+            name: Granite
+            icon: GRANITE
+            points: 1
+            includes: Polished granite, stairs, slabs and walls
+            match: [GRANITE, GRANITE_STAIRS, GRANITE_SLAB, GRANITE_WALL,
+                    POLISHED_GRANITE, POLISHED_GRANITE_STAIRS, POLISHED_GRANITE_SLAB]
+          diorite:
+            name: Diorite
+            icon: DIORITE
+            points: 1
+            includes: Polished diorite, stairs, slabs and walls
+            match: [DIORITE, DIORITE_STAIRS, DIORITE_SLAB, DIORITE_WALL,
+                    POLISHED_DIORITE, POLISHED_DIORITE_STAIRS, POLISHED_DIORITE_SLAB]
+          andesite:
+            name: Andesite
+            icon: ANDESITE
+            points: 1
+            includes: Polished andesite, stairs, slabs and walls
+            match: [ANDESITE, ANDESITE_STAIRS, ANDESITE_SLAB, ANDESITE_WALL,
+                    POLISHED_ANDESITE, POLISHED_ANDESITE_STAIRS, POLISHED_ANDESITE_SLAB]
+          tuff:
+            name: Tuff
+            icon: TUFF
+            points: 2
+            includes: Polished tuff, tuff bricks and their variants
+            match: [TUFF, TUFF_STAIRS, TUFF_SLAB, TUFF_WALL, CHISELED_TUFF,
+                    POLISHED_TUFF, POLISHED_TUFF_STAIRS, POLISHED_TUFF_SLAB, POLISHED_TUFF_WALL,
+                    TUFF_BRICKS, TUFF_BRICK_STAIRS, TUFF_BRICK_SLAB, TUFF_BRICK_WALL, CHISELED_TUFF_BRICKS]
+          blackstone:
+            name: Blackstone
+            icon: BLACKSTONE
+            points: 2
+            includes: Polished, bricks, gilded and their variants
+            match: [BLACKSTONE, BLACKSTONE_STAIRS, BLACKSTONE_SLAB, BLACKSTONE_WALL, GILDED_BLACKSTONE,
+                    POLISHED_BLACKSTONE, POLISHED_BLACKSTONE_STAIRS, POLISHED_BLACKSTONE_SLAB, POLISHED_BLACKSTONE_WALL,
+                    POLISHED_BLACKSTONE_BRICKS, POLISHED_BLACKSTONE_BRICK_STAIRS, POLISHED_BLACKSTONE_BRICK_SLAB,
+                    POLISHED_BLACKSTONE_BRICK_WALL, CRACKED_POLISHED_BLACKSTONE_BRICKS, CHISELED_POLISHED_BLACKSTONE]
+          basalt:
+            name: Basalt
+            icon: BASALT
+            points: 1
+            includes: Polished and smooth basalt
+            match: [BASALT, POLISHED_BASALT, SMOOTH_BASALT]
+
+      ores:
+        name: Ores
+        icon: DIAMOND_ORE
+        types:
+          coal_ore:
+            name: Coal Ore
+            icon: COAL_ORE
+            points: 2
+            includes: Normal and deepslate coal ore
+            match: [COAL_ORE, DEEPSLATE_COAL_ORE]
+          copper_ore:
+            name: Copper Ore
+            icon: COPPER_ORE
+            points: 2
+            includes: Normal and deepslate copper ore
+            match: [COPPER_ORE, DEEPSLATE_COPPER_ORE]
+          iron_ore:
+            name: Iron Ore
+            icon: IRON_ORE
+            points: 3
+            includes: Normal and deepslate iron ore
+            match: [IRON_ORE, DEEPSLATE_IRON_ORE]
+          gold_ore:
+            name: Gold Ore
+            icon: GOLD_ORE
+            points: 5
+            includes: Normal and deepslate gold ore
+            match: [GOLD_ORE, DEEPSLATE_GOLD_ORE]
+          redstone_ore:
+            name: Redstone Ore
+            icon: REDSTONE_ORE
+            points: 3
+            includes: Normal and deepslate redstone ore
+            match: [REDSTONE_ORE, DEEPSLATE_REDSTONE_ORE]
+          lapis_ore:
+            name: Lapis Ore
+            icon: LAPIS_ORE
+            points: 5
+            includes: Normal and deepslate lapis ore
+            match: [LAPIS_ORE, DEEPSLATE_LAPIS_ORE]
+          diamond_ore:
+            name: Diamond Ore
+            icon: DIAMOND_ORE
+            points: 25
+            includes: Normal and deepslate diamond ore
+            match: [DIAMOND_ORE, DEEPSLATE_DIAMOND_ORE]
+          emerald_ore:
+            name: Emerald Ore
+            icon: EMERALD_ORE
+            points: 50
+            includes: Normal and deepslate emerald ore
+            match: [EMERALD_ORE, DEEPSLATE_EMERALD_ORE]
+          nether_quartz_ore:
+            name: Nether Quartz Ore
+            icon: NETHER_QUARTZ_ORE
+            points: 3
+            includes: Nether quartz ore
+            match: [NETHER_QUARTZ_ORE]
+          nether_gold_ore:
+            name: Nether Gold Ore
+            icon: NETHER_GOLD_ORE
+            points: 3
+            includes: Nether gold ore
+            match: [NETHER_GOLD_ORE]
+          ancient_debris:
+            name: Ancient Debris
+            icon: ANCIENT_DEBRIS
+            points: 100
+            includes: Ancient debris
+            match: [ANCIENT_DEBRIS]
+
+      dirt_and_sand:
+        name: Dirt & Sand
+        icon: GRASS_BLOCK
+        types:
+          dirt:
+            name: Dirt
+            icon: DIRT
+            points: 1
+            includes: Grass, coarse, rooted, podzol, mycelium, paths and farmland
+            match: [DIRT, GRASS_BLOCK, COARSE_DIRT, ROOTED_DIRT, PODZOL, MYCELIUM, DIRT_PATH, FARMLAND]
+          sand:
+            name: Sand
+            icon: SAND
+            points: 1
+            includes: Sand
+            match: [SAND]
+          red_sand:
+            name: Red Sand
+            icon: RED_SAND
+            points: 2
+            includes: Red sand
+            match: [RED_SAND]
+          gravel:
+            name: Gravel
+            icon: GRAVEL
+            points: 1
+            includes: Gravel
+            match: [GRAVEL]
+          clay:
+            name: Clay
+            icon: CLAY
+            points: 2
+            includes: Clay blocks
+            match: [CLAY]
+          mud:
+            name: Mud
+            icon: MUD
+            points: 2
+            includes: Packed mud, mud bricks and their variants
+            match: [MUD, PACKED_MUD, MUD_BRICKS, MUD_BRICK_STAIRS, MUD_BRICK_SLAB, MUD_BRICK_WALL]
+
+      nether:
+        name: Nether
+        icon: NETHERRACK
+        types:
+          netherrack:
+            name: Netherrack
+            icon: NETHERRACK
+            points: 1
+            includes: Netherrack
+            match: [NETHERRACK]
+          nether_bricks:
+            name: Nether Bricks
+            icon: NETHER_BRICKS
+            points: 2
+            includes: Red, cracked and chiseled nether bricks and their variants
+            match: [NETHER_BRICKS, NETHER_BRICK_STAIRS, NETHER_BRICK_SLAB, NETHER_BRICK_WALL, NETHER_BRICK_FENCE,
+                    CRACKED_NETHER_BRICKS, CHISELED_NETHER_BRICKS,
+                    RED_NETHER_BRICKS, RED_NETHER_BRICK_STAIRS, RED_NETHER_BRICK_SLAB, RED_NETHER_BRICK_WALL]
+          soul_sand:
+            name: Soul Sand
+            icon: SOUL_SAND
+            points: 1
+            includes: Soul sand and soul soil
+            match: [SOUL_SAND, SOUL_SOIL]
+          glowstone:
+            name: Glowstone
+            icon: GLOWSTONE
+            points: 2
+            includes: Glowstone
+            match: [GLOWSTONE]
+          magma:
+            name: Magma
+            icon: MAGMA_BLOCK
+            points: 2
+            includes: Magma blocks
+            match: [MAGMA_BLOCK]
+
+      end:
+        name: End
+        icon: END_STONE
+        types:
+          end_stone:
+            name: End Stone
+            icon: END_STONE
+            points: 1
+            includes: End stone bricks and their variants
+            match: [END_STONE, END_STONE_BRICKS, END_STONE_BRICK_STAIRS, END_STONE_BRICK_SLAB, END_STONE_BRICK_WALL]
+          purpur:
+            name: Purpur
+            icon: PURPUR_BLOCK
+            points: 3
+            includes: Purpur pillars, stairs and slabs
+            match: [PURPUR_BLOCK, PURPUR_PILLAR, PURPUR_STAIRS, PURPUR_SLAB]
+
+      building:
+        name: Building
+        icon: BRICKS
+        types:
+          bricks:
+            name: Bricks
+            icon: BRICKS
+            points: 2
+            includes: Brick stairs, slabs and walls
+            match: [BRICKS, BRICK_STAIRS, BRICK_SLAB, BRICK_WALL]
+          stone_bricks:
+            name: Stone Bricks
+            icon: STONE_BRICKS
+            points: 2
+            includes: Mossy, cracked and chiseled stone bricks and their variants
+            match: [STONE_BRICKS, STONE_BRICK_STAIRS, STONE_BRICK_SLAB, STONE_BRICK_WALL,
+                    MOSSY_STONE_BRICKS, MOSSY_STONE_BRICK_STAIRS, MOSSY_STONE_BRICK_SLAB, MOSSY_STONE_BRICK_WALL,
+                    CRACKED_STONE_BRICKS, CHISELED_STONE_BRICKS]
+          sandstone:
+            name: Sandstone
+            icon: SANDSTONE
+            points: 1
+            includes: Red, smooth, cut and chiseled sandstone and their variants
+            match: [SANDSTONE, SANDSTONE_STAIRS, SANDSTONE_SLAB, SANDSTONE_WALL,
+                    SMOOTH_SANDSTONE, SMOOTH_SANDSTONE_STAIRS, SMOOTH_SANDSTONE_SLAB,
+                    CUT_SANDSTONE, CUT_SANDSTONE_SLAB, CHISELED_SANDSTONE,
+                    RED_SANDSTONE, RED_SANDSTONE_STAIRS, RED_SANDSTONE_SLAB, RED_SANDSTONE_WALL,
+                    SMOOTH_RED_SANDSTONE, SMOOTH_RED_SANDSTONE_STAIRS, SMOOTH_RED_SANDSTONE_SLAB,
+                    CUT_RED_SANDSTONE, CUT_RED_SANDSTONE_SLAB, CHISELED_RED_SANDSTONE]
+          quartz:
+            name: Quartz
+            icon: QUARTZ_BLOCK
+            points: 3
+            includes: Pillars, bricks, smooth quartz and their variants
+            match: [QUARTZ_BLOCK, QUARTZ_STAIRS, QUARTZ_SLAB, QUARTZ_PILLAR, QUARTZ_BRICKS, CHISELED_QUARTZ_BLOCK,
+                    SMOOTH_QUARTZ, SMOOTH_QUARTZ_STAIRS, SMOOTH_QUARTZ_SLAB]
+          terracotta:
+            name: Terracotta
+            icon: TERRACOTTA
+            points: 2
+            includes: All coloured and glazed terracotta
+            match: [TERRACOTTA, "*_TERRACOTTA"]
+          concrete:
+            name: Concrete
+            icon: LIGHT_BLUE_CONCRETE
+            points: 2
+            includes: All colours of concrete and concrete powder
+            match: ["*_CONCRETE", "*_CONCRETE_POWDER"]
+          wool:
+            name: Wool
+            icon: WHITE_WOOL
+            points: 2
+            includes: All colours of wool
+            match: ["*_WOOL"]
+          glass:
+            name: Glass
+            icon: GLASS
+            points: 2
+            includes: Tinted, stained glass and glass panes
+            match: [GLASS, GLASS_PANE, TINTED_GLASS, "*_STAINED_GLASS", "*_STAINED_GLASS_PANE"]
+
+      wood_blocks:
+        name: Wood Blocks
+        icon: OAK_PLANKS
+        types:
+          oak_planks:
+            name: Oak Planks
+            icon: OAK_PLANKS
+            points: 1
+            includes: Oak stairs, slabs, fences and fence gates
+            match: [OAK_PLANKS, OAK_STAIRS, OAK_SLAB, OAK_FENCE, OAK_FENCE_GATE]
+          spruce_planks:
+            name: Spruce Planks
+            icon: SPRUCE_PLANKS
+            points: 1
+            includes: Spruce stairs, slabs, fences and fence gates
+            match: [SPRUCE_PLANKS, SPRUCE_STAIRS, SPRUCE_SLAB, SPRUCE_FENCE, SPRUCE_FENCE_GATE]
+          birch_planks:
+            name: Birch Planks
+            icon: BIRCH_PLANKS
+            points: 1
+            includes: Birch stairs, slabs, fences and fence gates
+            match: [BIRCH_PLANKS, BIRCH_STAIRS, BIRCH_SLAB, BIRCH_FENCE, BIRCH_FENCE_GATE]
+          jungle_planks:
+            name: Jungle Planks
+            icon: JUNGLE_PLANKS
+            points: 1
+            includes: Jungle stairs, slabs, fences and fence gates
+            match: [JUNGLE_PLANKS, JUNGLE_STAIRS, JUNGLE_SLAB, JUNGLE_FENCE, JUNGLE_FENCE_GATE]
+          acacia_planks:
+            name: Acacia Planks
+            icon: ACACIA_PLANKS
+            points: 1
+            includes: Acacia stairs, slabs, fences and fence gates
+            match: [ACACIA_PLANKS, ACACIA_STAIRS, ACACIA_SLAB, ACACIA_FENCE, ACACIA_FENCE_GATE]
+          dark_oak_planks:
+            name: Dark Oak Planks
+            icon: DARK_OAK_PLANKS
+            points: 1
+            includes: Dark oak stairs, slabs, fences and fence gates
+            match: [DARK_OAK_PLANKS, DARK_OAK_STAIRS, DARK_OAK_SLAB, DARK_OAK_FENCE, DARK_OAK_FENCE_GATE]
+          mangrove_planks:
+            name: Mangrove Planks
+            icon: MANGROVE_PLANKS
+            points: 1
+            includes: Mangrove stairs, slabs, fences and fence gates
+            match: [MANGROVE_PLANKS, MANGROVE_STAIRS, MANGROVE_SLAB, MANGROVE_FENCE, MANGROVE_FENCE_GATE]
+          cherry_planks:
+            name: Cherry Planks
+            icon: CHERRY_PLANKS
+            points: 1
+            includes: Cherry stairs, slabs, fences and fence gates
+            match: [CHERRY_PLANKS, CHERRY_STAIRS, CHERRY_SLAB, CHERRY_FENCE, CHERRY_FENCE_GATE]
+          pale_oak_planks:
+            name: Pale Oak Planks
+            icon: PALE_OAK_PLANKS
+            points: 1
+            includes: Pale oak stairs, slabs, fences and fence gates
+            match: [PALE_OAK_PLANKS, PALE_OAK_STAIRS, PALE_OAK_SLAB, PALE_OAK_FENCE, PALE_OAK_FENCE_GATE]
+          bamboo_planks:
+            name: Bamboo Planks
+            icon: BAMBOO_PLANKS
+            points: 1
+            includes: Bamboo mosaic, stairs, slabs, fences and fence gates
+            match: [BAMBOO_PLANKS, BAMBOO_STAIRS, BAMBOO_SLAB, BAMBOO_FENCE, BAMBOO_FENCE_GATE,
+                    BAMBOO_MOSAIC, BAMBOO_MOSAIC_STAIRS, BAMBOO_MOSAIC_SLAB]
+          crimson_planks:
+            name: Crimson Planks
+            icon: CRIMSON_PLANKS
+            points: 1
+            includes: Crimson stairs, slabs, fences and fence gates
+            match: [CRIMSON_PLANKS, CRIMSON_STAIRS, CRIMSON_SLAB, CRIMSON_FENCE, CRIMSON_FENCE_GATE]
+          warped_planks:
+            name: Warped Planks
+            icon: WARPED_PLANKS
+            points: 1
+            includes: Warped stairs, slabs, fences and fence gates
+            match: [WARPED_PLANKS, WARPED_STAIRS, WARPED_SLAB, WARPED_FENCE, WARPED_FENCE_GATE]
+
+  # -----------------------------------------------------------
+  # SLAYING - killing mobs (match = entity types)
+  # -----------------------------------------------------------
+  slaying:
+    unit: 5
+    types:
+      zombie:
+        name: Zombie
+        icon: ZOMBIE_HEAD
+        points: 1
+        includes: Zombies, zombie villagers and husks
+        match: [ZOMBIE, ZOMBIE_VILLAGER, HUSK]
+      skeleton:
+        name: Skeleton
+        icon: SKELETON_SKULL
+        points: 1
+        includes: Skeletons, strays and bogged
+        match: [SKELETON, STRAY, BOGGED]
+      spider:
+        name: Spider
+        icon: SPIDER_EYE
+        points: 1
+        includes: Spiders and cave spiders
+        match: [SPIDER, CAVE_SPIDER]
+      creeper:
+        name: Creeper
+        icon: CREEPER_HEAD
+        points: 2
+        includes: Creepers
+        match: [CREEPER]
+      enderman:
+        name: Enderman
+        icon: ENDER_PEARL
+        points: 5
+        includes: Endermen
+        match: [ENDERMAN]
+      witch:
+        name: Witch
+        icon: GLASS_BOTTLE
+        points: 5
+        includes: Witches
+        match: [WITCH]
+      slime:
+        name: Slime
+        icon: SLIME_BALL
+        points: 2
+        includes: Slimes of every size
+        match: [SLIME]
+      magma_cube:
+        name: Magma Cube
+        icon: MAGMA_CREAM
+        points: 2
+        includes: Magma cubes of every size
+        match: [MAGMA_CUBE]
+      blaze:
+        name: Blaze
+        icon: BLAZE_ROD
+        points: 3
+        includes: Blazes
+        match: [BLAZE]
+      ghast:
+        name: Ghast
+        icon: GHAST_TEAR
+        points: 5
+        includes: Ghasts
+        match: [GHAST]
+      wither_skeleton:
+        name: Wither Skeleton
+        icon: WITHER_SKELETON_SKULL
+        points: 10
+        includes: Wither skeletons
+        match: [WITHER_SKELETON]
+      piglin:
+        name: Piglin
+        icon: PIGLIN_HEAD
+        points: 2
+        includes: Piglins and piglin brutes
+        match: [PIGLIN, PIGLIN_BRUTE]
+      zombified_piglin:
+        name: Zombified Piglin
+        icon: GOLD_NUGGET
+        points: 1
+        includes: Zombified piglins
+        match: [ZOMBIFIED_PIGLIN]
+      hoglin:
+        name: Hoglin
+        icon: COOKED_PORKCHOP
+        points: 3
+        includes: Hoglins and zoglins
+        match: [HOGLIN, ZOGLIN]
+      drowned:
+        name: Drowned
+        icon: TRIDENT
+        points: 2
+        includes: Drowned
+        match: [DROWNED]
+      phantom:
+        name: Phantom
+        icon: PHANTOM_MEMBRANE
+        points: 2
+        includes: Phantoms
+        match: [PHANTOM]
+      guardian:
+        name: Guardian
+        icon: PRISMARINE_SHARD
+        points: 5
+        includes: Guardians
+        match: [GUARDIAN]
+      silverfish:
+        name: Silverfish
+        icon: STONE_BRICKS
+        points: 1
+        includes: Silverfish
+        match: [SILVERFISH]
+      endermite:
+        name: Endermite
+        icon: ENDER_EYE
+        points: 2
+        includes: Endermites
+        match: [ENDERMITE]
+      shulker:
+        name: Shulker
+        icon: SHULKER_SHELL
+        points: 5
+        includes: Shulkers
+        match: [SHULKER]
+      pillager:
+        name: Pillager
+        icon: CROSSBOW
+        points: 3
+        includes: Pillagers
+        match: [PILLAGER]
+      vindicator:
+        name: Vindicator
+        icon: IRON_AXE
+        points: 5
+        includes: Vindicators
+        match: [VINDICATOR]
+      evoker:
+        name: Evoker
+        icon: TOTEM_OF_UNDYING
+        points: 10
+        includes: Evokers
+        match: [EVOKER]
+      ravager:
+        name: Ravager
+        icon: SADDLE
+        points: 10
+        includes: Ravagers
+        match: [RAVAGER]
+      breeze:
+        name: Breeze
+        icon: BREEZE_ROD
+        points: 5
+        includes: Breezes
+        match: [BREEZE]
+      cow:
+        name: Cow
+        icon: LEATHER
+        points: 1
+        includes: Cows and mooshrooms (adults only)
+        match: [COW, MOOSHROOM]
+      pig:
+        name: Pig
+        icon: PORKCHOP
+        points: 1
+        includes: Pigs (adults only)
+        match: [PIG]
+      sheep:
+        name: Sheep
+        icon: WHITE_WOOL
+        points: 1
+        includes: Sheep (adults only)
+        match: [SHEEP]
+      chicken:
+        name: Chicken
+        icon: FEATHER
+        points: 1
+        includes: Chickens (adults only)
+        match: [CHICKEN]
+      rabbit:
+        name: Rabbit
+        icon: RABBIT_FOOT
+        points: 2
+        includes: Rabbits (adults only)
+        match: [RABBIT]
+      squid:
+        name: Squid
+        icon: INK_SAC
+        points: 1
+        includes: Squid and glow squid
+        match: [SQUID, GLOW_SQUID]
+      elder_guardian:
+        name: Elder Guardian
+        icon: PRISMARINE_CRYSTALS
+        points: 500
+        includes: Elder guardians (boss)
+        match: [ELDER_GUARDIAN]
+      ender_dragon:
+        name: Ender Dragon
+        icon: DRAGON_HEAD
+        points: 1000
+        includes: The Ender Dragon (boss)
+        match: [ENDER_DRAGON]
+      wither:
+        name: Wither
+        icon: NETHER_STAR
+        points: 1000
+        includes: The Wither (boss)
+        match: [WITHER]
+      warden:
+        name: Warden
+        icon: ECHO_SHARD
+        points: 1000
+        includes: The Warden (boss)
+        match: [WARDEN]
+
+  # -----------------------------------------------------------
+  # FARMING - breaking fully grown crops
+  # -----------------------------------------------------------
+  farming:
+    unit: 25
+    types:
+      wheat:
+        name: Wheat
+        icon: WHEAT
+        points: 1
+        includes: Fully grown wheat
+        match: [WHEAT]
+      carrots:
+        name: Carrots
+        icon: CARROT
+        points: 1
+        includes: Fully grown carrots
+        match: [CARROTS]
+      potatoes:
+        name: Potatoes
+        icon: POTATO
+        points: 1
+        includes: Fully grown potatoes
+        match: [POTATOES]
+      beetroot:
+        name: Beetroot
+        icon: BEETROOT
+        points: 1
+        includes: Fully grown beetroot
+        match: [BEETROOTS]
+      nether_wart:
+        name: Nether Wart
+        icon: NETHER_WART
+        points: 2
+        includes: Fully grown nether wart
+        match: [NETHER_WART]
+      sweet_berries:
+        name: Sweet Berries
+        icon: SWEET_BERRIES
+        points: 1
+        includes: Fully grown bushes, picked or broken
+        match: [SWEET_BERRY_BUSH]
+      cocoa:
+        name: Cocoa
+        icon: COCOA_BEANS
+        points: 2
+        includes: Fully grown cocoa pods
+        match: [COCOA]
+      melon:
+        name: Melon
+        icon: MELON
+        points: 1
+        includes: Melons grown from stems
+        match: [MELON]
+      pumpkin:
+        name: Pumpkin
+        icon: PUMPKIN
+        points: 1
+        includes: Pumpkins grown from stems
+        match: [PUMPKIN]
+      sugar_cane:
+        name: Sugar Cane
+        icon: SUGAR_CANE
+        points: 1
+        includes: Grown pieces (not the planted base)
+        match: [SUGAR_CANE]
+      cactus:
+        name: Cactus
+        icon: CACTUS
+        points: 1
+        includes: Grown pieces (not the planted base)
+        match: [CACTUS]
+      bamboo:
+        name: Bamboo
+        icon: BAMBOO
+        points: 1
+        includes: Grown pieces (not the planted base)
+        match: [BAMBOO]
+      kelp:
+        name: Kelp
+        icon: KELP
+        points: 1
+        includes: Grown pieces (not the planted base)
+        match: [KELP, KELP_PLANT]
+
+  # -----------------------------------------------------------
+  # FORAGING - mining natural logs, stems, wood and hyphae
+  # -----------------------------------------------------------
+  foraging:
+    unit: 15
+    types:
+      oak:
+        name: Oak
+        icon: OAK_LOG
+        points: 1
+        includes: Oak logs and wood, stripped or not
+        match: [OAK_LOG, OAK_WOOD, STRIPPED_OAK_LOG, STRIPPED_OAK_WOOD]
+      spruce:
+        name: Spruce
+        icon: SPRUCE_LOG
+        points: 1
+        includes: Spruce logs and wood, stripped or not
+        match: [SPRUCE_LOG, SPRUCE_WOOD, STRIPPED_SPRUCE_LOG, STRIPPED_SPRUCE_WOOD]
+      birch:
+        name: Birch
+        icon: BIRCH_LOG
+        points: 1
+        includes: Birch logs and wood, stripped or not
+        match: [BIRCH_LOG, BIRCH_WOOD, STRIPPED_BIRCH_LOG, STRIPPED_BIRCH_WOOD]
+      jungle:
+        name: Jungle
+        icon: JUNGLE_LOG
+        points: 1
+        includes: Jungle logs and wood, stripped or not
+        match: [JUNGLE_LOG, JUNGLE_WOOD, STRIPPED_JUNGLE_LOG, STRIPPED_JUNGLE_WOOD]
+      acacia:
+        name: Acacia
+        icon: ACACIA_LOG
+        points: 1
+        includes: Acacia logs and wood, stripped or not
+        match: [ACACIA_LOG, ACACIA_WOOD, STRIPPED_ACACIA_LOG, STRIPPED_ACACIA_WOOD]
+      dark_oak:
+        name: Dark Oak
+        icon: DARK_OAK_LOG
+        points: 1
+        includes: Dark oak logs and wood, stripped or not
+        match: [DARK_OAK_LOG, DARK_OAK_WOOD, STRIPPED_DARK_OAK_LOG, STRIPPED_DARK_OAK_WOOD]
+      mangrove:
+        name: Mangrove
+        icon: MANGROVE_LOG
+        points: 2
+        includes: Mangrove logs and wood, stripped or not
+        match: [MANGROVE_LOG, MANGROVE_WOOD, STRIPPED_MANGROVE_LOG, STRIPPED_MANGROVE_WOOD]
+      cherry:
+        name: Cherry
+        icon: CHERRY_LOG
+        points: 2
+        includes: Cherry logs and wood, stripped or not
+        match: [CHERRY_LOG, CHERRY_WOOD, STRIPPED_CHERRY_LOG, STRIPPED_CHERRY_WOOD]
+      pale_oak:
+        name: Pale Oak
+        icon: PALE_OAK_LOG
+        points: 2
+        includes: Pale oak logs and wood, stripped or not
+        match: [PALE_OAK_LOG, PALE_OAK_WOOD, STRIPPED_PALE_OAK_LOG, STRIPPED_PALE_OAK_WOOD]
+      crimson:
+        name: Crimson
+        icon: CRIMSON_STEM
+        points: 2
+        includes: Crimson stems and hyphae, stripped or not
+        match: [CRIMSON_STEM, CRIMSON_HYPHAE, STRIPPED_CRIMSON_STEM, STRIPPED_CRIMSON_HYPHAE]
+      warped:
+        name: Warped
+        icon: WARPED_STEM
+        points: 2
+        includes: Warped stems and hyphae, stripped or not
+        match: [WARPED_STEM, WARPED_HYPHAE, STRIPPED_WARPED_STEM, STRIPPED_WARPED_HYPHAE]
+
+  # -----------------------------------------------------------
+  # FISHING - catching fish (treasure and junk never count)
+  # -----------------------------------------------------------
+  fishing:
+    unit: 5
+    types:
+      cod:
+        name: Cod
+        icon: COD
+        points: 2
+        includes: Raw cod caught with a rod
+        match: [COD]
+      salmon:
+        name: Salmon
+        icon: SALMON
+        points: 5
+        includes: Raw salmon caught with a rod
+        match: [SALMON]
+      pufferfish:
+        name: Pufferfish
+        icon: PUFFERFISH
+        points: 10
+        includes: Pufferfish caught with a rod
+        match: [PUFFERFISH]
+      tropical_fish:
+        name: Tropical Fish
+        icon: TROPICAL_FISH
+        points: 50
+        includes: Tropical fish caught with a rod
+        match: [TROPICAL_FISH]

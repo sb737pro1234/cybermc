@@ -1,0 +1,25 @@
+# =============================================================
+# CyberMastery - general settings
+# Types, groups, points per action and level units are in mastery.yml.
+# =============================================================
+
+# Players in creative mode earn no mastery points.
+ignore-creative: true
+
+# How often online players' data is saved, in minutes.
+autosave-minutes: 5
+
+# Announce to the whole server when someone reaches level 45.
+broadcast-max-level: true
+
+placement:
+  # Placing a Blocks-category block gives points (only once per position, ever).
+  enabled: true
+
+  # How much of the block's mining value placing gives, in percent.
+  # Progress is stored in quarter-points, so use 25, 50, 75 or 100.
+  percent: 25
+
+  # The most points one player can earn from placing each type per hour.
+  # Stops players walking around placing blocks to grind levels. 0 = no cap.
+  hourly-cap: 100
