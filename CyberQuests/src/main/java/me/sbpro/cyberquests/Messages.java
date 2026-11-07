@@ -165,8 +165,10 @@ public final class Messages {
                 .append(Component.text(".", NamedTextColor.WHITE));
     }
 
+    /** e.g. "QUESTS » Mine 48 iron ore (12/48)" */
     public static Component bossBarTitle(String questTitle, int progress, int required) {
-        return Component.text(questTitle, CUSTOM)
+        return PREFIX
+                .append(Component.text(questTitle, CUSTOM))
                 .append(Component.text(" (" + progress + "/" + required + ")", NamedTextColor.WHITE));
     }
 
