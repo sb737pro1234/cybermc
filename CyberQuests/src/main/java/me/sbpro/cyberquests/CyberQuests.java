@@ -2,10 +2,12 @@ package me.sbpro.cyberquests;
 
 import me.sbpro.cybercoins.data.CoinManager;
 import me.sbpro.cyberquests.commands.QuestsCommand;
+import me.sbpro.cyberquests.commands.TutorialCommand;
 import me.sbpro.cyberquests.data.DataManager;
 import me.sbpro.cyberquests.menus.MenuListener;
 import me.sbpro.cyberquests.menus.MenuManager;
 import me.sbpro.cyberquests.quests.BlockTrackingListener;
+import me.sbpro.cyberquests.quests.TutorialManager;
 import me.sbpro.cyberquests.quests.PlacedBlockTracker;
 import me.sbpro.cyberquests.quests.QuestBossBarManager;
 import me.sbpro.cyberquests.quests.QuestListener;
@@ -19,6 +21,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class CyberQuests extends JavaPlugin {
     private DataManager dataManager;
     private QuestManager questManager;
+    private TutorialManager tutorial;
     private MenuManager menus;
     private QuestBossBarManager bossBars;
     private PlacedBlockTracker placedBlocks;
@@ -35,6 +38,7 @@ public class CyberQuests extends JavaPlugin {
         saveDefaultConfig();
         dataManager = new DataManager(this);
         questManager = new QuestManager(this);
+        tutorial = new TutorialManager(this, questManager);
         menus = new MenuManager(this);
         bossBars = new QuestBossBarManager(this);
         placedBlocks = new PlacedBlockTracker(this);
@@ -44,6 +48,10 @@ public class CyberQuests extends JavaPlugin {
         QuestsCommand command = new QuestsCommand(this);
         quests.setExecutor(command);
         quests.setTabCompleter(command);
+
+        PluginCommand tutorial = getCommand("tutorial");
+        if (tutorial == null) throw new IllegalStateException("tutorial command missing from plugin.yml");
+        tutorial.setExecutor(new TutorialCommand(this));
 
         Bukkit.getPluginManager().registerEvents(new BlockTrackingListener(placedBlocks), this);
         Bukkit.getPluginManager().registerEvents(new QuestListener(this, questManager, placedBlocks), this);
@@ -57,11 +65,12 @@ public class CyberQuests extends JavaPlugin {
 
         for (Player player : Bukkit.getOnlinePlayers()) questManager.loadPlayer(player);
 
-        // Once per second: unlock expired slot cooldowns and keep an open quest list's timers up to date.
+        // Once per second: unlock expired slot cooldowns and keep an open quest list / Tutorial menu up to date.
         Bukkit.getScheduler().runTaskTimer(this, () -> {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 questManager.processCooldowns(player);
                 menus.refreshQuestListIfOpen(player);
+                menus.refreshTutorialIfOpen(player);
             }
         }, 20L, 20L);
 
@@ -88,6 +97,7 @@ public class CyberQuests extends JavaPlugin {
 
     public DataManager getDataManager() { return dataManager; }
     public QuestManager getQuestManager() { return questManager; }
+    public TutorialManager getTutorial() { return tutorial; }
     public MenuManager getMenus() { return menus; }
     public QuestBossBarManager getBossBars() { return bossBars; }
     public PlacedBlockTracker getPlacedBlocks() { return placedBlocks; }

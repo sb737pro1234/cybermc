@@ -24,17 +24,29 @@ public class MenuListener implements Listener {
         if (event.getClickedInventory() == null || event.getClickedInventory() != event.getView().getTopInventory()) return;
 
         int slot = event.getRawSlot();
-        if (holder.getType() == QuestMenuHolder.Type.MAIN) {
-            if (slot == MenuManager.QUEST_LIST_BUTTON_SLOT) {
-                plugin.getMenus().openQuestList(player);
-            } else if (slot == MenuManager.COIN_SHOP_BUTTON_SLOT) {
-                if (!player.hasPermission("cyber.coins.shop")) return;
-                player.openInventory(me.sbpro.cybercoins.gui.MenuFactory.createShopMenu(plugin.getCoinsPlugin(), player));
+        if (holder.getType() == QuestMenuHolder.Type.HUB) {
+            if (slot == MenuManager.TUTORIAL_BUTTON_SLOT) {
+                plugin.getMenus().openTutorial(player);
+            } else if (slot == MenuManager.QUEST_BOARD_BUTTON_SLOT) {
+                if (plugin.getQuestManager().getData(player.getUniqueId()).isBoardUnlocked()) {
+                    plugin.getMenus().openQuestList(player);
+                } else {
+                    player.sendMessage(Messages.QUEST_BOARD_LOCKED);
+                }
             }
             return;
         }
 
+        if (holder.getType() == QuestMenuHolder.Type.TUTORIAL) {
+            if (slot == MenuManager.TUTORIAL_BACK_SLOT) plugin.getMenus().openHub(player);
+            return;
+        }
+
         if (holder.getType() == QuestMenuHolder.Type.LIST) {
+            if (slot == MenuManager.QUEST_LIST_BACK_SLOT) {
+                plugin.getMenus().openHub(player);
+                return;
+            }
             PlayerData data = plugin.getQuestManager().getData(player.getUniqueId());
             long now = System.currentTimeMillis();
             for (int i = 0; i < PlayerData.SLOT_COUNT; i++) {

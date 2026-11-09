@@ -1,6 +1,7 @@
 package me.sbpro.cyberquests.quests;
 
 import me.sbpro.cyberquests.CyberQuests;
+import me.sbpro.cyberquests.Tutorial;
 import me.sbpro.cyberquests.Quests;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
@@ -12,7 +13,7 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.*;
 
 /**
- * Remembers which mining-quest blocks were placed by players so they can be ignored when broken.
+ * Remembers which mining-quest blocks (Quest Board and Tutorial) were placed by players so they can be ignored when broken.
  *
  * Positions are stored in each chunk's persistent data container, so the information survives restarts
  * and is removed together with the chunk. Only materials used by BREAK_BLOCK quests are tracked, which
@@ -34,7 +35,9 @@ public class PlacedBlockTracker {
 
     public PlacedBlockTracker(CyberQuests plugin) {
         this.key = new NamespacedKey(plugin, "placed_blocks");
-        for (QuestDefinition quest : Quests.QUESTS.values()) {
+        List<QuestDefinition> quests = new ArrayList<>(Quests.QUESTS.values());
+        for (TutorialStep step : Tutorial.STEPS) quests.add(step.quest());
+        for (QuestDefinition quest : quests) {
             if (quest.getType() != QuestType.BREAK_BLOCK) continue;
             for (String target : quest.getTargets()) {
                 Material material = Material.matchMaterial(target);

@@ -32,6 +32,7 @@ public class QuestManager {
     public void loadPlayer(Player player) {
         getData(player.getUniqueId());
         processCooldowns(player);
+        plugin.getTutorial().refreshBossBar(player);
     }
 
     public void savePlayer(Player player) {
@@ -42,7 +43,7 @@ public class QuestManager {
 
     public void saveAll() { plugin.getDataManager().saveAll(players.values()); dirty.clear(); }
 
-    public void unloadPlayer(Player player) { savePlayer(player); players.remove(player.getUniqueId()); }
+    public void unloadPlayer(Player player) { plugin.getBossBars().hideTutorial(player); savePlayer(player); players.remove(player.getUniqueId()); }
 
     /** Writes progress changes that have not been saved yet (called periodically). */
     public void flushDirty() {
@@ -56,15 +57,19 @@ public class QuestManager {
         if (!toSave.isEmpty()) plugin.getDataManager().saveAll(toSave);
     }
 
-    private void saveNow(PlayerData data) {
+    void saveNow(PlayerData data) {
         plugin.getDataManager().save(data);
         dirty.remove(data.getUuid());
     }
 
-    private void markDirty(PlayerData data) { dirty.add(data.getUuid()); }
+    void markDirty(PlayerData data) { dirty.add(data.getUuid()); }
 
-    /** Fills slots that were never assigned (new players, resets, unknown quests). Slots with a cooldown are left alone. */
-    private void fillNewSlots(PlayerData data) {
+    /**
+     * Fills slots that were never assigned (new players, resets, unknown quests). Slots with a cooldown are left alone.
+     * Nothing is assigned while the Quest Board is still locked behind the Tutorial.
+     */
+    void fillNewSlots(PlayerData data) {
+        if (!data.isBoardUnlocked()) return;
         for (int i = 0; i < PlayerData.SLOT_COUNT; i++) {
             if (data.getSlot(i) != null || data.getCooldownUntil(i) != 0L) continue;
             QuestDefinition next = getRandomAvailableQuest(data);
@@ -90,7 +95,7 @@ public class QuestManager {
      */
     public void processCooldowns(Player player) {
         PlayerData data = players.get(player.getUniqueId());
-        if (data == null) return;
+        if (data == null || !data.isBoardUnlocked()) return;
         long now = System.currentTimeMillis();
         boolean changed = false;
         for (int i = 0; i < PlayerData.SLOT_COUNT; i++) {
@@ -116,7 +121,7 @@ public class QuestManager {
 
     /** True when this slot holds a Normal quest that may be Easified (never on cooldown, never already Easy). */
     public boolean canEasify(PlayerData data, int slot) {
-        if (slot < 0 || slot >= PlayerData.SLOT_COUNT) return false;
+        if (slot < 0 || slot >= PlayerData.SLOT_COUNT || !data.isBoardUnlocked()) return false;
         if (data.isOnCooldown(slot, System.currentTimeMillis())) return false;
         ActiveQuest active = data.getSlot(slot);
         return active != null && !active.isEasy();
@@ -180,17 +185,24 @@ public class QuestManager {
         return true;
     }
 
+    /** Wipes all quest data, including the Tutorial (the player starts again at step 1 with the Quest Board locked). */
     public void reset(Player target) {
         PlayerData data = new PlayerData(target.getUniqueId());
         fillNewSlots(data);
         players.put(target.getUniqueId(), data);
         plugin.getBossBars().hide(target);
+        plugin.getTutorial().refreshBossBar(target);
         saveNow(data);
     }
 
     public void addProgress(Player player, QuestType type, String target, int amount) {
         if (amount <= 0) return;
         PlayerData data = getData(player.getUniqueId());
+        // Until the Tutorial is finished only the current Tutorial step can progress; the Quest Board is locked.
+        if (!data.isBoardUnlocked()) {
+            plugin.getTutorial().addProgress(player, data, type, target, amount);
+            return;
+        }
         List<Integer> completed = new ArrayList<>();
         boolean changed = false;
         for (int i = 0; i < PlayerData.SLOT_COUNT; i++) {

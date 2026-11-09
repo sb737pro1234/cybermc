@@ -1,12 +1,11 @@
 ## ToDo:
 ### Change:
 - CyberCoins
--  CyberCombat
+- CyberCombat
 - CyberEnchants
 - CyberFastPlace
 - CyberHomes
 - CyberProtect
-- CyberQuests
 - CyberStaff
 - CyberSuperTools
 - CyberTeleport

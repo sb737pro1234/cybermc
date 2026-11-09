@@ -1,5 +1,6 @@
 package me.sbpro.cyberquests.data;
 
+import me.sbpro.cyberquests.Tutorial;
 import me.sbpro.cyberquests.quests.ActiveQuest;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +17,20 @@ public class PlayerData {
     private final ActiveQuest[] slots = new ActiveQuest[SLOT_COUNT];
     private final long[] cooldownUntil = new long[SLOT_COUNT];
 
+    /** Index of the current Tutorial step; equal to {@link Tutorial#size()} once the Tutorial is finished. */
+    private int tutorialStep;
+    private int tutorialProgress;
+
     public PlayerData(UUID uuid) { this.uuid = uuid; }
     public UUID getUuid() { return uuid; }
+
+    public int getTutorialStep() { return tutorialStep; }
+    public void setTutorialStep(int step) { tutorialStep = Math.max(0, Math.min(Tutorial.size(), step)); }
+    public int getTutorialProgress() { return tutorialProgress; }
+    public void setTutorialProgress(int progress) { tutorialProgress = Math.max(0, progress); }
+
+    /** The Quest Board is locked until every Tutorial step is completed. */
+    public boolean isBoardUnlocked() { return tutorialStep >= Tutorial.size(); }
 
     public ActiveQuest getSlot(int slot) { return validSlot(slot) ? slots[slot] : null; }
     public void setSlot(int slot, ActiveQuest quest) { if (validSlot(slot)) slots[slot] = quest; }

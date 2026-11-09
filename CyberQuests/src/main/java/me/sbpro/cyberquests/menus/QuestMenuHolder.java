@@ -6,7 +6,7 @@ import org.bukkit.inventory.InventoryHolder;
 /** Identifies the quest menus so listeners never have to compare inventory titles. */
 public final class QuestMenuHolder implements InventoryHolder {
 
-    public enum Type { MAIN, LIST, EASIFY_CONFIRM }
+    public enum Type { HUB, TUTORIAL, LIST, EASIFY_CONFIRM }
 
     private final Type type;
     private Inventory inventory;

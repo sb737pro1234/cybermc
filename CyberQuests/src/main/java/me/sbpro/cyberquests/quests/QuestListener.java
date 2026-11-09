@@ -1,5 +1,6 @@
 package me.sbpro.cyberquests.quests;
 
+import me.sbpro.cyberquests.Aliases;
 import me.sbpro.cyberquests.CyberQuests;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -16,6 +17,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.FurnaceExtractEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
@@ -124,5 +126,21 @@ public class QuestListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onEat(PlayerItemConsumeEvent event) {
         questManager.addProgress(event.getPlayer(), QuestType.EAT_ITEM, event.getItem().getType().name(), 1);
+    }
+
+    /**
+     * Command quests. Detects any typed command, including ones from other plugins (/rtp, /shop, /sell).
+     * Runs even if another plugin cancels the command (e.g. a cooldown), since the player still used it.
+     */
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onCommand(PlayerCommandPreprocessEvent event) {
+        String message = event.getMessage();
+        if (message.length() < 2) return;
+        String label = message.substring(1).split(" ", 2)[0];
+        int namespace = label.indexOf(':');
+        if (namespace >= 0) label = label.substring(namespace + 1);
+        if (label.isEmpty()) return;
+        // Aliases (e.g. /sellall) count as their main command (/sell); see Aliases.java.
+        questManager.addProgress(event.getPlayer(), QuestType.RUN_COMMAND, Aliases.resolve(label), 1);
     }
 }

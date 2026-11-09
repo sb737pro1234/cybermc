@@ -25,6 +25,10 @@ public class DataManager {
         PlayerData playerData = new PlayerData(uuid);
         String path = "players." + uuid;
 
+        // Tutorial: players.<uuid>.tutorial.{step,progress}. Missing = step 0, so every player starts the Tutorial.
+        playerData.setTutorialStep(data.getInt(path + ".tutorial.step", 0));
+        playerData.setTutorialProgress(data.getInt(path + ".tutorial.progress", 0));
+
         // Current format: players.<uuid>.slots.<0-3>.{id,progress,easy,cooldown-until}
         ConfigurationSection slots = data.getConfigurationSection(path + ".slots");
         if (slots != null) {
@@ -64,6 +68,8 @@ public class DataManager {
     private void write(PlayerData playerData) {
         String path = "players." + playerData.getUuid();
         data.set(path, null);
+        data.set(path + ".tutorial.step", playerData.getTutorialStep());
+        data.set(path + ".tutorial.progress", playerData.getTutorialProgress());
         for (int i = 0; i < PlayerData.SLOT_COUNT; i++) {
             ActiveQuest quest = playerData.getSlot(i);
             long cooldown = playerData.getCooldownUntil(i);

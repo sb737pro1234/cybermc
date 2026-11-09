@@ -1,9 +1,12 @@
 package me.sbpro.cyberquests.menus;
 
 import me.sbpro.cyberquests.CyberQuests;
+import me.sbpro.cyberquests.Tutorial;
 import me.sbpro.cyberquests.Messages;
 import me.sbpro.cyberquests.data.PlayerData;
 import me.sbpro.cyberquests.quests.ActiveQuest;
+import me.sbpro.cyberquests.quests.TutorialStep;
+import net.kyori.adventure.text.format.NamedTextColor;
 import me.sbpro.cyberquests.quests.QuestDefinition;
 import me.sbpro.cyberquests.quests.QuestManager;
 import org.bukkit.Bukkit;
@@ -20,10 +23,23 @@ import java.util.*;
 public class MenuManager {
     public static final int[] QUEST_SLOTS = {10, 12, 14, 16};
     public static final int[] EASIFY_SLOTS = {19, 21, 23, 25};
-    /** Slot of the Quest List button in the main menu. */
-    public static final int QUEST_LIST_BUTTON_SLOT = 11;
-    /** Slot of the Coin Shop button in the main menu. */
-    public static final int COIN_SHOP_BUTTON_SLOT = 15;
+    /** Back button in the quest list (bottom row, centre). */
+    public static final int QUEST_LIST_BACK_SLOT = 31;
+
+    /** Hub buttons. */
+    public static final int TUTORIAL_BUTTON_SLOT = 11;
+    public static final int QUEST_BOARD_BUTTON_SLOT = 15;
+
+    /**
+     * Tutorial menu layout (54 slots): info book on top, steps in three rows of seven, and the Quest Board goal
+     * in the slot straight after the last step. Holds up to 20 steps plus the goal.
+     */
+    public static final int TUTORIAL_INFO_SLOT = 4;
+    public static final int[] TUTORIAL_STEP_SLOTS = {
+            10, 11, 12, 13, 14, 15, 16,
+            19, 20, 21, 22, 23, 24, 25,
+            28, 29, 30, 31, 32, 33, 34};
+    public static final int TUTORIAL_BACK_SLOT = 49;
 
     private record PendingEasify(int slot, String questId) {}
 
@@ -32,17 +48,72 @@ public class MenuManager {
 
     public MenuManager(CyberQuests plugin) { this.plugin = plugin; }
 
-    public void openMain(Player player) {
-        Inventory inv = createMenu(QuestMenuHolder.Type.MAIN, 27, Messages.QUEST_MENU_TITLE);
-        inv.setItem(QUEST_LIST_BUTTON_SLOT, button(Material.WRITABLE_BOOK, Messages.ACTIVE_QUESTS_NAME, Messages.ACTIVE_QUESTS_LORE));
-        inv.setItem(COIN_SHOP_BUTTON_SLOT, button(Material.EMERALD, Messages.COIN_SHOP_NAME, Messages.COIN_SHOP_LORE));
+    /** The /quests hub: Tutorial (progression quests) and the Quest Board (locked until the Tutorial is finished). */
+    public void openHub(Player player) {
+        PlayerData data = plugin.getQuestManager().getData(player.getUniqueId());
+        Inventory inv = createMenu(QuestMenuHolder.Type.HUB, 27, Messages.HUB_MENU_TITLE);
+        inv.setItem(TUTORIAL_BUTTON_SLOT, button(Material.FILLED_MAP, Messages.TUTORIAL_NAME,
+                Messages.tutorialButtonLore(data.getTutorialStep(), Tutorial.size())));
+        inv.setItem(QUEST_BOARD_BUTTON_SLOT, data.isBoardUnlocked()
+                ? button(Material.WRITABLE_BOOK, Messages.QUEST_BOARD_NAME, Messages.QUEST_BOARD_LORE)
+                : button(Material.WRITABLE_BOOK, Messages.QUEST_BOARD_LOCKED_NAME, Messages.QUEST_BOARD_LOCKED_LORE));
         player.openInventory(inv);
+    }
+
+    public void openTutorial(Player player) {
+        Inventory inv = createMenu(QuestMenuHolder.Type.TUTORIAL, 54, Messages.TUTORIAL_MENU_TITLE);
+        inv.setItem(TUTORIAL_INFO_SLOT, button(Material.BOOK, Messages.TUTORIAL_INFO_NAME, Messages.TUTORIAL_INFO_LORE));
+        inv.setItem(TUTORIAL_BACK_SLOT, backButton());
+        populateTutorial(inv, player);
+        player.openInventory(inv);
+    }
+
+    /** Completed steps are lime glass, the current step shows its icon and progress, later steps are gray glass. */
+    public void populateTutorial(Inventory inv, Player player) {
+        PlayerData data = plugin.getQuestManager().getData(player.getUniqueId());
+        int current = data.getTutorialStep();
+        int shown = Math.min(Tutorial.size(), TUTORIAL_STEP_SLOTS.length - 1); // keep one slot for the goal
+        for (int i = 0; i < shown; i++) {
+            TutorialStep step = Tutorial.get(i);
+            QuestDefinition quest = step.quest();
+            ItemStack item;
+            if (i < current) {
+                item = button(Material.LIME_STAINED_GLASS_PANE,
+                        Messages.tutorialStepName(i + 1, quest.getTitle(), NamedTextColor.GREEN),
+                        Messages.tutorialCompletedLore(quest.getDescription(), step.rewardLabel()));
+            } else if (i == current) {
+                item = button(step.icon(),
+                        Messages.tutorialStepName(i + 1, quest.getTitle(), Messages.CUSTOM),
+                        Messages.tutorialCurrentLore(quest.getDescription(), data.getTutorialProgress(),
+                                quest.getRequiredAmount(), step.rewardLabel()));
+            } else {
+                item = button(Material.GRAY_STAINED_GLASS_PANE,
+                        Messages.tutorialStepName(i + 1, quest.getTitle(), NamedTextColor.GRAY),
+                        Messages.tutorialLockedLore(quest.getDescription(), step.rewardLabel()));
+            }
+            inv.setItem(TUTORIAL_STEP_SLOTS[i], item);
+        }
+        inv.setItem(TUTORIAL_STEP_SLOTS[shown], data.isBoardUnlocked()
+                ? button(Material.WRITABLE_BOOK, Messages.QUEST_BOARD_NAME, Messages.QUEST_BOARD_GOAL_LORE)
+                : button(Material.WRITABLE_BOOK, Messages.QUEST_BOARD_LOCKED_NAME, Messages.QUEST_BOARD_GOAL_LOCKED_LORE));
+    }
+
+    /** Live-updates progress when the player is looking at the Tutorial menu. */
+    public void refreshTutorialIfOpen(Player player) {
+        Inventory top = player.getOpenInventory().getTopInventory();
+        if (!(top.getHolder() instanceof QuestMenuHolder holder) || holder.getType() != QuestMenuHolder.Type.TUTORIAL) return;
+        populateTutorial(top, player);
     }
 
     public void openQuestList(Player player) {
         Inventory inv = createMenu(QuestMenuHolder.Type.LIST, 36, Messages.QUEST_LIST_TITLE);
+        inv.setItem(QUEST_LIST_BACK_SLOT, backButton());
         populateQuestList(inv, player);
         player.openInventory(inv);
+    }
+
+    private ItemStack backButton() {
+        return button(Material.ARROW, Messages.BACK_NAME, Messages.BACK_LORE);
     }
 
     /** Fills (or refreshes) the quest list. Cooldown slots show a barrier and have no Easify button. */
