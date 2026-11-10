@@ -29,7 +29,6 @@ import org.bukkit.entity.Player;
 public final class AllianceCommand
 implements CommandExecutor,
 TabCompleter {
-    private static final int MAX_MEMBERS = 5;
     private static final Pattern HEX_PATTERN = Pattern.compile("(?i)(#[0-9a-f]{6}|&x(&[0-9a-f]){6})");
     private static final Pattern AMPERSAND_COLOR_PATTERN = Pattern.compile("(?i)&[0-9a-fk-or]");
     private static final Pattern VALID_NAME_PATTERN = Pattern.compile("[A-Za-z0-9 _-]+");
@@ -219,7 +218,7 @@ TabCompleter {
             player.sendMessage(Messages.OWNER_ONLY_INVITE);
             return;
         }
-        if (alliance.getMembers().size() >= 5) {
+        if (alliance.getMembers().size() >= Alliance.MAX_MEMBERS) {
             player.sendMessage(Messages.ALLIANCE_FULL);
             return;
         }
@@ -255,7 +254,7 @@ TabCompleter {
             return;
         }
         Alliance alliance = allianceOptional.get();
-        if (alliance.getMembers().size() >= 5) {
+        if (alliance.getMembers().size() >= Alliance.MAX_MEMBERS) {
             this.inviteService.clearInvite(player.getUniqueId());
             player.sendMessage(Messages.ALLIANCE_FULL);
             return;

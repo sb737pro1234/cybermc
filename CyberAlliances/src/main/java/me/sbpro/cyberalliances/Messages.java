@@ -1,5 +1,6 @@
 package me.sbpro.cyberalliances;
 
+import me.sbpro.cyberalliances.model.Alliance;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
@@ -90,7 +91,7 @@ public final class Messages {
             .append(Component.text("That alliance already exists.", NamedTextColor.RED));
 
     public static final Component ALLIANCE_FULL = PREFIX
-            .append(Component.text("That alliance already has the maximum of 5 members.", NamedTextColor.RED));
+            .append(Component.text("That alliance already has the maximum of " + Alliance.MAX_MEMBERS + " members.", NamedTextColor.RED));
 
     public static final Component OWNER_ONLY_INVITE = PREFIX
             .append(Component.text("Only the alliance owner can invite players.", NamedTextColor.RED));

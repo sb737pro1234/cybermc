@@ -6,6 +6,9 @@ import java.util.Set;
 import java.util.UUID;
 
 public final class Alliance {
+    /** Most players an alliance can hold, owner included. */
+    public static final int MAX_MEMBERS = 5;
+
     private final String name;
     private final UUID owner;
     private final Set<UUID> members;

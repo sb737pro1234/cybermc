@@ -29,4 +29,25 @@ public final class PlaytimeFormatter {
 
         return builder.toString();
     }
+
+    /**
+     * Compact form for placeholders: "5m", "1h 10m" or "2d 5h".
+     * Once days are shown, minutes are dropped (rounded down); zero hours are hidden.
+     */
+    public static String formatShort(long ticks) {
+        long totalMinutes = Math.max(0, ticks) / 20L / 60L;
+        long days = totalMinutes / (60L * 24L);
+        long hours = (totalMinutes / 60L) % 24L;
+        long minutes = totalMinutes % 60L;
+
+        if (days > 0) {
+            return hours > 0 ? days + "d " + hours + "h" : days + "d";
+        }
+
+        if (hours > 0) {
+            return hours + "h " + minutes + "m";
+        }
+
+        return minutes + "m";
+    }
 }

@@ -35,6 +35,7 @@ import me.sbpro.cybersurvival.commands.baltop.BalTopCommand;
 import me.sbpro.cybersurvival.commands.baltop.BalTopListener;
 import me.sbpro.cybersurvival.commands.baltop.BalTopMenu;
 import me.sbpro.cybersurvival.listeners.HidePlayerListener;
+import me.sbpro.cybersurvival.placeholder.SurvivalPlaceholderExpansion;
 
 public final class CyberSurvival extends JavaPlugin implements Listener {
 
@@ -167,6 +168,12 @@ public final class CyberSurvival extends JavaPlugin implements Listener {
         getCommand("playtop").setExecutor(new PlayTopCommand(this));
         getServer().getPluginManager().registerEvents(new PlayTopListener(), this);
         getCommand("playtime").setExecutor(new PlayTimeCommand());
+
+        // PlaceholderAPI
+        if (getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            new SurvivalPlaceholderExpansion(this).register();
+            getLogger().info("PlaceholderAPI expansion registered: %cybersurvival%.");
+        }
 
         getCommand("reboot").setExecutor(new RebootCommand(this));
          getServer().getPluginManager().registerEvents(new StartupJoinGate(this), this);

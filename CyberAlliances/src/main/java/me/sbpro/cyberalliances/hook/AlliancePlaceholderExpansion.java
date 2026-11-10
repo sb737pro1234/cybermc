@@ -4,6 +4,7 @@ package me.sbpro.cyberalliances.hook;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import me.sbpro.cyberalliances.CyberAlliances;
 import me.sbpro.cyberalliances.data.AllianceStorage;
+import me.sbpro.cyberalliances.model.Alliance;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,12 +20,12 @@ extends PlaceholderExpansion {
 
     @NotNull
     public String getIdentifier() {
-        return "alliances";
+        return "cyberalliances";
     }
 
     @NotNull
     public String getAuthor() {
-        return "alex";
+        return "Cyber";
     }
 
     @NotNull
@@ -40,8 +41,19 @@ extends PlaceholderExpansion {
         if (player == null) {
             return "";
         }
+        // %cyberalliances_name%
         if (params.equalsIgnoreCase("name")) {
             return this.allianceStorage.getAllianceByPlayer(player.getUniqueId()).map(alliance -> alliance.getName()).orElse("None");
+        }
+        // %cyberalliances_members%
+        if (params.equalsIgnoreCase("members")) {
+            return this.allianceStorage.getAllianceByPlayer(player.getUniqueId())
+                    .map(alliance -> String.valueOf(alliance.getMembers().size()))
+                    .orElse("0");
+        }
+        // %cyberalliances_members_max%
+        if (params.equalsIgnoreCase("members_max")) {
+            return String.valueOf(Alliance.MAX_MEMBERS);
         }
         return "";
     }
