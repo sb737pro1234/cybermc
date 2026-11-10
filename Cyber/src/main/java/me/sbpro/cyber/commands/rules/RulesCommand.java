@@ -1,7 +1,8 @@
 package me.sbpro.cyber.commands.rules;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.sbpro.cyber.Messages;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,16 +26,27 @@ public class RulesCommand implements CommandExecutor {
         Inventory inventory = player.getServer().createInventory(holder, 27, Messages.RULES_TITLE);
         holder.setInventory(inventory);
 
-        ItemStack book = new ItemStack(Material.BOOK);
-        ItemMeta meta = book.getItemMeta();
-        meta.displayName(Messages.RULES_BOOK_NAME);
-        meta.lore(Messages.RULES_LORE);
-        book.setItemMeta(meta);
-
-        inventory.setItem(13, book);
+        for (RulesCategory category : RulesCategory.values()) {
+            inventory.setItem(category.slot(), createItem(category));
+        }
 
         player.openInventory(inventory);
 
         return true;
+    }
+
+    private static ItemStack createItem(RulesCategory category) {
+        ItemStack item = new ItemStack(category.material());
+        ItemMeta meta = item.getItemMeta();
+        meta.displayName(category.displayName());
+        meta.lore(category.lore());
+        item.setItemMeta(meta);
+
+        // Hide the shulker box's "Empty" contents line
+        item.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                .addHiddenComponents(DataComponentTypes.CONTAINER)
+                .build());
+
+        return item;
     }
 }

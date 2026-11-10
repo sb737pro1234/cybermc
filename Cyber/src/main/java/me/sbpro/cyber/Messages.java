@@ -492,49 +492,94 @@ public final class Messages {
             .append(Component.text("Cancelled - items returned.", NamedTextColor.RED));
 
     // Rules menu
-    private static final TextColor RULES_COLOR = TextColor.color(0x2979FF);
+    private static final TextColor RULES_COLOR = TextColor.color(0x00AAFF);
 
-    public static final Component RULES_TITLE = Component.text("Rules", RULES_COLOR);
+    public static final Component RULES_TITLE = Component.text("Rules", RULES_COLOR, TextDecoration.BOLD);
 
-    public static final Component RULES_BOOK_NAME = Component.text("Rules", RULES_COLOR)
-            .decoration(TextDecoration.ITALIC, false);
+    // Section colours match their shulker box (purple / orange / cyan)
+    public static final TextColor DISCORD_RULES_COLOR = TextColor.color(0x8932B8);
+    public static final TextColor CHAT_RULES_COLOR = TextColor.color(0xF9801D);
+    public static final TextColor GAME_RULES_COLOR = TextColor.color(0x3AB3DA);
 
-    private static final List<String> RULES = List.of(
-            "No chat spam, symbols or caps abuse",
-            "English only, no swearing or inappropriate topics",
+    private static final String RULE_BULLET = "✦ ";
+
+    // Discord Rules (purple shulker)
+    public static final Component DISCORD_RULES_NAME = rulesName("DISCORD RULES", DISCORD_RULES_COLOR);
+
+    public static final List<Component> DISCORD_RULES_LORE = rulesLore(DISCORD_RULES_COLOR, List.of(
+            "No impersonation or swearing",
+            "No harassment, bullying or toxicity",
+            "No doxing, threats or leaking info",
+            "No NSFW names, statuses or pfps",
+            "No spamming or advertising",
+            "No scamming, politics or bug abuse",
+            "Respect and listen to staff",
+            "Only ping the moderation team",
+            "English only in public chats",
+            "Follow Discord's TOS"
+    ));
+
+    // Chat Rules (orange shulker)
+    public static final Component CHAT_RULES_NAME = rulesName("CHAT RULES", CHAT_RULES_COLOR);
+
+    public static final List<Component> CHAT_RULES_LORE = rulesLore(CHAT_RULES_COLOR, List.of(
+            "No spam, caps or symbol abuse",
+            "English only in public chat",
+            "No swearing or bypassing the filter",
+            "No inappropriate or political topics",
+            "No fake messages or chat scams",
+            "No hackusating - use /report",
             "No disrespect, harassment or toxicity",
-            "No scamming, fake messages or impersonation",
-            "No advertising or hackusating",
-            "No disallowed mods, hacking, ESP or Xray",
-            "No glitch/exploit abuse or duping",
-            "No lag machines, bad builds or casinos",
-            "No alt abuse, autoclicking or macros",
-            "No teleport trapping, command or report abuse",
-            "No racism, threats, IRL scamming or leaking info"
-    );
+            "No advertising or impersonation",
+            "No encouraging others to break rules"
+    ));
 
-    public static final List<Component> RULES_LORE = rulesLore();
+    // Game Rules (cyan shulker)
+    public static final Component GAME_RULES_NAME = rulesName("GAME RULES", GAME_RULES_COLOR);
+
+    public static final List<Component> GAME_RULES_LORE = rulesLore(GAME_RULES_COLOR, List.of(
+            "No hacks, ESP, XRay or disallowed mods",
+            "No glitch abuse or duping",
+            "No lag machines or player casinos",
+            "No inappropriate builds, skins or names",
+            "No autoclicking, macros or account sharing",
+            "Max 3 alts - no alt boosting",
+            "No teleport trapping",
+            "No scamming or IRL trading",
+            "No threats, racism or discrimination",
+            "No command or report abuse"
+    ));
 
     public static final Component RULES_LINK_LINE = Component.text(
             "----------------------------------------",
             TextColor.color(0x555555)
     );
 
-    public static final Component RULES_LINK_MESSAGE = Component.text()
-            .append(Component.text("◆ ", CUSTOM))
-            .append(Component.text("[CLICK HERE]", CUSTOM, TextDecoration.BOLD))
-            .append(Component.text(" Open the Cyber rules.", NamedTextColor.WHITE))
-            .build();
+    /** Chat line with a [CLICK HERE] button; the caller attaches the URL click event. */
+    public static Component rulesLink(String document, TextColor color) {
+        return Component.text()
+                .append(Component.text(RULE_BULLET, color))
+                .append(Component.text("[CLICK HERE]", color, TextDecoration.BOLD))
+                .append(Component.text(" Open the " + document + " rules.", NamedTextColor.WHITE))
+                .hoverEvent(Component.text("Open the " + document + " rules document", color))
+                .build();
+    }
 
-    private static List<Component> rulesLore() {
+    private static Component rulesName(String name, TextColor color) {
+        return Component.text(name, color, TextDecoration.BOLD)
+                .decoration(TextDecoration.ITALIC, false);
+    }
+
+    private static List<Component> rulesLore(TextColor color, List<String> rules) {
         List<Component> lore = new ArrayList<>();
-        for (String rule : RULES) {
-            lore.add(Component.text("◆ ", RULES_COLOR)
+        lore.add(Component.empty());
+        for (String rule : rules) {
+            lore.add(Component.text(RULE_BULLET, color)
                     .append(Component.text(rule, NamedTextColor.WHITE))
                     .decoration(TextDecoration.ITALIC, false));
         }
         lore.add(Component.empty());
-        lore.add(Component.text("For more details on the rules. Click here.", RULES_COLOR)
+        lore.add(Component.text("Click to view the full list.", NamedTextColor.YELLOW)
                 .decoration(TextDecoration.ITALIC, false));
         return List.copyOf(lore);
     }

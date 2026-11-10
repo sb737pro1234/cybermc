@@ -17,6 +17,7 @@ import me.sbpro.cyber.commands.message.MessageManager;
 import me.sbpro.cyber.commands.message.MsgToggleCommand;
 import me.sbpro.cyber.commands.message.ReplyCommand;
 import me.sbpro.cyber.commands.misc.*;
+import me.sbpro.cyber.commands.rules.RulesCategory;
 import me.sbpro.cyber.commands.rules.RulesCommand;
 import me.sbpro.cyber.commands.rules.RulesListener;
 import me.sbpro.cyber.commands.say.SayCommand;
@@ -139,7 +140,14 @@ public final class Cyber extends JavaPlugin implements Listener {
                 Component.text("Server Rules")
                         .color(TextColor.fromHexString("#00AAFF"))
                         .decorate(TextDecoration.BOLD),
-                URI.create("https://docs.google.com/document/d/1wZWo1C1_vQj826vAjiInfvQced7srQfRcTJrb9H-BoQ/edit?usp=sharing")
+                URI.create(RulesCategory.MINECRAFT_RULES_URL)
+        );
+
+        getServer().getServerLinks().addLink(
+                Component.text("Discord Rules")
+                        .color(Messages.DISCORD_RULES_COLOR)
+                        .decorate(TextDecoration.BOLD),
+                URI.create(RulesCategory.DISCORD_RULES_URL)
         );
     }
 
