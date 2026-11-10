@@ -1,3 +1,21 @@
+# ============================================================
+# CyberStaff punishments
+# ============================================================
+# Based on the CyberMC Minecraft Rules document.
+#
+# tiers:   punishment ladders. Each new offence in a tier moves
+#          the player one step up that tier's ladder.
+#          type: WARNING, MUTE or BAN
+#          duration: m, h, d, w, mo, y or "permanent"
+#
+# reasons: what staff pick with /offend <player> <reason>.
+#          "name" is what staff type / tab-complete and what the
+#          player sees. "tier" must be one of the tiers below.
+#
+# Staff can also give a custom reason with a tier:
+#   /offend <player> #GAME_1 <your own reason>
+# ============================================================
+
 tiers:
   CHAT_1:
     display-name: "Chat 1"
@@ -114,30 +132,47 @@ tiers:
         duration: "permanent"
 
 reasons:
+
+  # ----------------------------------------------------------
   # Chat Rules
+  # ----------------------------------------------------------
+
   chat_spam:
-    name: "Spamming"
+    name: "Chat Spam"
     tier: "CHAT_1"
 
   chat_symbols:
-    name: "Excessive Symbols"
+    name: "Symbols"
     tier: "CHAT_1"
 
   chat_non_english:
     name: "Non-English"
     tier: "CHAT_1"
 
-  chat_swearing_tier1:
-    name: "Swearing (Tier 1)"
-    tier: "CHAT_1"
-
-  chat_swearing_tier2:
-    name: "Swearing (Tier 2)"
-    tier: "CHAT_2"
-
   chat_inappropriate:
     name: "Inappropriate Chat"
     tier: "CHAT_1"
+
+  chat_fake_messages:
+    name: "Fake Messages"
+    tier: "CHAT_1"
+
+  chat_hackusating:
+    name: "Hackusating"
+    tier: "CHAT_1"
+
+  chat_scamming_chat:
+    name: "Scamming (In Chat)"
+    tier: "CHAT_1"
+
+  # Swearing is Chat 1 or Chat 2 depending on how severe the swear is.
+  chat_swearing_tier1:
+    name: "Swearing (Minor)"
+    tier: "CHAT_1"
+
+  chat_swearing_tier2:
+    name: "Swearing (Severe)"
+    tier: "CHAT_2"
 
   chat_disrespect:
     name: "Disrespect"
@@ -147,25 +182,13 @@ reasons:
     name: "Advertising"
     tier: "CHAT_2"
 
-  chat_fake_messages:
-    name: "Fake Messages"
-    tier: "CHAT_1"
-
   chat_impersonation:
     name: "Impersonation"
     tier: "CHAT_2"
 
-  chat_hackusating:
-    name: "Hackusating"
-    tier: "CHAT_1"
-
   chat_rule_breaking_encouragement:
     name: "Rule Breaking Encouragement"
     tier: "CHAT_2"
-
-  chat_scamming_chat:
-    name: "Scamming (In Chat)"
-    tier: "CHAT_1"
 
   chat_harassment:
     name: "Harassment"
@@ -175,9 +198,12 @@ reasons:
     name: "Toxicity"
     tier: "CHAT_2"
 
-  # Other / Game Rules
+  # ----------------------------------------------------------
+  # Other Rules
+  # ----------------------------------------------------------
+
   disallowed_modifications:
-    name: "Disallowed Mods"
+    name: "Disallowed Modifications"
     tier: "GAME_1"
 
   minor_glitch_abuse:
@@ -236,14 +262,6 @@ reasons:
     name: "Account Sharing"
     tier: "GAME_2"
 
-  racism_discrimination:
-    name: "Racism/Discrimination"
-    tier: "GAME_4"
-
-  suicide_encouragement:
-    name: "Suicide Encouragement"
-    tier: "GAME_4"
-
   hacking_hacks:
     name: "Hacking"
     tier: "GAME_3"
@@ -253,7 +271,7 @@ reasons:
     tier: "GAME_3"
 
   hacking_xray:
-    name: "Xray"
+    name: "XRay"
     tier: "GAME_3"
 
   threats:
@@ -272,17 +290,28 @@ reasons:
     name: "Major Glitches/Duping"
     tier: "GAME_3"
 
-  botting:
-    name: "Botting"
-    tier: "GAME_4"
-
   leaking_personal_information:
     name: "Leaking Personal Information"
     tier: "GAME_3"
 
-  inappropriate_ign:
-    name: "Inappropriate Name"
-    tier: "GAME_3"
+  # If the name/skin was not chosen on purpose, the rules say to
+  # warn the player and give them time to change it first.
   inappropriate_skins:
     name: "Inappropriate Skin"
     tier: "GAME_3"
+
+  inappropriate_ign:
+    name: "Inappropriate IGN"
+    tier: "GAME_3"
+
+  racism_discrimination:
+    name: "Racism/Discrimination"
+    tier: "GAME_4"
+
+  suicide_encouragement:
+    name: "Suicide Encouragement"
+    tier: "GAME_4"
+
+  botting:
+    name: "Botting"
+    tier: "GAME_4"

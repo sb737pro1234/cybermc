@@ -62,7 +62,8 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.6.0</version>
+                <!-- 3.6.1+ bundles ASM 9.8, needed to relocate Java 25 (class version 69) classes -->
+                <version>3.6.1</version>
                 <executions>
                     <execution>
                         <phase>package</phase>

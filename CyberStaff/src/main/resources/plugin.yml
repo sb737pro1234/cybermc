@@ -9,7 +9,7 @@ commands:
 
   offend:
     description: Issue a punishment.
-    usage: /offend <player> <reason>
+    usage: /offend <player> <reason | tier custom reason>
     permission: cyber.staff
 
   offence:
@@ -24,8 +24,6 @@ commands:
     description: CyberStaff administration command.
     usage: /cyberstaff <reload>
     permission: cyber.staff
-    aliases:
-      - grassggstaff
 
   ban:
     description: Redirects to the offence system.

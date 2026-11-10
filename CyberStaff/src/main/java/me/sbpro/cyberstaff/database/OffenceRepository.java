@@ -49,7 +49,7 @@ public final class OffenceRepository {
     public boolean createTables() {
 
         String mysql = """
-                CREATE TABLE IF NOT EXISTS grassgg_offences (
+                CREATE TABLE IF NOT EXISTS cyber_offences (
                     offence_id BIGINT NOT NULL AUTO_INCREMENT,
                     player_uuid CHAR(36) NOT NULL,
                     player_name VARCHAR(16) NOT NULL,
@@ -77,7 +77,7 @@ public final class OffenceRepository {
                 """;
 
         String sqlite = """
-                CREATE TABLE IF NOT EXISTS grassgg_offences (
+                CREATE TABLE IF NOT EXISTS cyber_offences (
                     offence_id INTEGER PRIMARY KEY AUTOINCREMENT,
                     player_uuid TEXT NOT NULL,
                     player_name TEXT NOT NULL,
@@ -113,9 +113,9 @@ public final class OffenceRepository {
 
             if (database.isSqlite()) {
                 for (String index : new String[] {
-                        "CREATE INDEX IF NOT EXISTS idx_player ON grassgg_offences (player_uuid)",
-                        "CREATE INDEX IF NOT EXISTS idx_player_tier ON grassgg_offences (player_uuid, tier)",
-                        "CREATE INDEX IF NOT EXISTS idx_active ON grassgg_offences (player_uuid, active)"
+                        "CREATE INDEX IF NOT EXISTS idx_player ON cyber_offences (player_uuid)",
+                        "CREATE INDEX IF NOT EXISTS idx_player_tier ON cyber_offences (player_uuid, tier)",
+                        "CREATE INDEX IF NOT EXISTS idx_active ON cyber_offences (player_uuid, active)"
                 }) {
                     try (PreparedStatement indexStatement = connection.prepareStatement(index)) {
                         indexStatement.executeUpdate();
@@ -148,7 +148,7 @@ public final class OffenceRepository {
     ) throws SQLException {
 
         String sql =
-                "ALTER TABLE grassgg_offences ADD COLUMN "
+                "ALTER TABLE cyber_offences ADD COLUMN "
                         + name
                         + " "
                         + definition;
@@ -188,7 +188,7 @@ public final class OffenceRepository {
 
                     String sql = """
                             SELECT *
-                            FROM grassgg_offences
+                            FROM cyber_offences
                             WHERE player_uuid = ?
                             ORDER BY offence_id ASC
                             """;
@@ -243,7 +243,7 @@ public final class OffenceRepository {
 
                     String sql = database.adapt("""
                             SELECT *
-                            FROM grassgg_offences
+                            FROM cyber_offences
                             WHERE player_uuid = ?
                               AND active = TRUE
                               AND removed = FALSE
@@ -323,7 +323,7 @@ public final class OffenceRepository {
                 () -> {
 
                     String sql = """
-                            UPDATE grassgg_offences
+                            UPDATE cyber_offences
                             SET active = FALSE,
                                 removed = TRUE,
                                 removed_by = ?,
@@ -399,7 +399,7 @@ public final class OffenceRepository {
                 () -> {
 
                     String sql = """
-                            INSERT INTO grassgg_offences
+                            INSERT INTO cyber_offences
                             (
                                 player_uuid,
                                 player_name,
@@ -581,7 +581,7 @@ public final class OffenceRepository {
                 () -> {
 
                     String sql = database.adapt("""
-                            UPDATE grassgg_offences
+                            UPDATE cyber_offences
                             SET active = FALSE,
                                 removed = TRUE,
                                 removed_by = ?,
@@ -642,7 +642,7 @@ public final class OffenceRepository {
                 () -> {
 
                     String sql = """
-                            UPDATE grassgg_offences
+                            UPDATE cyber_offences
                             SET reason_id = ?,
                                 reason_name = ?,
                                 tier = ?,
@@ -947,7 +947,7 @@ public final class OffenceRepository {
                 () -> {
 
                     String sql = database.adapt("""
-                            UPDATE grassgg_offences
+                            UPDATE cyber_offences
                             SET active = FALSE
                             WHERE active = TRUE
                               AND removed = FALSE
@@ -999,17 +999,8 @@ public final class OffenceRepository {
         return CompletableFuture.supplyAsync(
                 () -> {
 
-                    String deleteAuditSql = """
-                        DELETE FROM grassgg_offence_audit
-                        WHERE offence_id IN (
-                            SELECT offence_id
-                            FROM grassgg_offences
-                            WHERE player_uuid = ?
-                        )
-                        """;
-
                     String deleteOffenceSql = """
-                        DELETE FROM grassgg_offences
+                        DELETE FROM cyber_offences
                         WHERE player_uuid = ?
                         """;
 
@@ -1026,26 +1017,7 @@ public final class OffenceRepository {
                             connection.setAutoCommit(false);
 
                             /*
-                             * Delete audit entries belonging to this
-                             * player's offences first.
-                             */
-                            try (
-                                    PreparedStatement auditStatement =
-                                            connection.prepareStatement(
-                                                    deleteAuditSql
-                                            )
-                            ) {
-
-                                auditStatement.setString(
-                                        1,
-                                        playerUuid.toString()
-                                );
-
-                                auditStatement.executeUpdate();
-                            }
-
-                            /*
-                             * Now delete the player's offence history.
+                             * Delete the player's offence history.
                              */
                             try (
                                     PreparedStatement offenceStatement =

@@ -1,7 +1,5 @@
 package me.sbpro.cyberstaff.commands.staffguide;
 
-import me.sbpro.cyberstaff.Messages;
-import net.kyori.adventure.text.event.ClickEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,9 +7,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 
 public class StaffGuideListener implements Listener {
-
-    private static final String RULES_URL =
-            "https://docs.google.com/document/d/1wZWo1C1_vQj826vAjiInfvQced7srQfRcTJrb9H-BoQ/edit?usp=sharing";
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
@@ -40,8 +35,9 @@ public class StaffGuideListener implements Listener {
                 case StaffGuideMenus.SLOT_PROTOCOL -> StaffGuideMenus.openProtocol(player);
                 case StaffGuideMenus.SLOT_COMMANDS -> StaffGuideMenus.openCommands(player);
                 case StaffGuideMenus.SLOT_RULES -> {
-                    sendRulesLink(player);
+                    // Opens the /rules menu (provided by another plugin).
                     player.closeInventory();
+                    player.performCommand("rules");
                 }
                 default -> { }
             }
@@ -64,11 +60,5 @@ public class StaffGuideListener implements Listener {
                 return;
             }
         }
-    }
-
-    private void sendRulesLink(Player player) {
-        player.sendMessage(Messages.RULES_LINK_LINE);
-        player.sendMessage(Messages.RULES_LINK_MESSAGE.clickEvent(ClickEvent.openUrl(RULES_URL)));
-        player.sendMessage(Messages.RULES_LINK_LINE);
     }
 }

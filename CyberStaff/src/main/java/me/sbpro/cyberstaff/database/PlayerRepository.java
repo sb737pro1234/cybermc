@@ -35,7 +35,7 @@ public final class PlayerRepository {
     public boolean createTable() {
 
         String mysql = """
-                CREATE TABLE IF NOT EXISTS grassgg_players (
+                CREATE TABLE IF NOT EXISTS cyber_players (
                     player_uuid CHAR(36) NOT NULL,
                     player_name VARCHAR(16) NOT NULL,
                     first_seen TIMESTAMP(3) NOT NULL,
@@ -46,7 +46,7 @@ public final class PlayerRepository {
                 """;
 
         String sqlite = """
-                CREATE TABLE IF NOT EXISTS grassgg_players (
+                CREATE TABLE IF NOT EXISTS cyber_players (
                     player_uuid TEXT NOT NULL PRIMARY KEY,
                     player_name TEXT NOT NULL,
                     first_seen INTEGER NOT NULL,
@@ -63,7 +63,7 @@ public final class PlayerRepository {
 
             if (database.isSqlite()) {
                 try (PreparedStatement index = connection.prepareStatement(
-                        "CREATE INDEX IF NOT EXISTS idx_player_name ON grassgg_players (player_name)")) {
+                        "CREATE INDEX IF NOT EXISTS idx_player_name ON cyber_players (player_name)")) {
                     index.executeUpdate();
                 }
             }
@@ -84,7 +84,7 @@ public final class PlayerRepository {
         return CompletableFuture.runAsync(() -> {
 
             String sql = database.isSqlite() ? database.adapt("""
-                    INSERT INTO grassgg_players
+                    INSERT INTO cyber_players
                         (player_uuid, player_name, first_seen, last_seen)
                     VALUES
                         (?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))
@@ -92,7 +92,7 @@ public final class PlayerRepository {
                         player_name = excluded.player_name,
                         last_seen = CURRENT_TIMESTAMP(3)
                     """) : """
-                    INSERT INTO grassgg_players
+                    INSERT INTO cyber_players
                         (player_uuid, player_name, first_seen, last_seen)
                     VALUES
                         (?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))
@@ -135,7 +135,7 @@ public final class PlayerRepository {
 
             String sql = """
                     SELECT player_uuid
-                    FROM grassgg_players
+                    FROM cyber_players
                     WHERE LOWER(player_name) = LOWER(?)
                     LIMIT 1
                     """;

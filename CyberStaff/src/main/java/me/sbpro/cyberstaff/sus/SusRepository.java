@@ -39,8 +39,8 @@ public final class SusRepository {
 
     public boolean createTable() {
 
-        String sql = """
-                CREATE TABLE IF NOT EXISTS grassgg_sus (
+        String mysql = """
+                CREATE TABLE IF NOT EXISTS cyber_sus (
                     sus_id BIGINT NOT NULL AUTO_INCREMENT,
 
                     player_uuid CHAR(36) NOT NULL,
@@ -59,13 +59,44 @@ public final class SusRepository {
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
                 """;
 
+        /*
+         * SQLite: timestamps are stored as epoch milliseconds,
+         * matching cyber_offences.
+         */
+        String sqlite = """
+                CREATE TABLE IF NOT EXISTS cyber_sus (
+                    sus_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    player_uuid TEXT NOT NULL,
+                    player_name TEXT NOT NULL,
+                    reason TEXT NOT NULL,
+                    staff_uuid TEXT NOT NULL,
+                    staff_name TEXT NOT NULL,
+                    created_at INTEGER NOT NULL
+                )
+                """;
+
         try (
                 Connection connection = database.connection();
                 PreparedStatement statement =
-                        connection.prepareStatement(sql)
+                        connection.prepareStatement(
+                                database.isSqlite() ? sqlite : mysql
+                        )
         ) {
 
             statement.executeUpdate();
+
+            if (database.isSqlite()) {
+                for (String index : new String[] {
+                        "CREATE INDEX IF NOT EXISTS idx_sus_player ON cyber_sus (player_uuid)",
+                        "CREATE INDEX IF NOT EXISTS idx_sus_player_name ON cyber_sus (player_name)"
+                }) {
+                    try (PreparedStatement indexStatement =
+                                 connection.prepareStatement(index)) {
+                        indexStatement.executeUpdate();
+                    }
+                }
+            }
+
             return true;
 
         } catch (SQLException exception) {
@@ -91,7 +122,7 @@ public final class SusRepository {
                                 staff_uuid,
                                 staff_name,
                                 created_at
-                            FROM grassgg_sus
+                            FROM cyber_sus
                             ORDER BY player_name ASC, sus_id ASC
                             """;
 
@@ -135,7 +166,7 @@ public final class SusRepository {
                                 staff_uuid,
                                 staff_name,
                                 created_at
-                            FROM grassgg_sus
+                            FROM cyber_sus
                             WHERE player_uuid = ?
                             ORDER BY sus_id ASC
                             """;
@@ -182,8 +213,8 @@ public final class SusRepository {
         return CompletableFuture.supplyAsync(
                 () -> {
 
-                    String sql = """
-                            INSERT INTO grassgg_sus (
+                    String sql = database.adapt("""
+                            INSERT INTO cyber_sus (
                                 player_uuid,
                                 player_name,
                                 reason,
@@ -192,7 +223,7 @@ public final class SusRepository {
                                 created_at
                             )
                             VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3))
-                            """;
+                            """);
 
                     try (
                             Connection connection = database.connection();
@@ -271,7 +302,7 @@ public final class SusRepository {
                 () -> {
 
                     String sql = """
-                            DELETE FROM grassgg_sus
+                            DELETE FROM cyber_sus
                             WHERE sus_id = ?
                             """;
 

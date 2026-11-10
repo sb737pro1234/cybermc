@@ -41,18 +41,15 @@ public final class OffendCommand implements CommandExecutor, TabCompleter {
 
         String playerName = args[0];
 
-        String reasonInput = String.join(
-                " ",
-                Arrays.copyOfRange(args, 1, args.length)
-        );
+        String[] reasonWords = Arrays.copyOfRange(args, 1, args.length);
 
         PunishmentReason reason =
                 plugin.getReasonManager()
-                        .find(reasonInput)
+                        .resolve(reasonWords)
                         .orElse(null);
 
         if (reason == null) {
-            sender.sendMessage(Messages.REASON_NOT_FOUND);
+            sender.sendMessage(Messages.reasonError(plugin.getReasonManager(), reasonWords));
             return true;
         }
 
@@ -221,27 +218,8 @@ public final class OffendCommand implements CommandExecutor, TabCompleter {
         }
 
         if (args.length >= 2) {
-
-            String current =
-                    String.join(
-                            " ",
-                            Arrays.copyOfRange(
-                                    args,
-                                    1,
-                                    args.length
-                            )
-                    ).toLowerCase(Locale.ROOT);
-
             return plugin.getReasonManager()
-                    .all()
-                    .stream()
-                    .map(PunishmentReason::displayName)
-                    .filter(name ->
-                            name.toLowerCase(Locale.ROOT)
-                                    .startsWith(current)
-                    )
-                    .sorted()
-                    .collect(Collectors.toList());
+                    .complete(Arrays.copyOfRange(args, 1, args.length));
         }
 
         return Collections.emptyList();

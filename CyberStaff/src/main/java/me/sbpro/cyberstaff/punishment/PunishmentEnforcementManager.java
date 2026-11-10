@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public final class PunishmentEnforcementManager {
 
@@ -17,6 +18,9 @@ public final class PunishmentEnforcementManager {
 
     private final Map<UUID, OffenceRecord> cache =
             new ConcurrentHashMap<>();
+
+    private final AtomicBoolean databaseDown =
+            new AtomicBoolean(false);
 
     private int syncTaskId = -1;
 
@@ -85,15 +89,48 @@ public final class PunishmentEnforcementManager {
          */
         plugin.getOffenceRepository()
                 .expirePunishments()
-                .exceptionally(
-                        exception -> {
+                .whenComplete(
+                        (ignored, exception) -> {
 
-                            plugin.getLogger().warning(
-                                    "Failed to expire punishments: "
-                                            + exception.getMessage()
-                            );
+                            if (exception == null) {
 
-                            return null;
+                                /*
+                                 * Only announce recovery once after
+                                 * an outage.
+                                 */
+                                if (databaseDown.compareAndSet(
+                                        true,
+                                        false
+                                )) {
+
+                                    plugin.getLogger().info(
+                                            "Database connection restored; "
+                                                    + "punishment expiry resumed."
+                                    );
+                                }
+
+                                return;
+                            }
+
+                            /*
+                             * Warn once per outage instead of every
+                             * poll, which would flood the console.
+                             */
+                            if (databaseDown.compareAndSet(
+                                    false,
+                                    true
+                            )) {
+
+                                plugin.getLogger().warning(
+                                        "Failed to expire punishments: "
+                                                + exception.getMessage()
+                                );
+
+                                plugin.getLogger().warning(
+                                        "Further failures will be suppressed "
+                                                + "until the database recovers."
+                                );
+                            }
                         }
                 );
 
@@ -211,6 +248,12 @@ public final class PunishmentEnforcementManager {
                 || !Objects.equals(
                 previous.reasonId(),
                 current.reasonId()
+        )
+
+                // Custom reasons all share the "custom" id, so compare text too.
+                || !Objects.equals(
+                previous.reasonName(),
+                current.reasonName()
         )
 
                 || !Objects.equals(

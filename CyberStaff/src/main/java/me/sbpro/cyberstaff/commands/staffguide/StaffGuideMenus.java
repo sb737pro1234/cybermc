@@ -43,7 +43,7 @@ public class StaffGuideMenus {
         inv.setItem(SLOT_COMMANDS, item(Material.COMMAND_BLOCK, "Commands",
                 wrap("To open the staff commands, Click here.", Component.empty(), Component.empty(), 0)));
         inv.setItem(SLOT_RULES, item(Material.BOOK, "Rules",
-                wrap("To open the rules document, Click here.", Component.empty(), Component.empty(), 0)));
+                wrap("To open the server rules, Click here.", Component.empty(), Component.empty(), 0)));
 
         player.openInventory(inv);
     }
@@ -61,8 +61,8 @@ public class StaffGuideMenus {
         step(standard, 2, "Add them to the sus list. (<c>/sus add [PLAYER] [REASON]<r>)");
         step(standard, 3, "Gather as much evidence as you can, screenshots of the area, inventory etc.");
         step(standard, 4, "Punish them with the correct offence. (<c>/offend [PLAYER] [REASON]<r>) "
-                + "If there is not an appropriate offence, use a punishment as similar as possible "
-                + "(<c>/offence list<r>) and notify a higher member of staff.");
+                + "If there is not an appropriate offence, give a custom reason with the closest tier "
+                + "(<c>/offend [PLAYER] #[TIER] [REASON]<r>) and notify a higher member of staff.");
         step(standard, 5, "Go to <c>#create-a-punishment-log<r> in the Discord, fill in the requirements "
                 + "and post your evidence there with the duration of the punishment given. "
                 + "If only a warning was given, select \"none\" for the duration option.");
@@ -103,12 +103,15 @@ public class StaffGuideMenus {
         List<Component> offences = new ArrayList<>();
         cmd(offences, "/offend [PLAYER] [REASON]",
                 "Automatically gives the specified player the correct offence/time for the reason given.");
+        cmd(offences, "/offend [PLAYER] #[TIER] [REASON]",
+                "Gives the specified player the next offence in that tier, with your own reason. "
+                        + "Use this when no listed reason fits.");
         cmd(offences, "/offence change [PLAYER] [NEW-REASON]",
                 "Changes the offence that the specified player currently has active.");
         cmd(offences, "/offence check [PLAYER]",
                 "Lists the specified player's current offences, if any.");
         cmd(offences, "/offence list",
-                "Lists every punishment and its category.");
+                "Lists every reason and its tier.");
         cmd(offences, "/offence remove [PLAYER]",
                 "Removes active punishment from specified player.");
         cmd(offences, "/offence reset [PLAYER]",
@@ -121,6 +124,8 @@ public class StaffGuideMenus {
                 "Opens a list of people with sus notes (people that staff think may be breaking the rules).");
         cmd(sus, "/sus add [PLAYER] [REASON]",
                 "Adds a sus note for the specified player for the specified reason.");
+        cmd(sus, "/sus remove [PLAYER] [REASON]",
+                "Removes the specified sus note from a player.");
         inv.setItem(12, item(Material.SPYGLASS, "Sus List", sus));
 
         // Chat
@@ -129,6 +134,8 @@ public class StaffGuideMenus {
                 "Toggles the chat which can only be viewed by staff members.");
         cmd(chat, "/clearchat",
                 "Clears the global chat.");
+        cmd(chat, "/chatlock",
+                "Locks or unlocks the public chat.");
         inv.setItem(13, item(Material.PAPER, "Chat", chat));
 
         // SProtect

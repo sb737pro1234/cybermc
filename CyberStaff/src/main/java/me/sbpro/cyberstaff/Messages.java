@@ -234,6 +234,28 @@ public final class Messages {
     public static final Component PLAYER_NOT_FOUND = error("That player could not be identified.");
     public static final Component UNKNOWN_PLAYER = error("That player has never joined the network and cannot be identified.");
     public static final Component REASON_NOT_FOUND = error("That is not a valid punishment reason.");
+    public static final Component REASON_TEXT_MISSING = error("Add a reason after the tier, e.g. #CHAT_1 being silly");
+    public static final Component CUSTOM_REASON_TOO_LONG = error("That reason is too long (max 255 characters).");
+
+    public static Component missingTier(java.util.List<String> tiers) {
+        return error("Pick a listed reason, or put a tier before your own reason: "
+                + String.join(", ", tiers));
+    }
+
+    /**
+     * Picks the right error for reason words that did not resolve:
+     * no tier first, no reason after the tier, or reason too long.
+     */
+    public static Component reasonError(
+            me.sbpro.cyberstaff.reason.ReasonManager reasons,
+            String[] words
+    ) {
+        return switch (reasons.problem(words)) {
+            case MISSING_TIER -> missingTier(reasons.tierIds());
+            case MISSING_TEXT -> REASON_TEXT_MISSING;
+            case TOO_LONG -> CUSTOM_REASON_TOO_LONG;
+        };
+    }
     public static final Component INVALID_PUNISHMENT = error("The punishment configuration for this offence is invalid.");
     public static final Component DATABASE_ERROR = error("A database error occurred. Please try again.");
     public static final Component RELOAD_SUCCESS = PREFIX.append(Component.text("Configuration reloaded.", NamedTextColor.GREEN));
@@ -243,10 +265,10 @@ public final class Messages {
     // ============================================================
 
     public static final Component STAFF_RELOAD_USAGE = usage("/cyberstaff reload");
-    public static final Component OFFEND_USAGE = usage("/offend <player> <reason>");
+    public static final Component OFFEND_USAGE = usage("/offend <player> <reason | tier custom reason>");
     public static final Component OFFENCE_USAGE = usage("/offence <new|check|list|change|remove> ...");
     public static final Component OFFENCE_REMOVE_USAGE = usage("/offence remove <player>");
-    public static final Component OFFENCE_NEW_USAGE = usage("/offence new <player> <reason>");
+    public static final Component OFFENCE_NEW_USAGE = usage("/offence new <player> <reason | tier custom reason>");
     public static final Component OFFENCE_CHECK_USAGE = usage("/offence check <player>");
     public static final Component OFFENCE_CHANGE_USAGE = usage("/offence change <player> <new reason>");
     public static final Component OFFENCE_RESET_USAGE = usage("/offence reset <player>");
@@ -476,17 +498,6 @@ public final class Messages {
     public static final Component STAFF_GUIDE_TITLE = Component.text("Staff Guide", CUSTOM);
     public static final Component STAFF_PROTOCOL_TITLE = Component.text("Staff Protocol", CUSTOM);
     public static final Component STAFF_COMMANDS_TITLE = Component.text("Staff Commands", CUSTOM);
-
-    public static final Component RULES_LINK_LINE = Component.text(
-            "----------------------------------------",
-            TextColor.color(0x555555)
-    );
-
-    public static final Component RULES_LINK_MESSAGE = Component.text()
-            .append(Component.text("◆ ", TextColor.color(0x00C2FF)))
-            .append(Component.text("[CLICK HERE]", TextColor.color(0x00C2FF), TextDecoration.BOLD))
-            .append(Component.text(" Open the Cyber rules.", NamedTextColor.WHITE))
-            .build();
 
     public static Component guideItemName(String name) {
         return Component.text(name, CUSTOM).decoration(TextDecoration.ITALIC, false);

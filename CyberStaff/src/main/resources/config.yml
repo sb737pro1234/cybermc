@@ -35,8 +35,14 @@ database:
   pool-size: 10
   use-ssl: false
   connection-timeout-ms: 10000
-  idle-timeout-ms: 600000
-  max-lifetime-ms: 1800000
+  # Must be lower than max-lifetime-ms or Hikari disables it.
+  idle-timeout-ms: 240000
+  # Keep this below your MySQL server's wait_timeout
+  # (SHOW VARIABLES LIKE 'wait_timeout';).
+  max-lifetime-ms: 300000
+  # Pings idle connections so they are not silently dropped.
+  # Must be lower than max-lifetime-ms. 0 disables it.
+  keepalive-ms: 60000
 
 offence-counting:
   mode: "PER_TIER"

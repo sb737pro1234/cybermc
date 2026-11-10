@@ -95,7 +95,7 @@ public final class DatabaseManager {
                 .getInt("database.port", 3306);
 
         String database = plugin.getConfig()
-                .getString("database.database", "grassgg_staff");
+                .getString("database.database", "cyber_staff");
 
         String username = plugin.getConfig()
                 .getString("database.username", "root");
@@ -121,13 +121,24 @@ public final class DatabaseManager {
         int idleTimeout = plugin.getConfig()
                 .getInt(
                         "database.idle-timeout-ms",
-                        600000
+                        240000
                 );
 
         int maxLifetime = plugin.getConfig()
                 .getInt(
                         "database.max-lifetime-ms",
-                        1800000
+                        300000
+                );
+
+        /*
+         * Pings idle connections so MySQL / NAT / firewalls
+         * do not silently close them while they sit in the pool.
+         * Must be lower than max-lifetime-ms; 0 disables it.
+         */
+        int keepaliveTime = plugin.getConfig()
+                .getInt(
+                        "database.keepalive-ms",
+                        60000
                 );
 
         /*
@@ -187,7 +198,14 @@ public final class DatabaseManager {
                         + "?useSSL="
                         + ssl
                         + "&serverTimezone=UTC"
-                        + "&characterEncoding=utf8";
+                        + "&characterEncoding=utf8"
+                        /*
+                         * Fail fast when MySQL is unreachable instead of
+                         * hanging, and detect dead sockets.
+                         */
+                        + "&connectTimeout=" + connectionTimeout
+                        + "&socketTimeout=30000"
+                        + "&tcpKeepAlive=true";
 
         try {
 
@@ -217,6 +235,14 @@ public final class DatabaseManager {
             hikari.setMaxLifetime(
                     maxLifetime
             );
+
+            if (keepaliveTime > 0
+                    && keepaliveTime < maxLifetime) {
+
+                hikari.setKeepaliveTime(
+                        keepaliveTime
+                );
+            }
 
             hikari.addDataSourceProperty(
                     "cachePrepStmts",
