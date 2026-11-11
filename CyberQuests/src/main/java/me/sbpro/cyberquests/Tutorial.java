@@ -78,7 +78,7 @@ public final class Tutorial {
         steps.add(step("tutorial_iron_ore", "Mine 6 Iron Ore", "Mine 6 Iron Ore or Deepslate Iron Ore.",
                 QuestType.BREAK_BLOCK, List.of("IRON_ORE", "DEEPSLATE_IRON_ORE"), 6,
                 Material.IRON_ORE, Material.COAL, 8, "8 Coal"));
-        steps.add(step("tutorial_iron_ingots", "Smelt 6 Iron Ingots", "Smelt 6 Iron Ingots and take them out of a furnace.",
+        steps.add(step("tutorial_iron_ingots", "Smelt 6 Iron Ingots", "Smelt 6 Iron Ingots and take them out of a furnace or blast furnace.",
                 QuestType.SMELT_ITEM, List.of("IRON_INGOT"), 6,
                 Material.IRON_INGOT, Material.SHIELD, 1, "1 Shield"));
         steps.add(step("tutorial_iron_pickaxe", "Craft an Iron Pickaxe", "Craft an Iron Pickaxe.",
