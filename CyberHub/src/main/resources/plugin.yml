@@ -7,3 +7,8 @@ api-version: '26.2'
 load: POSTWORLD
 
 authors: [ SBPro ]
+
+permissions:
+  cyber.builder:
+    description: Bypasses hub protection (build, break, damage, items, etc.)
+    default: op

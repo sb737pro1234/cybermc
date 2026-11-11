@@ -17,8 +17,22 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerAdvancementDoneEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import net.kyori.adventure.bossbar.BossBar;
+
+import me.sbpro.cyberhub.items.HubItemLockListener;
+import me.sbpro.cyberhub.items.HubItems;
+import me.sbpro.cyberhub.items.enderbow.EnderBow;
+import me.sbpro.cyberhub.items.enderbow.EnderBowListener;
+import me.sbpro.cyberhub.items.visibility.VisibilityListener;
+import me.sbpro.cyberhub.items.visibility.VisibilityManager;
+import me.sbpro.cyberhub.items.visibility.VisibilityToggle;
+import me.sbpro.cyberhub.protection.HubProtectionListener;
+import me.sbpro.cyberhub.selector.ServerConnector;
+import me.sbpro.cyberhub.selector.ServerSelector;
+import me.sbpro.cyberhub.selector.ServerSelectorListener;
 
 public final class CyberHub extends JavaPlugin implements Listener {
 
@@ -26,13 +40,50 @@ public final class CyberHub extends JavaPlugin implements Listener {
 
     private static final TextColor GREY = NamedTextColor.GRAY;
 
+    private static final String HUB_WORLD = "NewHub";
+
+    private VisibilityManager visibilityManager;
+
+    /** Permanent bossbar shown to everyone. */
+    private final BossBar bossBar = BossBar.bossBar(Messages.BOSSBAR, 1F, BossBar.Color.BLUE, BossBar.Overlay.PROGRESS);
+
+    /** Hub spawn point, falling back to the given world's spawn if NewHub isn't loaded. */
+    public static Location hubSpawn(World fallback) {
+        World world = Bukkit.getWorld(HUB_WORLD);
+        return world != null
+                ? new Location(world, 0.5, 1, 0.5, 270F, 0F)
+                : fallback.getSpawnLocation();
+    }
+
     @Override
     public void onEnable() {
         getLogger().info("Cyber » Server Starting.");
 
         getServer().getPluginManager().registerEvents(this, this);
+        getServer().getPluginManager().registerEvents(new EnderBowListener(this), this);
+        visibilityManager = new VisibilityManager(this);
+        getServer().getPluginManager().registerEvents(new VisibilityListener(this, visibilityManager), this);
+        getServer().getPluginManager().registerEvents(new HubProtectionListener(this), this);
+        getServer().getPluginManager().registerEvents(new ServerSelectorListener(this), this);
+        getServer().getPluginManager().registerEvents(new HubItemLockListener(this), this);
+
+        ServerConnector.register(this);
+
+        // Covers /reload: anyone already online gets the bossbar
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            player.showBossBar(bossBar);
+        }
 
         startTabTask();
+    }
+
+    @Override
+    public void onDisable() {
+        ServerConnector.unregister(this);
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            player.hideBossBar(bossBar);
+        }
     }
 
     private void startTabTask() {
@@ -87,29 +138,13 @@ public final class CyberHub extends JavaPlugin implements Listener {
         Player player = event.getPlayer();
 
         player.getInventory().clear();
-
-        Bukkit.dispatchCommand(
-                Bukkit.getConsoleSender(),
-                "zmenu giveopenitem zmenu:server " + player.getName()
-        );
-
-        Bukkit.getScheduler().runTaskLater(this, () -> {
-            ItemStack item = player.getInventory().getItem(0);
-
-            if (item != null) {
-                player.getInventory().setItem(4, item);
-                player.getInventory().setItem(0, null);
-            }
-        }, 1L);
+        giveHubItems(player);
+        player.showBossBar(bossBar);
 
         event.joinMessage(null);
 
-        World world = Bukkit.getWorld("NewHub");
-
-        if (world != null) {
-            player.teleport(
-                    new Location(world, 0.5, 1, 0.5, 270F, 0F)
-            );
+        if (Bukkit.getWorld(HUB_WORLD) != null) {
+            player.teleport(hubSpawn(player.getWorld()));
         }
     }
 
@@ -126,5 +161,22 @@ public final class CyberHub extends JavaPlugin implements Listener {
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
         event.deathMessage(null);
+
+        // Hub items are given back on respawn, so don't drop copies on the ground
+        event.getDrops().removeIf(item -> HubItems.isHubItem(this, item));
+    }
+
+    @EventHandler
+    public void onRespawn(PlayerRespawnEvent event) {
+        giveHubItems(event.getPlayer());
+    }
+
+    /** Server selector in slot 1, visibility toggle in slot 8, Ender Bow in slot 9. */
+    private void giveHubItems(Player player) {
+        boolean visible = !visibilityManager.isHiding(player);
+
+        player.getInventory().setItem(ServerSelector.SLOT, ServerSelector.create(this));
+        player.getInventory().setItem(VisibilityToggle.SLOT, VisibilityToggle.create(this, visible));
+        player.getInventory().setItem(EnderBow.SLOT, EnderBow.create(this));
     }
 }
