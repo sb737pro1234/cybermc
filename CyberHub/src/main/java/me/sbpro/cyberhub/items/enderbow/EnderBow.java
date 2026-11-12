@@ -23,8 +23,8 @@ public final class EnderBow {
 
     private EnderBow() {}
 
-    /** Hotbar slot 9. */
-    public static final int SLOT = 8;
+    /** Hotbar slot 5. */
+    public static final int SLOT = 4;
     /** 3 second cooldown after firing. */
     public static final int COOLDOWN_TICKS = 60;
 

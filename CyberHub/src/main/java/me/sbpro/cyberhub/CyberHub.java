@@ -30,9 +30,9 @@ import me.sbpro.cyberhub.items.visibility.VisibilityListener;
 import me.sbpro.cyberhub.items.visibility.VisibilityManager;
 import me.sbpro.cyberhub.items.visibility.VisibilityToggle;
 import me.sbpro.cyberhub.protection.HubProtectionListener;
-import me.sbpro.cyberhub.selector.ServerConnector;
-import me.sbpro.cyberhub.selector.ServerSelector;
-import me.sbpro.cyberhub.selector.ServerSelectorListener;
+import me.sbpro.cyberhub.items.selector.ServerConnector;
+import me.sbpro.cyberhub.items.selector.ServerSelector;
+import me.sbpro.cyberhub.items.selector.ServerSelectorListener;
 
 public final class CyberHub extends JavaPlugin implements Listener {
 
@@ -171,7 +171,7 @@ public final class CyberHub extends JavaPlugin implements Listener {
         giveHubItems(event.getPlayer());
     }
 
-    /** Server selector in slot 1, visibility toggle in slot 8, Ender Bow in slot 9. */
+    /** Server selector in slot 1, Ender Bow in slot 5, visibility toggle in slot 9. */
     private void giveHubItems(Player player) {
         boolean visible = !visibilityManager.isHiding(player);
 

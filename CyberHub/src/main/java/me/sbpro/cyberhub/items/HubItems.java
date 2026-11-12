@@ -5,7 +5,7 @@ import org.bukkit.plugin.Plugin;
 
 import me.sbpro.cyberhub.items.enderbow.EnderBow;
 import me.sbpro.cyberhub.items.visibility.VisibilityToggle;
-import me.sbpro.cyberhub.selector.ServerSelector;
+import me.sbpro.cyberhub.items.selector.ServerSelector;
 
 public final class HubItems {
 

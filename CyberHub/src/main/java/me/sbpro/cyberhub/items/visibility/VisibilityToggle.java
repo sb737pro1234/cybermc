@@ -17,8 +17,8 @@ public final class VisibilityToggle {
 
     private VisibilityToggle() {}
 
-    /** Hotbar slot 8. */
-    public static final int SLOT = 7;
+    /** Hotbar slot 9. */
+    public static final int SLOT = 8;
     /** 3 second cooldown between toggles. */
     public static final int COOLDOWN_TICKS = 60;
 
