@@ -33,19 +33,15 @@ public final class ServerSelectorHolder implements InventoryHolder {
     public ServerSelectorHolder() {
         this.inventory = Bukkit.createInventory(this, SIZE, Messages.SELECTOR_TITLE);
 
-        // Survival
         add(11, Material.OAK_SAPLING, Messages.SELECTOR_SURVIVAL_NAME, Messages.SELECTOR_SURVIVAL_LORE,
                 new Entry("survival", "Survival", true));
 
-        // Hub (already here)
         add(15, Material.COMPASS, Messages.SELECTOR_HUB_NAME, Messages.SELECTOR_HUB_LORE,
                 new Entry("hub", "Hub", false));
 
-        // Skyblock (unavailable, no server)
         add(29, Material.BARRIER, Messages.SELECTOR_UNAVAILABLE_NAME, List.of(),
                 new Entry(null, null, true));
 
-        // Unknown (unavailable, no server)
         add(33, Material.BARRIER, Messages.SELECTOR_UNAVAILABLE_NAME, List.of(),
                 new Entry(null, null, true));
     }
