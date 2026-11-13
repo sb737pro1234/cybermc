@@ -1,0 +1,41 @@
+name: CyberKits
+version: '1.0'
+main: me.sbpro.cyberkits.CyberKits
+api-version: '26.2'
+author: SBPro
+description: Cyber rank kits with per-kit cooldowns, an in-game item editor and a first-join Starter kit.
+commands:
+  kits:
+    description: Opens the kits menu and manages kits.
+    usage: /kits [editor|reload|cooldown]
+    aliases:
+      - kit
+permissions:
+  cyber.kits.admin:
+    description: Allows /kits editor, /kits reload and /kits cooldown.
+    default: op
+  # One permission per kit: cyber.kits.<kit id from Kits.java>
+  cyber.kits.starter:
+    description: Allows claiming the Starter kit (Member rank).
+    default: true
+  cyber.kits.jester:
+    description: Allows claiming the Jester kit.
+    default: op
+  cyber.kits.squire:
+    description: Allows claiming the Squire kit.
+    default: op
+  cyber.kits.bishop:
+    description: Allows claiming the Bishop kit.
+    default: op
+  cyber.kits.lord:
+    description: Allows claiming the Lord kit.
+    default: op
+  cyber.kits.knight:
+    description: Allows claiming the Knight kit.
+    default: op
+  cyber.kits.king:
+    description: Allows claiming the King kit.
+    default: op
+  cyber.kits.cyber:
+    description: Allows claiming the Cyber kit.
+    default: op
