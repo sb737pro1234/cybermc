@@ -14,7 +14,7 @@ import java.util.List;
  */
 public final class Messages {
 
-    public static final TextColor CUSTOM = TextColor.color(0x43A047);
+    public static final TextColor CUSTOM = TextColor.color(0xFF0000);
 
     public static final Component PREFIX = Component.text()
             .append(Component.text("ALLIANCES", CUSTOM, TextDecoration.BOLD))
