@@ -112,9 +112,9 @@ public final class Messages {
 
     public static Component firstJoinKit(Kit kit) {
         return PREFIX
-                .append(Component.text("Welcome! You received a ", NamedTextColor.WHITE))
+                .append(Component.text("Welcome! You received the ", NamedTextColor.WHITE))
                 .append(kit.displayName())
-                .append(Component.text(" Note. Right-click it to open it, and use ", NamedTextColor.WHITE))
+                .append(Component.text(". Use ", NamedTextColor.WHITE))
                 .append(Component.text("/kits", CUSTOM))
                 .append(Component.text(" to see all kits.", NamedTextColor.WHITE));
     }
@@ -161,7 +161,7 @@ public final class Messages {
     }
 
     private static Component cooldownLine(Kit kit) {
-        return plain("Cooldown: ", NamedTextColor.GRAY).append(plain(formatTime(kit.cooldown().toMillis()), NamedTextColor.WHITE));
+        return plain("Cooldown: ", NamedTextColor.GRAY).append(plain(formatTime(kit.cooldown().toMillis()), CUSTOM));
     }
 
     // Preview
@@ -209,13 +209,11 @@ public final class Messages {
 
     public static final Component KIT_NOTE_NAME = bold("Kit Note", CUSTOM);
 
-    public static List<Component> kitNoteLore(Kit kit, String claimedBy) {
+    public static List<Component> kitNoteLore(Kit kit) {
         return List.of(
                 plain("Kit: ", NamedTextColor.GRAY).append(kit.displayName()),
-                plain("Claimed by: ", NamedTextColor.GRAY).append(plain(claimedBy, NamedTextColor.WHITE)),
                 Component.empty(),
-                plain("Right-click to open this kit.", NamedTextColor.GREEN),
-                plain("Can be given to other players.", NamedTextColor.GRAY)
+                plain("Right-click to open this kit.", CUSTOM)
         );
     }
 

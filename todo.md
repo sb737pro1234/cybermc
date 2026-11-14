@@ -22,5 +22,4 @@
 - Add 6 rows of enderchest to CyberSurvival
 
 ### Other:
-- Update Crates
 - Add Items to Shop: Ice, Dirt + Sand Variants

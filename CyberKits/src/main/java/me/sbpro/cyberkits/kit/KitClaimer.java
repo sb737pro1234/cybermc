@@ -70,18 +70,21 @@ public final class KitClaimer {
         return true;
     }
 
-    /** First join: gives a Starter Kit Note (dropped if it doesn't fit) and starts its cooldown. */
+    /**
+     * First join: gives the Starter kit's items directly (no note; anything that doesn't fit is dropped)
+     * and locks EVERY kit for its full cooldown, so each kit first unlocks after its configured time.
+     */
     public void giveFirstJoin(Player player, Kit kit) {
-        if (!player.hasPermission(kit.permission())) return;
+        List<ItemStack> items = kitItems.items(kit);
 
-        if (kitItems.count(kit) > 0) {
-            player.getInventory().addItem(kitNotes.create(player, kit))
+        if (player.hasPermission(kit.permission()) && !items.isEmpty()) {
+            player.getInventory().addItem(items.toArray(ItemStack[]::new))
                     .values()
                     .forEach(left -> player.getWorld().dropItemNaturally(player.getLocation(), left));
             player.sendMessage(Messages.firstJoinKit(kit));
         }
 
-        cooldowns.start(player.getUniqueId(), kit, Kits.KITS);
+        cooldowns.start(player.getUniqueId(), null, Kits.KITS);
     }
 
     /** Whether every item fits into a copy of the given storage contents (36 main inventory slots). */
