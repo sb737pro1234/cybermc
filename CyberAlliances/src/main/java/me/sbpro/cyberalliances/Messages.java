@@ -426,11 +426,11 @@ public final class Messages {
         );
     }
 
-    /** 20-segment progress bar: filled segments use the alliance color, the rest are red. */
+    /** 20-segment progress bar: filled segments are green, the rest are red. */
     public static Component progressBar(int filled) {
         Component bar = Component.empty();
         for (int index = 0; index < 20; index++) {
-            bar = bar.append(Component.text("|", index < filled ? CUSTOM : NamedTextColor.RED));
+            bar = bar.append(Component.text("|", index < filled ? NamedTextColor.GREEN : NamedTextColor.RED));
         }
         return bar;
     }
