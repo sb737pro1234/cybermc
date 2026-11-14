@@ -63,11 +63,6 @@ public final class Messages {
     // Item names
     public static final Component AUTOSMELT_LORE = Component.text("AutoSmelt", NamedTextColor.GOLD)
             .decoration(TextDecoration.ITALIC, false);
-    public static final Component GRASSY_HELMET = item("Grassy Helmet", NamedTextColor.DARK_GREEN);
-    public static final Component GRASSY_CHESTPLATE = item("Grassy Chestplate", NamedTextColor.DARK_GREEN);
-    public static final Component GRASSY_LEGGINGS = item("Grassy Leggings", NamedTextColor.DARK_GREEN);
-    public static final Component GRASSY_BOOTS = item("Grassy Boots", NamedTextColor.DARK_GREEN);
-
     private Messages() {
     }
 

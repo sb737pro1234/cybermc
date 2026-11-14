@@ -19,8 +19,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerAdvancementDoneEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -198,58 +196,7 @@ public final class CyberSurvival extends JavaPlugin implements Listener {
 
         if (!player.hasPlayedBefore()){
 
-            // Grassy Helmet
-            ItemStack helmet = new ItemStack(Material.LEATHER_HELMET);
-            LeatherArmorMeta helmetMeta = (LeatherArmorMeta) helmet.getItemMeta();
 
-            if (helmetMeta != null) {
-                helmetMeta.setColor(Color.GREEN);
-                helmetMeta.displayName(Messages.GRASSY_HELMET);
-                helmet.setItemMeta(helmetMeta);
-            }
-
-            // Grassy Chestplate
-            ItemStack chestplate = new ItemStack(Material.LEATHER_CHESTPLATE);
-            LeatherArmorMeta chestMeta = (LeatherArmorMeta) chestplate.getItemMeta();
-
-            if (chestMeta != null) {
-                chestMeta.setColor(Color.GREEN);
-                chestMeta.displayName(Messages.GRASSY_CHESTPLATE);
-                chestplate.setItemMeta(chestMeta);
-            }
-
-            // Grassy Leggings
-            ItemStack leggings = new ItemStack(Material.LEATHER_LEGGINGS);
-            LeatherArmorMeta leggingsMeta = (LeatherArmorMeta) leggings.getItemMeta();
-
-            if (leggingsMeta != null) {
-                leggingsMeta.setColor(Color.GREEN);
-                leggingsMeta.displayName(Messages.GRASSY_LEGGINGS);
-                leggings.setItemMeta(leggingsMeta);
-            }
-
-            // Grassy Boots
-            ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
-            LeatherArmorMeta bootsMeta = (LeatherArmorMeta) boots.getItemMeta();
-
-            if (bootsMeta != null) {
-                bootsMeta.setColor(Color.GREEN);
-                bootsMeta.displayName(Messages.GRASSY_BOOTS);
-                boots.setItemMeta(bootsMeta);
-            }
-
-            // Give armour
-            player.getInventory().setHelmet(helmet);
-            player.getInventory().setChestplate(chestplate);
-            player.getInventory().setLeggings(leggings);
-            player.getInventory().setBoots(boots);
-
-            // Give starter items
-            player.getInventory().addItem(new ItemStack(Material.STONE_SWORD));
-            player.getInventory().addItem(new ItemStack(Material.STONE_PICKAXE));
-            player.getInventory().addItem(new ItemStack(Material.STONE_AXE));
-            player.getInventory().addItem(new ItemStack(Material.STONE_SHOVEL));
-            player.getInventory().addItem(new ItemStack(Material.COOKED_BEEF, 16));
 // Teleport first-time players to SurvivalSpawn.
 // Delayed so other plugins can finish their join teleport first.
             Bukkit.getScheduler().runTaskLater(this, () -> {

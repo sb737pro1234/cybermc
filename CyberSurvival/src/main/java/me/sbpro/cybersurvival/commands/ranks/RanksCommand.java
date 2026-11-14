@@ -23,7 +23,7 @@ public class RanksCommand implements CommandExecutor {
     private static final TextColor KNIGHT_COLOR = TextColor.color(0xF472B6);
     private static final TextColor LORD_COLOR = TextColor.color(0xFB923C);
     private static final TextColor KING_COLOR = TextColor.color(0xFDE047);
-    private static final TextColor GRASS_COLOR = TextColor.color(0x338650);
+    private static final TextColor CYBER_COLOR = TextColor.color(0x008BD1);
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -69,7 +69,7 @@ public class RanksCommand implements CommandExecutor {
                 "Can set up to 6 homes.",
                 "Can use up to 5 enderchest rows.",
                 "Can use fastplace with a range of 128 blocks."));
-        ranks.setItem(34, rank(GRASS_COLOR, "Grass",
+        ranks.setItem(34, rank(CYBER_COLOR, "Cyber",
                 "Can set up to 7 homes.",
                 "Can use up to 6 enderchest rows."));
 
