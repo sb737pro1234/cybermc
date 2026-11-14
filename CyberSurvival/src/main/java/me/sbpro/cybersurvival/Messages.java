@@ -5,6 +5,9 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 
+import net.kyori.adventure.title.Title;
+
+import java.time.Duration;
 import java.util.List;
 
 public final class Messages {
@@ -15,6 +18,22 @@ public final class Messages {
             .append(Component.text("Cyber", CUSTOM, TextDecoration.BOLD))
             .append(Component.text(" » ", NamedTextColor.DARK_GRAY))
             .build();
+
+    // Join title (shown on every join)
+    public static final Component JOIN_TITLE = Component.text("CyberMC", CUSTOM, TextDecoration.BOLD);
+
+    public static Component joinSubtitle(String player) {
+        return Component.text()
+                .append(Component.text("Welcome to ", NamedTextColor.WHITE))
+                .append(Component.text("CyberMC ", CUSTOM))
+                .append(Component.text(player + "!", NamedTextColor.WHITE))
+                .build();
+    }
+
+    public static Title joinTitle(String player) {
+        return Title.title(JOIN_TITLE, joinSubtitle(player), Title.Times.times(
+                Duration.ofMillis(500), Duration.ofMillis(3000), Duration.ofMillis(1000)));
+    }
 
     // Standard errors (unprefixed)
     public static final Component PLAYER_ONLY = Component.text(

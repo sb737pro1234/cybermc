@@ -96,6 +96,12 @@ public final class CyberSurvival extends JavaPlugin implements Listener {
 
     private GlowManager glowManager;
 
+    private JoinTitleManager joinTitleManager;
+
+    public JoinTitleManager getJoinTitleManager() {
+        return joinTitleManager;
+    }
+
     public GlowManager getGlowManager() {
         return glowManager;
     }
@@ -159,6 +165,7 @@ public final class CyberSurvival extends JavaPlugin implements Listener {
         scoreboardManager = new ScoreboardManager(this);
         nightVisionManager = new NightVisionManager(this);
         glowManager = new GlowManager(this);
+        joinTitleManager = new JoinTitleManager(this);
 
         getServer().getPluginManager().registerEvents(new RanksListener(), this);
         getCommand("ranks").setExecutor(new RanksCommand());
@@ -193,6 +200,11 @@ public final class CyberSurvival extends JavaPlugin implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
 
         Player player = event.getPlayer();
+
+        // Welcome title, every join (can be turned off in /settings > Visuals)
+        if (joinTitleManager.isJoinTitleEnabled(player.getUniqueId())) {
+            player.showTitle(Messages.joinTitle(player.getName()));
+        }
 
         if (!player.hasPlayedBefore()){
 

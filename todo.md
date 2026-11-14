@@ -17,8 +17,6 @@
 - CyberGames (KOTH, Chat Games)
 
 ### Change Plugins:
-- CyberSurvival - Update First Join: (Title: CYBERMC, Welcome to CyberMC, Remove player items
-- Add kits to cyberkits
 - update `/playtime [PLAYER]`
 - change progress bar in cyberalliances `/alliance` menu to use white as current (as red conflicts)
 

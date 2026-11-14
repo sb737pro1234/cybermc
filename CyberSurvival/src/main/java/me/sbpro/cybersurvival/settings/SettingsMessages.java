@@ -21,12 +21,14 @@ final class SettingsMessages {
     public static final Component SETTINGS_NIGHT_VISION = Component.text("Night Vision: ", NamedTextColor.WHITE);
     public static final Component SETTINGS_OPEN_THE_CRAFTING_TABLE = Component.text("Open the crafting table", NamedTextColor.WHITE);
     public static final Component SETTINGS_OPEN_YOUR_ENDER_CHEST = Component.text("Open your Ender Chest", NamedTextColor.WHITE);
-    public static final Component SETTINGS_PRIVACY = Component.text("Privacy", NamedTextColor.WHITE);
-    public static final Component SETTINGS_PRIVACY_AND_VISIBILITY_SETTINGS = Component.text("Privacy and visibility settings", NamedTextColor.WHITE);
+    public static final Component SETTINGS_TELEPORT = Component.text("Teleport", NamedTextColor.WHITE);
+    public static final Component SETTINGS_TELEPORT_REQUEST_SETTINGS = Component.text("Teleport request settings", NamedTextColor.WHITE);
     public static final Component SETTINGS_RETURN_TO_SETTINGS = Component.text("Return to Settings", NamedTextColor.WHITE);
     public static final Component SETTINGS_SCOREBOARD = Component.text("Scoreboard: ", NamedTextColor.WHITE);
     public static final Component SETTINGS_SETTINGS = Component.text("Settings", NamedTextColor.WHITE);
-    public static final Component SETTINGS_TOGGLE_YOUR_BOSSBAR = Component.text("Toggle your bossbar", NamedTextColor.WHITE);
+    public static final Component SETTINGS_JOIN_TITLE = Component.text("Join Title: ", NamedTextColor.WHITE);
+    public static final Component SETTINGS_TOGGLE_YOUR_JOIN_TITLE = Component.text("Toggle the welcome title shown when you join", NamedTextColor.WHITE);
+    public static final Component SETTINGS_TOGGLE_YOUR_BOSSBAR =Component.text("Toggle your bossbar", NamedTextColor.WHITE);
     public static final Component SETTINGS_TOGGLE_YOUR_CHAT_VISIBILITY = Component.text("Toggle your chat visibility", NamedTextColor.WHITE);
     public static final Component SETTINGS_TOGGLE_YOUR_NIGHT_VISION = Component.text("Toggle your night vision", NamedTextColor.WHITE);
     public static final Component SETTINGS_TOGGLE_YOUR_PLAYER_GLOW = Component.text("Toggle your player glow", NamedTextColor.WHITE);

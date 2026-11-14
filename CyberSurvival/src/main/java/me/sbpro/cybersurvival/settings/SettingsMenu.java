@@ -87,13 +87,13 @@ public class SettingsMenu {
                 )
         );
 
-        ActionButton privacyButton = ActionButton.create(
-                SettingsMessages.SETTINGS_PRIVACY,
-                SettingsMessages.SETTINGS_PRIVACY_AND_VISIBILITY_SETTINGS,
+        ActionButton teleportButton = ActionButton.create(
+                SettingsMessages.SETTINGS_TELEPORT,
+                SettingsMessages.SETTINGS_TELEPORT_REQUEST_SETTINGS,
                 BUTTON_WIDTH,
                 openDialogAction(
                         player -> player.showDialog(
-                                createPrivacyDialog(plugin, player)
+                                createTeleportDialog(plugin, player)
                         )
                 )
         );
@@ -116,7 +116,7 @@ public class SettingsMenu {
                 List.of(
                         chatButton,
                         visualsButton,
-                        privacyButton,
+                        teleportButton,
                         miscButton
                 ),
                 closeButton
@@ -327,13 +327,35 @@ public class SettingsMenu {
                 )
         );
 
+        ActionButton joinTitleButton = ActionButton.create(
+                SettingsMessages.SETTINGS_JOIN_TITLE.append(
+                        stateOf(plugin.getJoinTitleManager().isJoinTitleEnabled(player.getUniqueId()))
+                ),
+                SettingsMessages.SETTINGS_TOGGLE_YOUR_JOIN_TITLE,
+                BUTTON_WIDTH,
+                categoryToggleAction(
+                        plugin,
+                        clickedPlayer ->
+                                plugin.getJoinTitleManager()
+                                        .toggleJoinTitle(
+                                                clickedPlayer.getUniqueId()
+                                        ),
+                        clickedPlayer ->
+                                createVisualsDialog(
+                                        plugin,
+                                        clickedPlayer
+                                )
+                )
+        );
+
         return createDialog(
                 base,
                 List.of(
                         nightVisionButton,
                         scoreboardButton,
                         glowButton,
-                        bossBarButton
+                        bossBarButton,
+                        joinTitleButton
                 ),
                 createBackButton(plugin, player)
         );
@@ -341,7 +363,7 @@ public class SettingsMenu {
 
     /*
      * ============================================================
-     * PRIVACY
+     * TELEPORT
      * ============================================================
      */
 
@@ -352,14 +374,14 @@ public class SettingsMenu {
                 : Component.text("Disabled", NamedTextColor.RED);
     }
 
-    private static Dialog createPrivacyDialog(
+    private static Dialog createTeleportDialog(
             CyberSurvival plugin,
             Player player
     ) {
 
         DialogBase base = createBase(
-                "Privacy",
-                "Manage your privacy and visibility settings."
+                "Teleport",
+                "Manage your teleport request settings."
         );
 
         CyberTeleport teleportPlugin = getTeleportPlugin();
@@ -389,7 +411,7 @@ public class SettingsMenu {
                 SettingsMessages.SETTINGS_TPA.append(stateOf(!preferences.isTpaDisabled(player))),
                 SettingsMessages.SETTINGS_TPA_DESCRIPTION,
                 BUTTON_WIDTH,
-                privacyToggleAction(
+                teleportToggleAction(
                         plugin,
                         clickedPlayer -> clickedPlayer.sendMessage(
                                 Messages.tpaToggled(
@@ -403,7 +425,7 @@ public class SettingsMenu {
                 SettingsMessages.SETTINGS_TPAHERE.append(stateOf(!preferences.isTpaHereDisabled(player))),
                 SettingsMessages.SETTINGS_TPAHERE_DESCRIPTION,
                 BUTTON_WIDTH,
-                privacyToggleAction(
+                teleportToggleAction(
                         plugin,
                         clickedPlayer -> clickedPlayer.sendMessage(
                                 Messages.tpaHereToggled(
@@ -417,7 +439,7 @@ public class SettingsMenu {
                 SettingsMessages.SETTINGS_TPAUTO.append(stateOf(preferences.isAutoAcceptTpa(player))),
                 SettingsMessages.SETTINGS_TPAUTO_DESCRIPTION,
                 BUTTON_WIDTH,
-                privacyToggleAction(
+                teleportToggleAction(
                         plugin,
                         clickedPlayer -> clickedPlayer.sendMessage(
                                 preferences.toggleAutoAcceptTpa(clickedPlayer)
@@ -572,7 +594,7 @@ public class SettingsMenu {
         );
     }
 
-    private static DialogAction privacyToggleAction(
+    private static DialogAction teleportToggleAction(
             CyberSurvival plugin,
             Consumer<Player> action
     ) {
@@ -589,7 +611,7 @@ public class SettingsMenu {
                     plugin.getServer().getScheduler().runTask(
                             plugin,
                             () -> player.showDialog(
-                                    createPrivacyDialog(
+                                    createTeleportDialog(
                                             plugin,
                                             player
                                     )
