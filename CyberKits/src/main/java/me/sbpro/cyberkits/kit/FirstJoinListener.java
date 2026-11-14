@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import me.sbpro.cyberkits.CyberKits;
 import me.sbpro.cyberkits.Kits;
 
-/** Gives the Starter kit on a player's first join and starts its 12 hour cooldown. */
+/** Gives the Starter kit items on a player's first join and locks every kit for its cooldown. */
 public final class FirstJoinListener implements Listener {
 
     /** Short delay so other plugins' first-join handling (inventory clear, teleport) runs first. */

@@ -16,7 +16,8 @@ CyberKits is a Paper 26.2 rank kit plugin for the Cyber network.
 | Cyber | `cyber.kits.cyber` | 168h | 34 |
 
 - Kits are named with the rank prefix (gradient) followed by " Kit" in the prefix's last hex colour.
-- **Starter** is given automatically on a player's first join (as a Kit Note), and its 12h cooldown starts straight away.
+- On a player's **first join**, the Starter kit's items go straight into their inventory (no note), and **every** kit is
+  locked for its full cooldown. For example, Cyber first unlocks 168h after a player first joins, even if they have the rank.
 - Each kit only checks its own permission. To let higher ranks claim lower kits, use LuckPerms group inheritance.
 
 ## Menu (`/kits`)
