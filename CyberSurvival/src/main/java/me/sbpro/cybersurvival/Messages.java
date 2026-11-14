@@ -15,7 +15,7 @@ public final class Messages {
     public static final TextColor CUSTOM = TextColor.color(0x00AAFF);
 
     public static final Component PREFIX = Component.text()
-            .append(Component.text("Cyber", CUSTOM, TextDecoration.BOLD))
+            .append(Component.text("CYBER", CUSTOM, TextDecoration.BOLD))
             .append(Component.text(" » ", NamedTextColor.DARK_GRAY))
             .build();
 
@@ -136,6 +136,14 @@ public final class Messages {
     public static Component playtime(String playtime) {
         return PREFIX
                 .append(Component.text("Your playtime is ", NamedTextColor.WHITE))
+                .append(Component.text(playtime, CUSTOM))
+                .append(Component.text(".", NamedTextColor.WHITE));
+    }
+
+    public static Component playtimeOther(String playerName, String playtime) {
+        return PREFIX
+                .append(Component.text(playerName, CUSTOM))
+                .append(Component.text("'s playtime is ", NamedTextColor.WHITE))
                 .append(Component.text(playtime, CUSTOM))
                 .append(Component.text(".", NamedTextColor.WHITE));
     }

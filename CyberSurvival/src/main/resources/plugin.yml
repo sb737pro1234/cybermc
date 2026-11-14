@@ -78,7 +78,8 @@ commands:
       - topplaytime
 
   playtime:
-    description: View your total playtime
+    description: View your or another player's total playtime
+    usage: /playtime [player]
     permission: cyber.playtop
 
   ranks:

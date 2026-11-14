@@ -11,14 +11,15 @@
 - CyberSuperTools
 - CyberWarp
 ### Add Plugins:
+- CyberEconomy (Auction, Trade, Withdraw,)
+- CyberRTP
 - CyberRewards (KeyAll, DailyLogin)
 - CyberTech (Tech Slots)
 - CyberUtils (Mod)
 - CyberGames (KOTH, Chat Games)
 
 ### Change Plugins:
-- update `/playtime [PLAYER]`
-- change progress bar in cyberalliances `/alliance` menu to use white as current (as red conflicts)
+- Add 6 rows of enderchest to CyberSurvival
 
 ### Other:
 - Update Crates
