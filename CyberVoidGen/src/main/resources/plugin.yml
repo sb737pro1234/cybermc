@@ -1,0 +1,10 @@
+name: CyberVoidGen
+description: $description
+version: '${version}'
+
+main: me.sbpro.cybervoidgen.CyberVoidGen
+api-version: '26.2'
+# STARTUP so the generator is available before the default worlds load.
+load: STARTUP
+
+authors: [ SBPro ]
