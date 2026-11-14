@@ -17,18 +17,22 @@ import me.sbpro.cyberkits.menu.KitEditorSelectHolder;
 import me.sbpro.cyberkits.menu.KitMenuListener;
 import me.sbpro.cyberkits.menu.KitPreviewHolder;
 import me.sbpro.cyberkits.menu.KitsMenuHolder;
+import me.sbpro.cyberkits.note.KitNoteListener;
+import me.sbpro.cyberkits.note.KitNoteManager;
 
 public final class CyberKits extends JavaPlugin {
 
     private KitItemManager kitItems;
     private CooldownManager cooldowns;
+    private KitNoteManager kitNotes;
     private KitClaimer claimer;
 
     @Override
     public void onEnable() {
         kitItems = new KitItemManager(this);
         cooldowns = new CooldownManager(this);
-        claimer = new KitClaimer(kitItems, cooldowns);
+        kitNotes = new KitNoteManager(this);
+        claimer = new KitClaimer(kitItems, cooldowns, kitNotes);
 
         KitsCommand kitsCommand = new KitsCommand(this);
         getCommand("kits").setExecutor(kitsCommand);
@@ -36,6 +40,7 @@ public final class CyberKits extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new KitMenuListener(this), this);
         getServer().getPluginManager().registerEvents(new FirstJoinListener(this), this);
+        getServer().getPluginManager().registerEvents(new KitNoteListener(this), this);
 
         // Keep cooldown timers in open /kits menus counting down
         Bukkit.getScheduler().runTaskTimer(this, () -> {
@@ -61,6 +66,7 @@ public final class CyberKits extends JavaPlugin {
         }
 
         if (cooldowns != null) cooldowns.save();
+        if (kitNotes != null) kitNotes.save();
     }
 
     /** /kits reload: re-reads kititems.yml and cooldowns.yml from disk. */
@@ -97,6 +103,10 @@ public final class CyberKits extends JavaPlugin {
 
     public CooldownManager cooldowns() {
         return cooldowns;
+    }
+
+    public KitNoteManager kitNotes() {
+        return kitNotes;
     }
 
     public KitClaimer claimer() {

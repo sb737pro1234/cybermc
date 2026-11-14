@@ -4,7 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemStack;
 
 import me.sbpro.cyberkits.Kits;
 import me.sbpro.cyberkits.Messages;
@@ -18,9 +17,6 @@ public final class KitEditorSelectHolder implements InventoryHolder {
 
     public KitEditorSelectHolder(KitItemManager kitItems) {
         this.inventory = Bukkit.createInventory(this, Kits.MENU_SIZE, Messages.EDITOR_SELECT_TITLE);
-
-        ItemStack filler = MenuItems.filler();
-        for (int slot = 0; slot < inventory.getSize(); slot++) inventory.setItem(slot, filler);
 
         for (Kit kit : Kits.KITS) {
             if (kit.slot() < 0 || kit.slot() >= inventory.getSize()) continue;

@@ -31,9 +31,6 @@ public final class KitsMenuHolder implements InventoryHolder {
 
     /** Redraws every kit icon (called every second while open, so cooldowns count down). */
     public void render() {
-        ItemStack filler = MenuItems.filler();
-        for (int slot = 0; slot < inventory.getSize(); slot++) inventory.setItem(slot, filler);
-
         for (Kit kit : Kits.KITS) {
             if (kit.slot() < 0 || kit.slot() >= inventory.getSize()) continue;
             inventory.setItem(kit.slot(), icon(kit));

@@ -10,24 +10,35 @@ CyberKits is a Paper 26.2 rank kit plugin for the Cyber network.
 | Jester | `cyber.kits.jester` | 24h | 12 |
 | Squire | `cyber.kits.squire` | 48h | 14 |
 | Bishop | `cyber.kits.bishop` | 72h | 16 |
-| Lord | `cyber.kits.lord` | 96h | 19 |
-| Knight | `cyber.kits.knight` | 120h | 21 |
-| King | `cyber.kits.king` | 144h | 23 |
-| Cyber | `cyber.kits.cyber` | 168h | 25 |
+| Knight | `cyber.kits.knight` | 96h | 28 |
+| Lord | `cyber.kits.lord` | 120h | 30 |
+| King | `cyber.kits.king` | 144h | 32 |
+| Cyber | `cyber.kits.cyber` | 168h | 34 |
 
-- **Starter** is given automatically on a player's first join, and its 12h cooldown starts straight away.
+- Kits are named with the rank prefix (gradient) followed by " Kit" in the prefix's last hex colour.
+- **Starter** is given automatically on a player's first join (as a Kit Note), and its 12h cooldown starts straight away.
 - Each kit only checks its own permission. To let higher ranks claim lower kits, use LuckPerms group inheritance.
 
 ## Menu (`/kits`)
 
-Each kit is a minecart that shows its state:
+The menu has 45 slots. Each kit is a minecart that shows its state:
 
-- **Chest minecart**: claimable. Left-click claims it.
+- **Chest minecart**: claimable. Left-click claims a Kit Note.
 - **Minecart**: claimed. The lore shows the time left, counting down live.
 - **Furnace minecart**: locked. The lore says the player doesn't have permission and names the rank needed.
 
-Right-click any kit to preview its items (read-only, with a Back button). If the kit doesn't fit in the inventory, the claim is
-refused and no cooldown starts.
+Right-click any kit to preview its items (read-only, with a Back button).
+
+## Kit Notes
+
+Claiming a kit gives a **Kit Note** (paper) instead of the items. Right-click the note to get the kit's items. Notes can
+be traded or given to other players, and anyone holding one can open it.
+
+- It works the same way as CyberCoins bank notes: each note has a unique id, and used ids are saved to `kitnotes.yml`
+  before the items are given, so duplicated copies of a note only work once.
+- Claiming needs one free slot for the note. Opening a note needs room for all its items, otherwise it isn't used up.
+- A note gives the kit's items as they are when it's opened, not as they were when it was claimed.
+- Kit Notes can't be used in crafting.
 
 ## Commands
 
@@ -41,11 +52,12 @@ Admin permission: `cyber.kits.admin`
 
 ## Configuration
 
-- `Kits.java`: kit ids, display names, colours, menu slots, cooldowns, menu size and the first-join kit. If you add or
-  rename a kit, add its `cyber.kits.<id>` permission to `plugin.yml`.
+- `Kits.java`: kit ids, names, rank prefixes (`&#RRGGBB` / `&` codes), menu slots, cooldowns, menu size and the
+  first-join kit. If you add or rename a kit, add its `cyber.kits.<id>` permission to `plugin.yml`.
 - `Messages.java`: GUI names, lore, colours, sounds and messages.
 - `kititems.yml`: generated. The items in each kit, set with `/kits editor`.
 - `cooldowns.yml`: generated. When each player can next claim each kit.
+- `kitnotes.yml`: generated. The ids of used Kit Notes.
 
 ## Building
 

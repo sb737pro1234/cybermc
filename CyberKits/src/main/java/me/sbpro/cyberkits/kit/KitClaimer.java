@@ -9,8 +9,9 @@ import org.bukkit.inventory.ItemStack;
 
 import me.sbpro.cyberkits.Kits;
 import me.sbpro.cyberkits.Messages;
+import me.sbpro.cyberkits.note.KitNoteManager;
 
-/** Works out a kit's state for a player and handles claiming. */
+/** Works out a kit's state for a player and handles claiming (which gives a Kit Note). */
 public final class KitClaimer {
 
     /** What the kit icon in the /kits menu shows. */
@@ -18,10 +19,12 @@ public final class KitClaimer {
 
     private final KitItemManager kitItems;
     private final CooldownManager cooldowns;
+    private final KitNoteManager kitNotes;
 
-    public KitClaimer(KitItemManager kitItems, CooldownManager cooldowns) {
+    public KitClaimer(KitItemManager kitItems, CooldownManager cooldowns, KitNoteManager kitNotes) {
         this.kitItems = kitItems;
         this.cooldowns = cooldowns;
+        this.kitNotes = kitNotes;
     }
 
     public State state(Player player, Kit kit) {
@@ -30,7 +33,7 @@ public final class KitClaimer {
         return State.CLAIMABLE;
     }
 
-    /** Tries to claim the kit, sending the player the result. Returns true if it was given. */
+    /** Tries to claim the kit (gives a Kit Note), sending the player the result. Returns true if it was given. */
     public boolean claim(Player player, Kit kit) {
         switch (state(player, kit)) {
             case LOCKED -> {
@@ -46,20 +49,20 @@ public final class KitClaimer {
             case CLAIMABLE -> {}
         }
 
-        List<ItemStack> items = kitItems.items(kit);
-        if (items.isEmpty()) {
+        if (kitItems.count(kit) == 0) {
             player.sendMessage(Messages.KIT_EMPTY);
             player.playSound(Messages.SOUND_ERROR);
             return false;
         }
 
-        if (!fits(player, items)) {
-            player.sendMessage(Messages.INVENTORY_FULL);
+        ItemStack note = kitNotes.create(player, kit);
+        if (!fits(player.getInventory().getStorageContents(), List.of(note))) {
+            player.sendMessage(Messages.NOTE_INVENTORY_FULL);
             player.playSound(Messages.SOUND_ERROR);
             return false;
         }
 
-        player.getInventory().addItem(items.toArray(ItemStack[]::new));
+        player.getInventory().addItem(note);
         cooldowns.start(player.getUniqueId(), kit, Kits.KITS);
 
         player.sendMessage(Messages.kitClaimed(kit));
@@ -67,13 +70,12 @@ public final class KitClaimer {
         return true;
     }
 
-    /** First join: gives the Starter kit (anything that doesn't fit is dropped) and starts its cooldown. */
+    /** First join: gives a Starter Kit Note (dropped if it doesn't fit) and starts its cooldown. */
     public void giveFirstJoin(Player player, Kit kit) {
         if (!player.hasPermission(kit.permission())) return;
 
-        List<ItemStack> items = kitItems.items(kit);
-        if (!items.isEmpty()) {
-            player.getInventory().addItem(items.toArray(ItemStack[]::new))
+        if (kitItems.count(kit) > 0) {
+            player.getInventory().addItem(kitNotes.create(player, kit))
                     .values()
                     .forEach(left -> player.getWorld().dropItemNaturally(player.getLocation(), left));
             player.sendMessage(Messages.firstJoinKit(kit));
@@ -82,9 +84,8 @@ public final class KitClaimer {
         cooldowns.start(player.getUniqueId(), kit, Kits.KITS);
     }
 
-    /** Whether every item fits in the player's main inventory, tested on a copy. */
-    private static boolean fits(Player player, List<ItemStack> items) {
-        ItemStack[] storage = player.getInventory().getStorageContents();
+    /** Whether every item fits into a copy of the given storage contents (36 main inventory slots). */
+    public static boolean fits(ItemStack[] storage, List<ItemStack> items) {
         Inventory test = Bukkit.createInventory(null, 36);
 
         for (int i = 0; i < storage.length && i < 36; i++) {

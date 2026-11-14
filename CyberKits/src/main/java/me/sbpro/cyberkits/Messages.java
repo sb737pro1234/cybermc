@@ -10,6 +10,8 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 
+import org.bukkit.Material;
+
 import me.sbpro.cyberkits.kit.Kit;
 
 public final class Messages {
@@ -26,6 +28,7 @@ public final class Messages {
     // Sounds
     public static final Sound SOUND_CLAIM = Sound.sound(Key.key("entity.player.levelup"), Sound.Source.MASTER, 1F, 1.2F);
     public static final Sound SOUND_ERROR = Sound.sound(Key.key("entity.villager.no"), Sound.Source.MASTER, 1F, 1F);
+    public static final Sound SOUND_NOTE_OPEN = Sound.sound(Key.key("item.book.page_turn"), Sound.Source.MASTER, 1F, 1F);
 
     // Standard errors (unprefixed)
     public static final Component PLAYER_ONLY = Component.text(
@@ -75,42 +78,43 @@ public final class Messages {
         return kit == null
                 ? Component.text("all kit cooldowns", CUSTOM)
                 : Component.text("the ", NamedTextColor.WHITE)
-                        .append(Component.text(kit.name(), kit.color()))
-                        .append(Component.text(" kit cooldown", NamedTextColor.WHITE));
+                        .append(kit.displayName())
+                        .append(Component.text(" cooldown", NamedTextColor.WHITE));
     }
 
     // Claiming
     public static final Component KIT_EMPTY = error("This kit has no items yet.");
-    public static final Component INVENTORY_FULL = error("You do not have enough inventory space to claim this kit.");
 
     public static Component kitClaimed(Kit kit) {
         return PREFIX
                 .append(Component.text("You claimed the ", NamedTextColor.WHITE))
-                .append(Component.text(kit.name(), kit.color()))
-                .append(Component.text(" kit!", NamedTextColor.WHITE));
+                .append(kit.displayName())
+                .append(Component.text("! Right-click the ", NamedTextColor.WHITE))
+                .append(Component.text("Kit Note", CUSTOM))
+                .append(Component.text(" to open it.", NamedTextColor.WHITE));
     }
 
     public static Component kitLocked(Kit kit) {
         return PREFIX
                 .append(Component.text("You need the ", NamedTextColor.RED))
-                .append(Component.text(kit.name(), kit.color()))
+                .append(kit.prefixComponent())
                 .append(Component.text(" rank to claim this kit.", NamedTextColor.RED));
     }
 
     public static Component kitOnCooldown(Kit kit, long millis) {
         return PREFIX
                 .append(Component.text("You can claim the ", NamedTextColor.RED))
-                .append(Component.text(kit.name(), kit.color()))
-                .append(Component.text(" kit again in ", NamedTextColor.RED))
+                .append(kit.displayName())
+                .append(Component.text(" again in ", NamedTextColor.RED))
                 .append(Component.text(formatTime(millis), CUSTOM))
                 .append(Component.text(".", NamedTextColor.RED));
     }
 
     public static Component firstJoinKit(Kit kit) {
         return PREFIX
-                .append(Component.text("Welcome! You received the ", NamedTextColor.WHITE))
-                .append(Component.text(kit.name(), kit.color()))
-                .append(Component.text(" kit. Use ", NamedTextColor.WHITE))
+                .append(Component.text("Welcome! You received a ", NamedTextColor.WHITE))
+                .append(kit.displayName())
+                .append(Component.text(" Note. Right-click it to open it, and use ", NamedTextColor.WHITE))
                 .append(Component.text("/kits", CUSTOM))
                 .append(Component.text(" to see all kits.", NamedTextColor.WHITE));
     }
@@ -119,7 +123,7 @@ public final class Messages {
     public static final Component MENU_TITLE = Component.text("Kits", CUSTOM, TextDecoration.BOLD);
 
     public static Component kitName(Kit kit) {
-        return bold(kit.name() + " Kit", kit.color());
+        return kit.displayName();
     }
 
     public static List<Component> kitLoreClaimable(Kit kit) {
@@ -127,7 +131,7 @@ public final class Messages {
         lore.add(plain("Status: ", NamedTextColor.GRAY).append(plain("Claimable", NamedTextColor.GREEN)));
         lore.add(cooldownLine(kit));
         lore.add(Component.empty());
-        lore.add(plain("Left-click to claim!", NamedTextColor.GREEN));
+        lore.add(plain("Left-click to claim a Kit Note!", NamedTextColor.GREEN));
         lore.add(plain("Right-click to preview.", NamedTextColor.GRAY));
         return lore;
     }
@@ -149,7 +153,7 @@ public final class Messages {
         lore.add(Component.empty());
         lore.add(plain("You do not have permission", NamedTextColor.RED));
         lore.add(plain("to claim this kit. Requires the ", NamedTextColor.RED)
-                .append(plain(kit.name(), kit.color()))
+                .append(kit.prefixComponent())
                 .append(plain(" rank.", NamedTextColor.RED)));
         lore.add(Component.empty());
         lore.add(plain("Right-click to preview.", NamedTextColor.GRAY));
@@ -162,7 +166,7 @@ public final class Messages {
 
     // Preview
     public static Component previewTitle(Kit kit) {
-        return Component.text(kit.name() + " Kit", kit.color(), TextDecoration.BOLD);
+        return kit.displayName();
     }
 
     public static final Component PREVIEW_BACK_NAME = bold("Back", NamedTextColor.RED);
@@ -181,14 +185,14 @@ public final class Messages {
 
     public static Component editorTitle(Kit kit) {
         return Component.text("Editing: ", CUSTOM, TextDecoration.BOLD)
-                .append(Component.text(kit.name(), kit.color()));
+                .append(kit.displayName());
     }
 
     public static Component editorOpened(Kit kit) {
         return PREFIX
                 .append(Component.text("Editing the ", NamedTextColor.WHITE))
-                .append(Component.text(kit.name(), kit.color()))
-                .append(Component.text(" kit. Place the items to give, then close the menu to save.", NamedTextColor.WHITE));
+                .append(kit.displayName())
+                .append(Component.text(". Place the items to give, then close the menu to save.", NamedTextColor.WHITE));
     }
 
     public static Component editorSaved(Kit kit, int items) {
@@ -196,8 +200,37 @@ public final class Messages {
                 .append(Component.text("Saved ", NamedTextColor.WHITE))
                 .append(Component.text(items + (items == 1 ? " item" : " items"), CUSTOM))
                 .append(Component.text(" to the ", NamedTextColor.WHITE))
-                .append(Component.text(kit.name(), kit.color()))
-                .append(Component.text(" kit.", NamedTextColor.WHITE));
+                .append(kit.displayName())
+                .append(Component.text(".", NamedTextColor.WHITE));
+    }
+
+    // Kit notes (given on claim; right-click to get the items, can be passed to other players)
+    public static final Material KIT_NOTE_MATERIAL = Material.PAPER;
+
+    public static final Component KIT_NOTE_NAME = bold("Kit Note", CUSTOM);
+
+    public static List<Component> kitNoteLore(Kit kit, String claimedBy) {
+        return List.of(
+                plain("Kit: ", NamedTextColor.GRAY).append(kit.displayName()),
+                plain("Claimed by: ", NamedTextColor.GRAY).append(plain(claimedBy, NamedTextColor.WHITE)),
+                Component.empty(),
+                plain("Right-click to open this kit.", NamedTextColor.GREEN),
+                plain("Can be given to other players.", NamedTextColor.GRAY)
+        );
+    }
+
+    public static final Component NOTE_INVENTORY_FULL = error("You need a free inventory slot for the Kit Note.");
+    public static final Component NOTE_NO_SPACE = error("You do not have enough inventory space to open this kit.");
+    public static final Component NOTE_ALREADY_USED = error("This Kit Note has already been used.");
+    public static final Component NOTE_ERROR = error("This Kit Note could not be opened. No items were given.");
+    public static final Component NOTE_UNKNOWN_KIT = error("This Kit Note is for a kit that no longer exists.");
+    public static final Component NOTE_NO_CRAFT = error("Kit Notes cannot be used in crafting.");
+
+    public static Component kitNoteOpened(Kit kit) {
+        return PREFIX
+                .append(Component.text("You opened the ", NamedTextColor.WHITE))
+                .append(kit.displayName())
+                .append(Component.text("!", NamedTextColor.WHITE));
     }
 
     // Helpers
